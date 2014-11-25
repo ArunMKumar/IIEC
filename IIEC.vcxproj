@@ -66,15 +66,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Comm.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="Master.h" />
-    <ClInclude Include="Protocol.h" />
-    <ClInclude Include="Slave.h" />
+    <ClInclude Include="CycBuffer.h" />
+    <ClInclude Include="Load.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Project.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Master.cpp" />
-    <ClCompile Include="Protocol.cpp" />
-    <ClCompile Include="Slave.cpp" />
+    <ClCompile Include="CycBuffer.cpp" />
+    <ClCompile Include="Load.cpp" />
+    <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,13 +2,14 @@
 This will contain the methods for 
 Handling the I2C data that is received*/
 
-#ifndef __PROTOCOL_H
-#define __PROTOCOL_H
+#ifndef __CYCBUFFER_H
+#define __CYCBUFFER_H
 
 #include "Arduino.h"
 #include "Command.h"
+#include "Project.h"
 // defining parameters
-#define PROTOCOL_BUF_LEN	100U
+#define BUFFER_LEN	100U
 
 
 // Defining the error codes
@@ -16,16 +17,16 @@ Handling the I2C data that is received*/
 #define BUF_UNDERFLOW	0x01
 #define BUF_OVERFLOW	0x02
 
-class PROTOCOL_BUF{
+class CYCBUFFER{
 private:
 	uint8_t HEAD;
 	uint8_t TAIL;
 	uint8_t EleCount;
 	uint8_t Status;
-	char BUF[PROTOCOL_BUF_LEN];
+	char BUF[BUFFER_LEN];
 
 public:
-	PROTOCOL_BUF();
+	CYCBUFFER();
 	char readBuffer(unsigned char *loc);
 	uint8_t writeBuffer(char ele);
 	uint8_t readBufferln(unsigned char *loc,unsigned int len);
