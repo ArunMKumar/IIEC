@@ -18,8 +18,6 @@ Comm::Comm(){
 
 }
 
-
-
 Comm::Comm(comm_t commType){
 	/*
 		Function to initialize the Comm module
@@ -50,7 +48,6 @@ Comm::Comm(comm_t commType){
 		setCommType(commType);
 		setCommStatus(COMM_INIT);
 		//SPI Initialization code
-
 	}
 
 	else{
@@ -64,20 +61,17 @@ Comm::Comm(comm_t commType){
 status_t Comm::Transmit(){
 	/* This function the data available on the transmit buffer*/
 	
-		if (FRAME_LEN > outBuff.dataAvailLen()){
+		if (FRAME_LEN > outBuffer.dataAvailLen()){
 			return  COMM_TX_FAIL;
 		}
-
-
-
-
+		
 		if (COMM_TYPE_I2C == commType){
 
 		uint8_t loc = 0x00;
 		Wire.beginTransmission(DEST_I2C_ADDRESS);	// Start Tx
-
+		
 		for (uint8_t count = 0; count < FRAME_LEN; count++){
-				outBuff.readBuffer(&loc);	// read the data in a temp location
+				outBuffer.readBuffer(&loc);	// read the data in a temp location
 				Wire.write(loc);
 		}
 
@@ -91,8 +85,7 @@ status_t Comm::Transmit(){
 			uint8_t loc = 0x00;
 			
 			for (uint8_t count = 0; count < FRAME_LEN; count++){
-				outBuff.readBuffer(&loc);	// read the data in a temp location
-				Serial.write(loc);
+				outBuffer.readBuffer(&loc);	// read the data in a temp location
 			}
 			return COMM_TX_SUCCESS;
 		}
@@ -109,7 +102,6 @@ void Comm::setCommStatus(status_t status){
 void Comm::setCommType(comm_t commType){
 	this->commType = commType;
 }
-
 
 void Comm::setTxDataAvail(){
 	strartTx = COMM_DATA_AVAIL;

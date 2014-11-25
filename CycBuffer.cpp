@@ -14,7 +14,7 @@ CYCBUFFER::CYCBUFFER(){
 	Status = BUF_NOERROR;
 }
 
-char CYCBUFFER::readBuffer( unsigned char *loc){
+uint8_t CYCBUFFER::readBuffer( uint8_t *loc){
 	if (0 == EleCount){
 		return BUF_UNDERFLOW;	// Check for underflow
 	}
@@ -28,8 +28,7 @@ char CYCBUFFER::readBuffer( unsigned char *loc){
 	return BUF_NOERROR;
 }
 
-
-uint8_t CYCBUFFER::writeBuffer(char ele){
+uint8_t CYCBUFFER::writeBuffer(uint8_t ele){
 	if (BUFFER_LEN == EleCount){
 		return BUF_OVERFLOW;		// check for overflow
 	}
@@ -39,10 +38,12 @@ uint8_t CYCBUFFER::writeBuffer(char ele){
 		EleCount++;
 		TAIL = (TAIL + 1) % BUFFER_LEN;
 	}
+	
+
+	return BUF_NOERROR;
 }
 
-
-uint8_t CYCBUFFER::readBufferln(unsigned char *loc, unsigned int len){
+uint8_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
 	
 		// Read a particular length of data 
 	while (len){
@@ -56,18 +57,19 @@ uint8_t CYCBUFFER::readBufferln(unsigned char *loc, unsigned int len){
 	return BUF_NOERROR;
 }
 
+uint8_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
 
-uint8_t CYCBUFFER::writeBufferln(unsigned char *loc, unsigned int len){
 	while (len){
 		if (BUF_NOERROR == writeBuffer(*loc)){	// writeBuffer accepts values, not pointers
 			len--;	// reduce the counter
 			loc++;	// read from next location
 		}
-		else{
-			return BUF_OVERFLOW;
+		else{			
+			return BUF_OVERFLOW;		
 		}
 	}
-	return BUF_NOERROR;
+	
+	
 }
 
 uint8_t CYCBUFFER::dataAvailLen(){

@@ -21,10 +21,13 @@ class Comm{
 		status_t strartTx;
 		status_t doneRx;
 		comm_t	commType;
-		CYCBUFFER outBuff;
-		CYCBUFFER inBuff;
+		// Commneted just for testing purpose
+		/*CYCBUFFER outBuffer;	
+		CYCBUFFER inBuffer;*/
 
 	public:
+		CYCBUFFER outBuffer;
+		CYCBUFFER inBuffer;
 		Comm();	// default constructor to initialize the communication
 		Comm(comm_t);
 		void setTxDataAvail();
