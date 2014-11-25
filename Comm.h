@@ -18,6 +18,8 @@ Arun M Kumar		25 Nov 2011
 class Comm{
 	private:
 		status_t status;
+		status_t strartTx;
+		status_t doneRx;
 		comm_t	commType;
 		CYCBUFFER outBuff;
 		CYCBUFFER inBuff;
@@ -25,6 +27,7 @@ class Comm{
 	public:
 		Comm();	// default constructor to initialize the communication
 		Comm(comm_t);
+		void setTxDataAvail();
 		void setCommType(comm_t);
 		void setCommStatus(state_t);
 		status_t Transmit(); 

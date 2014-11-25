@@ -25,16 +25,25 @@ typedef uint8_t cmd_t;
 						Project Specific Configurations
 *********************************************************************************************/
 
-/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     COMMUNICATION	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    COMMUNICATION	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 /* I2C
 	Use address 0x00 for master
 	for others prefer 0x01 to 0x06
 */
-#define I2C_ADDRESS		0x01	
+#define SRC_I2C_ADDRESS		0x01
+#define DEST_I2C_ADDRESS	0x02
 
 /* UART
 	specify the baud rates here
 */
-#define UART_BAUD_RATE	9600U
+#define UART_BAUD_RATE	9600
+
+/* BLE
+	Specify BLE related settings here
+*/
+
+/*	SPI
+	Specify SPI related settings here
+*/
 
 #endif /* PROJECT_H_ */

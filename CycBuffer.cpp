@@ -69,3 +69,7 @@ uint8_t CYCBUFFER::writeBufferln(unsigned char *loc, unsigned int len){
 	}
 	return BUF_NOERROR;
 }
+
+uint8_t CYCBUFFER::dataAvailLen(){
+	return EleCount;
+}

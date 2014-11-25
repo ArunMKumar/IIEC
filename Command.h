@@ -84,4 +84,15 @@ Arun M Kumar				24 Nov 2014*/
 #define COMM_INIT			0x01
 #define COMM_ERROR			0x02
 
+#define COMM_DATA_AVAIL		0x01
+
+#define COMM_TX_SUCCESS		0x00
+#define COMM_TX_FAIL		0x01
+
+//====================================================================================
+//							PROTOCOL COMMANDS
+//====================================================================================
+
+#define FRAME_LEN		0x0A
+
 #endif

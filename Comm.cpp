@@ -28,6 +28,7 @@ Comm::Comm(comm_t commType){
 		setCommType(commType);
 		setCommStatus(COMM_INIT);
 		// I2C Initialization code
+		Wire.begin(SRC_I2C_ADDRESS);
 
 	}
 
@@ -35,6 +36,7 @@ Comm::Comm(comm_t commType){
 		setCommType(commType);
 		setCommStatus(COMM_INIT);
 		// Serial Initialization code
+		Serial.begin(UART_BAUD_RATE);
 	}
 
 	else if (COMM_TYPE_BLE == commType){
@@ -59,6 +61,46 @@ Comm::Comm(comm_t commType){
 	}
 }
 
+status_t Comm::Transmit(){
+	/* This function the data available on the transmit buffer*/
+	
+		if (FRAME_LEN > outBuff.dataAvailLen()){
+			return  COMM_TX_FAIL;
+		}
+
+
+
+
+		if (COMM_TYPE_I2C == commType){
+
+		uint8_t loc = 0x00;
+		Wire.beginTransmission(DEST_I2C_ADDRESS);	// Start Tx
+
+		for (uint8_t count = 0; count < FRAME_LEN; count++){
+				outBuff.readBuffer(&loc);	// read the data in a temp location
+				Wire.write(loc);
+		}
+
+		Wire.endTransmission(); // End Tx
+		return COMM_TX_SUCCESS;
+		}
+
+
+		if (COMM_TYPE_UART == commType){
+
+			uint8_t loc = 0x00;
+			
+			for (uint8_t count = 0; count < FRAME_LEN; count++){
+				outBuff.readBuffer(&loc);	// read the data in a temp location
+				Serial.write(loc);
+			}
+			return COMM_TX_SUCCESS;
+		}
+
+
+
+
+}
 
 void Comm::setCommStatus(status_t status){
 	this->status = status;
@@ -68,3 +110,7 @@ void Comm::setCommType(comm_t commType){
 	this->commType = commType;
 }
 
+
+void Comm::setTxDataAvail(){
+	strartTx = COMM_DATA_AVAIL;
+}

@@ -27,10 +27,11 @@ private:
 
 public:
 	CYCBUFFER();
-	char readBuffer(unsigned char *loc);
-	uint8_t writeBuffer(char ele);
-	uint8_t readBufferln(unsigned char *loc,unsigned int len);
-	uint8_t writeBufferln(unsigned char *loc, unsigned int len);
+	uint8_t dataAvailLen();
+	uint8_t readBuffer(uint8_t *loc);
+	uint8_t writeBuffer(uint8_t ele);
+	uint8_t readBufferln(uint8_t *loc,uint16_t len);
+	uint8_t writeBufferln(uint8_t *loc, uint16_t len);
 	
 };
 

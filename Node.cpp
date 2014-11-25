@@ -28,6 +28,11 @@ void Node::nodePRIO(){
 
 }
 
+void Node::nodeLoadCalc(){
+	/* This method calculates the various
+	load parameters for the node*/
+}
+
 
 
 
