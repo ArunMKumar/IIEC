@@ -15,7 +15,6 @@ Arun M Kumar		25 Nov 2011
 #include "Command.h"
 #include "CycBuffer.h"
 
-
 class Comm{
 	private:
 		status_t status;

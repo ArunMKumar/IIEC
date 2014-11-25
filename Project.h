@@ -21,5 +21,20 @@ typedef uint8_t comm_t;
 typedef float prio_t;
 typedef uint8_t cmd_t;
 
+/********************************************************************************************
+						Project Specific Configurations
+*********************************************************************************************/
+
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     COMMUNICATION	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/* I2C
+	Use address 0x00 for master
+	for others prefer 0x01 to 0x06
+*/
+#define I2C_ADDRESS		0x01	
+
+/* UART
+	specify the baud rates here
+*/
+#define UART_BAUD_RATE	9600U
 
 #endif /* PROJECT_H_ */

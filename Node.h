@@ -50,9 +50,9 @@ class Node{
       void nodeLoadCalc();	//calculate all 3 loads
       void fillParentBuf();	// fill Parent Out buffer with data
       void fillChildBuf();	// fill Child Out buffer with data
-      void TxParentBuf();	// Transmit the Parent buffer
-      void TxChildBuf();	// Transmit the child buffer
-      void Task();			// cyclic task for every node
+      status_t TxParentBuf();	// Transmit the Parent buffer
+      status_t TxChildBuf();	// Transmit the child buffer
+      status_t Task();			// cyclic task for every node
 };
 
 
