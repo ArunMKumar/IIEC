@@ -59,32 +59,29 @@ Arun M Kumar				24 Nov 2014*/
 #define LOAD_READ  0x02
 
 
-
-
 //====================================================================================
-//							SLAVE STATUS and CONSTATNTS
-//====================================================================================
-
-
-
-// Status of the Slaves
-#define SLAVE_NOT_INIT		0x00	// If the slave is not connected
-#define SLAVE_INIT			0x03	// If theslave is initialized
-
-//Buffer
-#define SLAVE_MASTER_BUFF_EMPTY		0x00
-
-
-
-//====================================================================================
-//							MASTER COMMANDS
+//							NODE COMMANDS
 //====================================================================================
 #define NODE_NO_ID		0xFA
-#define SLAVE_COUNT		0x03
 
-#define MASTER_NOT_INIT	0x00
-#define MASTER_INIT		0x03
+#define NODE_NOT_INIT	0x00
+#define NODE_INIT		0x03
 
 
+
+//====================================================================================
+//							COMM COMMANDS
+//====================================================================================
+
+#define COMM_NOT_DEFINED	0x00	// No Communication defined
+#define COMM_TYPE_I2C		0x01	// Communicatio over I2C
+#define COMM_TYPE_UART		0x02	// Communication over UART
+#define COMM_TYPE_BLE		0x03	// Communication over BLE
+#define COMM_TYPE_SPI		0x04	// Communication over SPI
+
+
+#define COMM_NOT_INIT		0x00
+#define COMM_INIT			0x01
+#define COMM_ERROR			0x02
 
 #endif

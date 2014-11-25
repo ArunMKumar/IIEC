@@ -13,6 +13,7 @@
 #include "CycBuffer.h"
 #include "Project.h"
 #include "Command.h"
+#include "Comm.h"
 
 typedef struct{
 	/* Data that needs to be retrieved from the child
@@ -39,10 +40,8 @@ class Node{
       load_t DCL;      	// Runtime load of the connected loads
       load_t DLoad;	 	// Demanded load
 	  status_t Status;	// Current Status of the Load
-	  CYCBUFFER childInBuf;	// Data received from child
-	  CYCBUFFER childOutBuf;	// Data sent to child
-	  CYCBUFFER parentInBuf;	// Data received from Parent
-	  CYCBUFFER parentOutBuf;// Data sent to parent
+	  Comm commParent;	// Communication with parent
+	  Comm commChild;	// Communication with child
 
   public:
 	  Node();

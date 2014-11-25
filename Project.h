@@ -17,7 +17,9 @@ typedef uint16_t time_t;
 typedef uint8_t state_t;
 typedef uint8_t status_t;
 typedef uint8_t pin_t;
+typedef uint8_t comm_t;
 typedef float prio_t;
 typedef uint8_t cmd_t;
+
 
 #endif /* PROJECT_H_ */

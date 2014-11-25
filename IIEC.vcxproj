@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino;$(IncludePath)</IncludePath>
+    <IncludePath>C:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino;C:\arduino\arduino-1.0.5-r2\libraries\Wire;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -74,6 +74,7 @@
     <ClInclude Include="Project.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Comm.cpp" />
     <ClCompile Include="CycBuffer.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Node.cpp" />
