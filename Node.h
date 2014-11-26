@@ -40,10 +40,13 @@ class Node{
       load_t DCL;      	// Runtime load of the connected loads
       load_t DLoad;	 	// Demanded load
 	  status_t Status;	// Current Status of the Load
+	  
+
+  public:
+
 	  Comm commParent;	// Communication with parent
 	  Comm commChild;	// Communication with child
 
-  public:
 	  Node();
       Node(id_t ID, id_t PID);   // Where to read from answer where to act
       void setNodePRIO(prio_t);			// Calculate the Priority of the node
