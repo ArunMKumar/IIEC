@@ -8,14 +8,6 @@ Handling the I2C data that is received*/
 #include "Arduino.h"
 #include "Command.h"
 #include "Project.h"
-// defining parameters
-#define BUFFER_LEN	100U
-
-
-// Defining the error codes
-#define BUF_NOERROR		0x00
-#define BUF_UNDERFLOW	0x01
-#define BUF_OVERFLOW	0x02
 
 class CYCBUFFER{
 private:
@@ -27,13 +19,15 @@ private:
 
 public:
 	CYCBUFFER();
-	uint8_t dataAvailLen();
-	uint8_t readBuffer(uint8_t *loc);
-	uint8_t writeBuffer(uint8_t ele);
-	uint8_t readBufferln(uint8_t *loc,uint16_t len);
-	uint8_t writeBufferln(uint8_t *loc, uint16_t len);
+	status_t dataAvailLen();
+	status_t flushBuffer(void);
+	status_t fillRandom(void);
+	status_t readBuffer(uint8_t *loc);
+	status_t writeBuffer(uint8_t ele);
+	status_t readBufferln(uint8_t *loc,uint16_t len);
+	status_t writeBufferln(uint8_t *loc, uint16_t len);
 	
 };
 
 
-#endif
+#endif /*CYCBUFFER_H*/

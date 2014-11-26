@@ -21,16 +21,19 @@ Node::Node(id_t ID, id_t PID){
 	this->PID = PID;
 }
 
-void Node::nodePRIO(){
+void Node::setNodePRIO(prio_t PRIO){
 	/* This method calculates the cumulative
 	 * priority of the node
 	 */
-
+	this->PRIO = PRIO;
 }
 
-void Node::nodeLoadCalc(){
+void Node::setNodeLoads(load_t ASL, load_t DCL, load_t DLoad){
 	/* This method calculates the various
 	load parameters for the node*/
+	this->ASL = ASL;
+	this->DCL = DCL;
+	this->DLoad = DLoad;
 }
 
 

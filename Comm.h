@@ -33,6 +33,14 @@ class Comm{
 		void setTxDataAvail();
 		void setCommType(comm_t);
 		void setCommStatus(state_t);
+		status_t flushInBuffer();
+		status_t flushOutBuffer();
+		status_t fillRandomIn();
+		status_t fillRandomOut();
+		status_t writeOutBuffer(uint8_t);
+		status_t readInBuffer(uint8_t*);
+		status_t writeOutBufferln(uint8_t *, uint16_t);	
+		status_t readInBufferln(uint8_t*, uint16_t);
 		status_t Transmit(); 
 };
 

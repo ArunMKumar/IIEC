@@ -9,12 +9,12 @@ Arun M Kumar			24 Nov 2014*/
 CYCBUFFER::CYCBUFFER(){
 	/* here we initialize our buffer*/
 	HEAD = 0x00;	// Head at the zeroth element
-	TAIL = 0x01;	// tail at first element
+	TAIL = 0x00;	// tail at first element
 	EleCount = 0x00;	// No element present
 	Status = BUF_NOERROR;
 }
 
-uint8_t CYCBUFFER::readBuffer( uint8_t *loc){
+status_t CYCBUFFER::readBuffer( uint8_t *loc){
 	if (0 == EleCount){
 		return BUF_UNDERFLOW;	// Check for underflow
 	}
@@ -28,7 +28,7 @@ uint8_t CYCBUFFER::readBuffer( uint8_t *loc){
 	return BUF_NOERROR;
 }
 
-uint8_t CYCBUFFER::writeBuffer(uint8_t ele){
+status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	if (BUFFER_LEN == EleCount){
 		return BUF_OVERFLOW;		// check for overflow
 	}
@@ -43,7 +43,7 @@ uint8_t CYCBUFFER::writeBuffer(uint8_t ele){
 	return BUF_NOERROR;
 }
 
-uint8_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
+status_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
 	
 		// Read a particular length of data 
 	while (len){
@@ -57,7 +57,7 @@ uint8_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
 	return BUF_NOERROR;
 }
 
-uint8_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
+status_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
 
 	while (len){
 		if (BUF_NOERROR == writeBuffer(*loc)){	// writeBuffer accepts values, not pointers
@@ -67,11 +67,38 @@ uint8_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
 		else{			
 			return BUF_OVERFLOW;		
 		}
-	}
-	
-	
+	}	
 }
 
-uint8_t CYCBUFFER::dataAvailLen(){
+status_t CYCBUFFER::dataAvailLen(void){
 	return EleCount;
+}
+
+status_t CYCBUFFER::flushBuffer(void){
+	/*
+	Resets the buffer to a state when it was just formed
+	IMP: Does not remove garbage data
+	*/
+	HEAD = 0x00;
+	TAIL = 0x01;
+	EleCount = 0x00;
+	Status = BUF_NOERROR;
+
+	return Status;
+}
+
+status_t CYCBUFFER::fillRandom(void){
+	/*
+		Fills the buffer with random data
+		in the range 0-299
+	*/
+	flushBuffer();
+	while (BUFFER_LEN > EleCount){
+		if (BUF_OVERFLOW == writeBuffer(uint8_t(random(300)))){
+			return BUF_OVERFLOW;
+		}
+
+		else
+			continue;
+	}
 }

@@ -95,4 +95,17 @@ Arun M Kumar				24 Nov 2014*/
 
 #define FRAME_LEN		0x0A
 
+//====================================================================================
+//							BUFFER COMMANDS
+//====================================================================================
+// defining parameters
+#define BUFFER_LEN	100U
+
+
+// Defining the error codes
+#define BUF_NOERROR		0x00
+#define BUF_UNDERFLOW	0x01
+#define BUF_OVERFLOW	0x02
+
+
 #endif

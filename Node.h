@@ -46,10 +46,10 @@ class Node{
   public:
 	  Node();
       Node(id_t ID, id_t PID);   // Where to read from answer where to act
-      void nodePRIO();			// Calculate the Priority of the node
-      void nodeLoadCalc();		//calculate all 3 loads
-      status_t TxParentBuf();	// Transmit the Parent buffer
-      status_t TxChildBuf();	// Transmit the child buffer
+      void setNodePRIO(prio_t);			// Calculate the Priority of the node
+      void setNodeLoads(load_t, load_t, load_t);		//calculate all 3 loads
+      status_t TxParent();	// Transmit the Parent buffer
+      status_t TxChild();	// Transmit the child buffer
       status_t Task();			// cyclic task for every node
 };
 
