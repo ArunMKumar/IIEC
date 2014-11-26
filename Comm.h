@@ -30,8 +30,9 @@ class Comm{
 		CYCBUFFER inBuffer;
 		Comm();	// default constructor to initialize the communication
 		Comm(comm_t);
-		void setTxDataAvail();
+		void setTxDataAvail(void);
 		void setCommType(comm_t);
+		uint8_t getCommType(void);
 		void setCommStatus(state_t);
 		status_t flushInBuffer();
 		status_t flushOutBuffer();

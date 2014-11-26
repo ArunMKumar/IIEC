@@ -104,6 +104,13 @@ void Comm::setCommType(comm_t commType){
 	this->commType = commType;
 }
 
+uint8_t Comm::getCommType(void){
+	/*
+		Returns the Comm type of the comm instance
+	*/
+	return commType;
+}
+
 void Comm::setTxDataAvail(void){
 	strartTx = COMM_DATA_AVAIL;
 }

@@ -99,7 +99,7 @@ Arun M Kumar				24 Nov 2014*/
 //							BUFFER COMMANDS
 //====================================================================================
 // defining parameters
-#define BUFFER_LEN	100U
+#define BUFFER_LEN		100U
 
 
 // Defining the error codes

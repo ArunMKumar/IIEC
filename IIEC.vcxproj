@@ -72,6 +72,7 @@
     <ClInclude Include="Load.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Project.h" />
+    <ClInclude Include="Protocol.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Comm.cpp" />
