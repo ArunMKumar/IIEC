@@ -52,7 +52,7 @@ class Load{
 		uint8_t readLoad();
 		void writeLoad(uint8_t Logic);
 		void getLoadState(LoadState_t*);
-		void LoadTask(); // Contains the cyclic task that need to be called periodically
+		status_t Task(void); // Contains the cyclic task that need to be called periodically
 };
 
 

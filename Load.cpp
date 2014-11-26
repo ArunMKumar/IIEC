@@ -34,7 +34,7 @@ Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 }
 
 
-uint8_t Load::readLoad(){
+uint8_t Load::readLoad(void){
 	// just return the analog values
 	return analogRead(_rpin);
 }
@@ -56,8 +56,40 @@ void Load::getLoadState(LoadState_t *Buf){
 	Buf-> DLoad		= this-> DLoad;	// demanded load
 }
 
+status_t Load::Task(void){
 
-void Load::LoadTask(){
+	/*
+	Periodic task that need to be performed by each load
+	*/
+
+	//Step1: Read the current Load
+	readLoad();		// Now we have the latest value
+
+	//Step2: Adjust the priority
+	/* 
+	If load has been Off and PRIO less than assigned PRIO
+	then keep rising the PRIO towards the Higher Priority
+	*/
+	if (LOAD_OFF == State){
+		offTime++;
+	}
+
+	else if (LOAD_ON == State){
+		onTime++;
+	}
+
+	if (0 == (GLOBAL_TICK % 10)){
+		// roughly every second
+		/*
+			Here the priority rises every every time unit
+			which is roughly 1 second in this case.
+
+			Priorities both rise and fall in this case
+			based on the state of the load.
+		*/
+
+	}
+
 	return;
 }
 

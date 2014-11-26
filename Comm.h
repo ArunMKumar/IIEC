@@ -28,6 +28,7 @@ class Comm{
 	public:
 		CYCBUFFER outBuffer;
 		CYCBUFFER inBuffer;
+
 		Comm();	// default constructor to initialize the communication
 		Comm(comm_t);
 		void setTxDataAvail(void);
@@ -43,6 +44,7 @@ class Comm{
 		status_t writeOutBufferln(uint8_t *, uint16_t);	
 		status_t readInBufferln(uint8_t*, uint16_t);
 		status_t Transmit(); 
+		status_t Task(void);
 };
 
 #endif

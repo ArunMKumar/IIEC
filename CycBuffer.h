@@ -26,7 +26,6 @@ public:
 	status_t writeBuffer(uint8_t ele);
 	status_t readBufferln(uint8_t *loc,uint16_t len);
 	status_t writeBufferln(uint8_t *loc, uint16_t len);
-	
 };
 
 
