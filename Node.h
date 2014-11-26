@@ -43,10 +43,11 @@ class Node{
 	  
 
   public:
-
-	  Comm commParent;	// Communication with parent
-	  Comm commChild;	// Communication with child
-
+	  /*
+		New Implementation, Communication based task are independent of the node
+	  */
+	  //Comm commParent;	// Communication with parent
+	  //Comm commChild;	// Communication with child
 	  Node();
       Node(id_t ID, id_t PID);   // Where to read from answer where to act
       void setNodePRIO(prio_t);			// Calculate the Priority of the node
