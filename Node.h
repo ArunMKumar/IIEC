@@ -45,6 +45,9 @@ class Node{
   public:
 	  /*
 		New Implementation, Communication based task are independent of the node
+		No need to associate Comm instances with the Node as their will only be only 
+		one node so only 2 instances of communication shall be implemented,
+		one for the parent and the other for the child.
 	  */
 	  //Comm commParent;	// Communication with parent
 	  //Comm commChild;	// Communication with child

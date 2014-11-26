@@ -36,6 +36,41 @@ void Node::setNodeLoads(load_t ASL, load_t DCL, load_t DLoad){
 	this->DLoad = DLoad;
 }
 
+status_t Node::TxParent(void){
+	
+	/*
+		No issuess in the current project as both
+		Parent and child nodes are in different comm instace
+		so we can safely use one particular instance for this 
+		task.
+	*/
+	return;
+}
+
+status_t Node::TxChild(void){
+
+	/*
+	No issuess in the current project as both
+	Parent and child nodes are in different comm instace
+	so we can safely use one particular instance for this
+	task.
+	*/
+
+	return;
+}
+
+status_t Node::Task(void){
+	/*
+	This function shall be executed cyclically everytime. 
+	This shall perform the periodic tasks that needs to be done for the
+	node, eg. Calculating the Priorities and the Load allowance.
+
+	We shall perform the algorith here, but do need to remember that
+	we should use modular functions to allow for improvements later.
+	*/
+
+}
+
 
 
 
