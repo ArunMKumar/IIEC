@@ -90,9 +90,7 @@ status_t Comm::Transmit(){
 			}
 			return COMM_TX_SUCCESS;
 		}
-
-
-
+		
 
 }
 
