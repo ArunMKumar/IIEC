@@ -20,16 +20,21 @@ Arun M Kumar		25 Nov 2011
 //====================================================================================
 
 typedef struct{
+	device_t	deviceType;	
+	baud_t		baudRate;
+}deviceAttrib_t;
 
-}deviceAttrib;
 //====================================================================================
 //							COMM CLASS
 //====================================================================================
 
-class Comm :protected CYCBUFFER{
+class Comm{
 	private:
 		status_t status;
-		comm_t	commType;
+		deviceAttrib_t inDevice;
+		deviceAttrib_t outDevice;
+		CYCBUFFER InBuf;	// Input Buffer for communication
+		CYCBUFFER outBuf;	// Output Buffer for Communication
 
 	public:
 		status_t startTx;	// Public flag to start Transmission
@@ -38,7 +43,9 @@ class Comm :protected CYCBUFFER{
 		Comm();							// Default constructor
 		Comm(comm_t); 					// Parameterized constructor
 		void commCheckRxStatus(uint8_t*); // Checks the status of the Rx and Tx flags
-		void commSetTxStatus(uint8_t, deviceAttrib*);	// Set the Tx flag on or off
+		void commSetTxStatus(uint8_t);	// Set the Tx flag on or off
+		void commRxISR(void);	// ISR for incoming communication
+		status_t commTask(void);
 		status_t startTx(void);
 
 };

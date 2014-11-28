@@ -14,6 +14,8 @@ typedef unsigned int uint16_t;
 typedef unsigned long uint32_t;
 typedef float uint32f_t;
 typedef uint8_t id_t;
+typedef uint8_t device_t;
+typedef uint16_t baud_t;	// Arduino specific, other arch may req more data
 typedef uint16_t load_t;
 typedef uint16_t time_t;
 typedef uint8_t state_t;
