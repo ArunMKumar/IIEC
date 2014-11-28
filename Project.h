@@ -11,6 +11,8 @@
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
+typedef unsigned long uint32_t;
+typedef float uint32f_t;
 typedef uint8_t id_t;
 typedef uint16_t load_t;
 typedef uint16_t time_t;
@@ -20,6 +22,13 @@ typedef uint8_t pin_t;
 typedef uint8_t comm_t;
 typedef float prio_t;
 typedef uint8_t cmd_t;
+
+
+// For converting Float to bytes and bytes to float
+typedef union {
+	uint32f_t val_float;
+	uint32_t val_long;
+}float_long_Buffer;
 
 
 

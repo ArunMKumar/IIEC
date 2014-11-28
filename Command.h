@@ -74,7 +74,7 @@ Arun M Kumar				24 Nov 2014*/
 //====================================================================================
 
 #define COMM_NOT_DEFINED	0x00	// No Communication defined
-#define COMM_TYPE_I2C		0x01	// Communicatio over I2C
+#define COMM_TYPE_I2C		0x01	// CommunicatioN over I2C
 #define COMM_TYPE_UART		0x02	// Communication over UART
 #define COMM_TYPE_BLE		0x03	// Communication over BLE
 #define COMM_TYPE_SPI		0x04	// Communication over SPI
@@ -95,17 +95,7 @@ Arun M Kumar				24 Nov 2014*/
 
 #define FRAME_LEN		0x0A
 
-//====================================================================================
-//							BUFFER COMMANDS
-//====================================================================================
-// defining parameters
-#define BUFFER_LEN		100U
 
-
-// Defining the error codes
-#define BUF_NOERROR		0x00
-#define BUF_UNDERFLOW	0x01
-#define BUF_OVERFLOW	0x02
 
 
 //====================================================================================

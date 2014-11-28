@@ -1,6 +1,6 @@
 /*
 Communication handler for handling the communication
-betwene nodes.
+between nodes.
 Should abstract the physical layer of communication and
 should do comm based on communication.
 
@@ -15,36 +15,32 @@ Arun M Kumar		25 Nov 2011
 #include "Command.h"
 #include "CycBuffer.h"
 
-class Comm{
+//====================================================================================
+//							device Attribute structures
+//====================================================================================
+
+typedef struct{
+
+}deviceAttrib;
+//====================================================================================
+//							COMM CLASS
+//====================================================================================
+
+class Comm :protected CYCBUFFER{
 	private:
 		status_t status;
-		status_t strartTx;
-		status_t doneRx;
 		comm_t	commType;
-		// Commneted just for testing purpose
-		/*CYCBUFFER outBuffer;	
-		CYCBUFFER inBuffer;*/
 
 	public:
-		CYCBUFFER outBuffer;
-		CYCBUFFER inBuffer;
+		status_t startTx;	// Public flag to start Transmission
+		status_t doneRx;	// Public flag to notify Reception
 
-		Comm();	// default constructor to initialize the communication
-		Comm(comm_t);
-		void setTxDataAvail(void);
-		void setCommType(comm_t);
-		uint8_t getCommType(void);
-		void setCommStatus(state_t);
-		status_t flushInBuffer();
-		status_t flushOutBuffer();
-		status_t fillRandomIn();
-		status_t fillRandomOut();
-		status_t writeOutBuffer(uint8_t);
-		status_t readInBuffer(uint8_t*);
-		status_t writeOutBufferln(uint8_t *, uint16_t);	
-		status_t readInBufferln(uint8_t*, uint16_t);
-		status_t Transmit(); 
-		status_t Task(void);
+		Comm();							// Default constructor
+		Comm(comm_t); 					// Parameterized constructor
+		void commCheckRxStatus(uint8_t*); // Checks the status of the Rx and Tx flags
+		void commSetTxStatus(uint8_t, deviceAttrib*);	// Set the Tx flag on or off
+		status_t startTx(void);
+
 };
 
 #endif

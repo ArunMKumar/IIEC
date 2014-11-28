@@ -18,7 +18,8 @@
 typedef struct{
 	/* Data that needs to be retrieved from the child
 	 * the same format of the data shall be sent to the
-	 * parent too
+	 * parent too. It helps in sending the appropriate set
+	 * of data.
 	 */
 	id_t ID;
 	id_t PID;
@@ -29,7 +30,14 @@ typedef struct{
 	load_t Dload;
 }childData;
 
-
+//====================================================================================
+//							NODE CLASS
+//====================================================================================
+/*
+ * The purpose of this class is to contain the attributes and methods associated with a given load
+ * This class shall contain the communication instances and the methods to extract meaningfull
+ * data from the buffers.
+ */
 class Node{
   private:
       id_t ID;        	// ID of the node
