@@ -36,3 +36,34 @@ Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
 		status = COMM_INIT;
 	}
 }
+
+status_t Comm::Transmit(id_t address){
+	/*
+	This method transmit the data on the bus which is 
+	specified for this Comm instance to the
+	destination address
+	*/
+
+	if (COMM_NOT_INIT == status){
+		return COMM_TX_FAIL;
+	}
+
+	uint8_t data;
+
+	else if (COMM_TYPE_I2C == Device.deviceType){
+		/*
+			If we need to send over I2C
+		*/
+		Wire.beginTransmission(address);		// Start I2C Comm
+
+		while(outBuffer.dataAvailLen){
+			/*
+				Transmit all the data in one go
+			*/
+			outBuffer.readBuffer(&data);
+			Wire.write(data);
+		}
+
+		Wire.endTransmission();				 // End I2C Comm
+	}
+}
