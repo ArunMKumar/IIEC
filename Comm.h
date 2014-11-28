@@ -47,6 +47,7 @@ Arun M Kumar		25 Nov 2011
 typedef struct{
 	device_t	deviceType;	
 	baud_t		baudRate;
+	id_t		address;
 }deviceAttrib_t;
 
 //====================================================================================
@@ -56,8 +57,7 @@ typedef struct{
 class Comm{
 	private:
 		status_t status;
-		deviceAttrib_t inDevice;
-		deviceAttrib_t outDevice;
+		deviceAttrib_t Device;	// type and Baud rate
 		CYCBUFFER InBuffer;		// Input Buffer for communication
 		CYCBUFFER outBuffer;	// Output Buffer for Communication
 
@@ -66,7 +66,7 @@ class Comm{
 		status_t doneRx;	// Public flag to notify Reception
 
 		Comm();										// Default constructor
-		Comm(device_t, baud_t, device_t, baud_t); 	// Parameterized constructor
+		Comm(device_t, baud_t, id_t); 	// Parameterized constructor
 		void commCheckRxStatus(uint8_t*);			// Checks the status of the Rx and Tx flags
 		void commSetTxStatus(uint8_t);				// Set the Tx flag on or off
 		void commRxISR(void);						// ISR for incoming communication
