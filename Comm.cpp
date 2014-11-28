@@ -43,14 +43,21 @@ status_t Comm::Transmit(id_t address){
 	specified for this Comm instance to the
 	destination address
 	*/
+	uint8_t data;
+
+	if (FALSE == startTx){
+		return COMM_TX_FAIL;
+	}
 
 	if (COMM_NOT_INIT == status){
 		return COMM_TX_FAIL;
 	}
 
-	uint8_t data;
+	/*
+	####################	I2C		######################### 
+	*/
 
-	else if (COMM_TYPE_I2C == Device.deviceType){
+	if (COMM_TYPE_I2C == Device.deviceType){
 		/*
 			If we need to send over I2C
 		*/
@@ -66,4 +73,7 @@ status_t Comm::Transmit(id_t address){
 
 		Wire.endTransmission();				 // End I2C Comm
 	}
+
+
+	return COMM_TX_SUCCESS;
 }
