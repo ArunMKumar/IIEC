@@ -58,8 +58,8 @@ class Comm{
 		status_t status;
 		deviceAttrib_t inDevice;
 		deviceAttrib_t outDevice;
-		CYCBUFFER InBuf;	// Input Buffer for communication
-		CYCBUFFER outBuf;	// Output Buffer for Communication
+		CYCBUFFER InBuffer;	// Input Buffer for communication
+		CYCBUFFER outBuffer;	// Output Buffer for Communication
 
 	public:
 		status_t startTx;	// Public flag to start Transmission
@@ -71,7 +71,7 @@ class Comm{
 		void commSetTxStatus(uint8_t);				// Set the Tx flag on or off
 		void commRxISR(void);						// ISR for incoming communication
 		status_t commTask(void);					// Cyclic task to manage the buffers
-		status_t startTx(void);
+		status_t Transmit(void);
 		void setCommStatus(status_t);
 
 };
