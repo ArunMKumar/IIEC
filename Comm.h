@@ -73,6 +73,7 @@ class Comm{
 		status_t commTask(void);					// Cyclic task to manage the buffers
 		status_t Transmit(id_t);					// Transmit to  a particular node
 		void setCommStatus(status_t);
+		status_t commWriteBuffer(uint8_t);
 
 };
 

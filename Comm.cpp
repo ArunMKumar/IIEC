@@ -77,3 +77,9 @@ status_t Comm::Transmit(id_t address){
 
 	return COMM_TX_SUCCESS;
 }
+
+status_t Comm::commWriteBuffer(uint8_t data){
+	/*This module writes data to the comm instance's 
+	out buffer one byte at a time*/
+	return outBuffer.writeBuffer(data);
+}
