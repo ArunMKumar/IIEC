@@ -91,3 +91,15 @@ status_t Comm::commWriteBufferWord(uint16_t data){
 status_t Comm::commWriteBufferFloat(uint32f_t data){
 	return outBuffer.writeBufferFloat(data);
 }
+
+status_t Comm::commReadBuffer(uint8_t* loc){
+	return inBuffer.readBuffer(loc);
+}
+
+status_t Comm::commReadBufferWord(uint16_t* loc){
+	return inBuffer.readBufferWord(loc);
+}
+
+status_t Comm::commReadBufferFloat(uint32f_t* loc){
+	return inBuffer.readBufferFloat(loc);
+}

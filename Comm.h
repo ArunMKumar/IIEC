@@ -58,7 +58,7 @@ class Comm{
 	private:
 		status_t status;
 		deviceAttrib_t Device;	// type and Baud rate
-		CYCBUFFER InBuffer;		// Input Buffer for communication
+		CYCBUFFER inBuffer;		// Input Buffer for communication
 		CYCBUFFER outBuffer;	// Output Buffer for Communication
 
 	public:
@@ -76,6 +76,10 @@ class Comm{
 		status_t commWriteBuffer(uint8_t);
 		status_t commWriteBufferWord(uint16_t);
 		status_t commWriteBufferFloat(uint32f_t);
+		status_t commReadBuffer(uint8_t*);
+		status_t commReadBufferWord(uint16_t*);
+		status_t commReadBufferFloat(uint32f_t*);
+
 
 };
 
