@@ -27,7 +27,8 @@ status_t CYCBUFFER::readBuffer( uint8_t *loc){
 	 * that is being passed as a parameter.
 	 */
 	if (UNDERFLOW){
-		return BUF_UNDERFLOW;	// Check for underflow
+		Status = BUF_UNDERFLOW;
+		return Status;	// Check for underflow
 	}
 
 	else {
@@ -36,7 +37,8 @@ status_t CYCBUFFER::readBuffer( uint8_t *loc){
 		HEAD = (HEAD + sizeof(uint8_t)) % BUFFER_LEN;
 	}
 
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::writeBuffer(uint8_t ele){
@@ -46,7 +48,8 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	 * The element to be written is passed as the parameter.
 	 */
 	if (OVERFLOW){
-		return BUF_OVERFLOW;		// check for overflow
+		Status = BUF_OVERFLOW;
+		return Status;		// check for overflow
 	}
 
 	else{
@@ -55,8 +58,8 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 		TAIL = (TAIL + sizeof(uint8_t)) % BUFFER_LEN;
 	}
 	
-
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::readBufferWord(uint16_t *loc){
@@ -65,7 +68,8 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 	 * and puts it into an appropriate location
 	 */
 	if(UNDERFLOW || (sizeof(uint16_t) > EleCount)){		// cannot read 2 bytes
-		return BUF_UNDERFLOW;
+		Status = BUF_UNDERFLOW;
+		return Status;
 	}
 
 	else{
@@ -90,7 +94,8 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 		}
 	}
 
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::writeBufferWord(uint16_t ele){
@@ -100,7 +105,8 @@ status_t CYCBUFFER::writeBufferWord(uint16_t ele){
 	 */
 
 	if (OVERFLOW || (sizeof(uint16_t) > (BUFFER_LEN - EleCount))){ // CAnnot write 2 bytes to buffer
-		return BUF_OVERFLOW;
+		Status = BUF_OVERFLOW;
+		return Status;
 	}
 
 	else{
@@ -122,7 +128,9 @@ status_t CYCBUFFER::writeBufferWord(uint16_t ele){
 			writeBuffer(ele & HIGH_BYTE);
 		}
 	}
-	return BUF_NOERROR;
+
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
@@ -140,7 +148,8 @@ status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
 	bufRead.val_long= 0U;	// Fill the union with zeros
 
 	if (UNDERFLOW || (sizeof(uint32f_t) > EleCount)){
-		return BUF_UNDERFLOW;
+		Status = BUF_UNDERFLOW;
+		return Status;
 	}
 
 	else{
@@ -162,7 +171,8 @@ status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
 		*loc = bufRead.val_float;
 	}
 
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
@@ -176,7 +186,8 @@ status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
 	bufWrite.val_long = ele;
 
 	if (OVERFLOW || (sizeof(uint32f_t) > (BUFFER_LEN - EleCount))){
-		return BUF_OVERFLOW;
+		Status = BUF_OVERFLOW;
+		return Status;
 	}
 
 	else{
@@ -186,7 +197,8 @@ status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
 		writeBuffer((uint8_t)  bufWrite.val_long);
 	}
 
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
@@ -197,10 +209,12 @@ status_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
 			len--;	// reduce the counter
 		}
 		else{
-			return BUF_UNDERFLOW;
+			Status = BUF_UNDERFLOW;
+			return Status;
 		}
 	}
-	return BUF_NOERROR;
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
@@ -210,11 +224,14 @@ status_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
 			len--;	// reduce the counter
 			loc++;	// read from next location
 		}
-		else{			
-			return BUF_OVERFLOW;		
+		else{		
+			Status = BUF_UNDERFLOW;
+			return Status;		
 		}
 	}
-	return BUF_NOERROR;
+
+	Status = BUF_NOERROR;
+	return Status;
 }
 
 status_t CYCBUFFER::dataAvailLen(void){
@@ -250,4 +267,8 @@ status_t CYCBUFFER::fillRandom(void){
 	}
 
 	return BUF_NOERROR;
+}
+
+status_t CYCBUFFER::getBufferStatus(void){
+	return Status;
 }

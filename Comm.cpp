@@ -92,6 +92,22 @@ status_t Comm::commWriteBufferFloat(uint32f_t data){
 	return outBuffer.writeBufferFloat(data);
 }
 
+status_t Comm::commWriteBufferString(uint8_t* data){
+	/* 
+		Method writes string contents till space is available
+		if the space runs out at runtime, data written will not be revealed
+		check bufferavail before writing anything
+	*/
+	if (BUFFER_LEN > outBuffer.dataAvailLen()){
+
+		while (*data != '\n'){
+			outBuffer.writeBuffer(*data);
+			data += sizeof(uint8_t);
+		}
+		return outBuffer.getBufferStatus();
+	}
+}
+
 status_t Comm::commReadBuffer(uint8_t* loc){
 	return inBuffer.readBuffer(loc);
 }

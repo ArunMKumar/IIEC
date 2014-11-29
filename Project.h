@@ -6,6 +6,12 @@
  *      Author: kumaar6
  */
 
+/* 
+	Arduyino libraries to be used by the project
+*/
+#include <Wire.h>
+
+
 #ifndef __PROJECT_H_
 #define __PROJECT_H_
 

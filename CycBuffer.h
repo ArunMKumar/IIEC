@@ -66,6 +66,7 @@ public:
 
 	CYCBUFFER();
 	status_t dataAvailLen(void);
+	status_t getBufferStatus(void);
 	status_t flushBuffer(void);
 	status_t fillRandom(void);
 	status_t readBuffer(uint8_t*);
