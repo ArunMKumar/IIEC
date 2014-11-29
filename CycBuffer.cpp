@@ -64,7 +64,7 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 	 * This Method reads a 16bit value from the buffer
 	 * and puts it into an appropriate location
 	 */
-	if(UNDERFLOW){
+	if(UNDERFLOW || (sizeof(uint16_t) > EleCount)){		// cannot read 2 bytes
 		return BUF_UNDERFLOW;
 	}
 
@@ -99,7 +99,7 @@ status_t CYCBUFFER::writeBufferWord(uint16_t ele){
 	 * The data to be written is passed as a parameter.
 	 */
 
-	if (OVERFLOW){
+	if (OVERFLOW || (sizeof(uint16_t) > (BUFFER_LEN - EleCount))){ // CAnnot write 2 bytes to buffer
 		return BUF_OVERFLOW;
 	}
 
@@ -138,7 +138,7 @@ status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
 	uint8_t temp;
 	float_long_Buffer bufRead = 0U;
 
-	if(UNDERFLOW){
+	if (UNDERFLOW || (sizeof(uint32f_t) > EleCount)){
 		return BUF_UNDERFLOW;
 	}
 
@@ -173,7 +173,7 @@ status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
 	float_long_Buffer bufWrite = 0U;
 	bufWrite.val_long = ele;
 
-	if(OVERFLOW){
+	if (OVERFLOW || (sizeof(uint32f_t) > (BUFFER_LEN - EleCount))){
 		return BUF_OVERFLOW;
 	}
 
