@@ -136,7 +136,8 @@ status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
 	 */
 
 	uint8_t temp;
-	float_long_Buffer bufRead = 0U;
+	float_long_Buffer bufRead;
+	bufRead.val_long= 0U;	// Fill the union with zeros
 
 	if (UNDERFLOW || (sizeof(uint32f_t) > EleCount)){
 		return BUF_UNDERFLOW;
@@ -147,16 +148,16 @@ status_t CYCBUFFER::readBufferFloat(uint32f_t* loc){
 		 * Here we convert the written data to float
 		 */
 		readBuffer(&temp);
-		bufRead |= ((uint32_t)temp << 24);	// first byte
+		bufRead.val_long |= ((uint32_t)temp << 24);	// first byte
 
 		readBuffer(&temp);
-		bufRead |= ((uint32_t)temp << 16);	// second byte
+		bufRead.val_long |= ((uint32_t)temp << 16);	// second byte
 
 		readBuffer(&temp);
-		bufRead |= ((uint32_t)temp << 8);	// third byte
+		bufRead.val_long |= ((uint32_t)temp << 8);	// third byte
 
 		readBuffer(&temp);
-		bufRead |= (uint32_t)temp;	// fourth byte
+		bufRead.val_long |= (uint32_t)temp;	// fourth byte
 
 		*loc = bufRead.val_float;
 	}
@@ -170,7 +171,8 @@ status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
 	 * byte oriented manner over the buffer
 	 */
 
-	float_long_Buffer bufWrite = 0U;
+	float_long_Buffer bufWrite;
+	bufWrite.val_long= 0U;	// Fill the union with zeros
 	bufWrite.val_long = ele;
 
 	if (OVERFLOW || (sizeof(uint32f_t) > (BUFFER_LEN - EleCount))){
