@@ -83,3 +83,11 @@ status_t Comm::commWriteBuffer(uint8_t data){
 	out buffer one byte at a time*/
 	return outBuffer.writeBuffer(data);
 }
+
+status_t Comm::commWriteBufferWord(uint16_t data){
+	return outBuffer.writeBufferWord(data);
+}
+
+status_t Comm::commWriteBufferFloat(uint32f_t data){
+	return outBuffer.writeBufferFloat(data);
+}

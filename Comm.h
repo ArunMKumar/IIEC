@@ -74,6 +74,8 @@ class Comm{
 		status_t Transmit(id_t);					// Transmit to  a particular node
 		void setCommStatus(status_t);
 		status_t commWriteBuffer(uint8_t);
+		status_t commWriteBufferWord(uint16_t);
+		status_t commWriteBufferFloat(uint32f_t);
 
 };
 

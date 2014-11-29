@@ -187,7 +187,6 @@ status_t CYCBUFFER::writeBufferFloat(uint32f_t ele){
 	return BUF_NOERROR;
 }
 
-
 status_t CYCBUFFER::readBufferln(uint8_t *loc, uint16_t len){
 	
 		// Read a particular length of data 
@@ -215,7 +214,6 @@ status_t CYCBUFFER::writeBufferln(uint8_t *loc, uint16_t len){
 	}
 	return BUF_NOERROR;
 }
-
 
 status_t CYCBUFFER::dataAvailLen(void){
 	return EleCount;
