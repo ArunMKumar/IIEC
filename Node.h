@@ -45,6 +45,7 @@ class Node{
 	  id_t PID;			// ID of the parent
       prio_t PRIO;   	// Fixed priority of the connected loads
 	  uint8_t childAddr[NUMCHILD];	// Address of the child nodes
+	  Load loads[NUMLOADS];
 	  /*
 		DPRIO is only meant for the Loads and not for the nodes
 	  */
@@ -68,11 +69,13 @@ class Node{
       Node(id_t, id_t, device_t, baud_t, id_t);   // Where to read from answer where to act
 
       void setNodePRIO(prio_t);			// Calculate the Priority of the node
+	  void setNodeLoads(load_t, load_t, load_t);
 
 	  void getLoadPrio(Load*);			// get priority from the loads	
 	  void setLoadPrio(Load*);			// set priroity of the loads
 	  void getLoadlimit(void);			// get the load limit of the loads, all of them
 	  void setLoadlimit(void);			// set the load limit of the loads
+	  void readLoads(void);
 
 
       status_t TxParent();	// Transmit the Parent buffer
