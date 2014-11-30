@@ -39,8 +39,7 @@ Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 	DCLoad = LOAD_NOT_INIT;	// Currently consuming load
 }
 
-
-uint8_t Load::readLoad(void){
+uint16_t Load::readLoad(void){
 	// just return the analog values
 	return analogRead(_rpin);
 }
@@ -63,13 +62,17 @@ void Load::getLoadState(LoadState_t *Buf){
 }
 
 status_t Load::Task(void){
+	//Debug
+	Serial.write("Inside Load Task\n");
 
 	/*
 	Periodic task that need to be performed by each load
 	*/
 
 	//Step1: Read the current Load
-	readLoad();		// Now we have the latest value
+	DCLoad = readLoad();		// Now we have the latest value
+	Serial.write("Value read");
+	Serial.print()
 
 	//Step2: Adjust the priority
 	/* 
@@ -96,7 +99,7 @@ status_t Load::Task(void){
 
 	//}
 
-	Serial.write("Inside Load Task\n");
+	
 
 	return State;
 }

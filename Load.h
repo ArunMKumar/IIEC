@@ -133,7 +133,7 @@ class Load{
 	public:
 		Load();
 		Load(pin_t, pin_t, id_t, prio_t, load_t);
-		uint8_t readLoad();
+		uint16_t readLoad();	// analog Read return 16 bit value, 10 bit resolution
 
 		void writeLoad(uint8_t Logic);
 		void getLoadState(LoadState_t*);
