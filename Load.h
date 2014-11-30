@@ -41,20 +41,20 @@
 // Project dependent Load Read Pins
 // currently supporting only UNO and clones
 
-#define LOAD_1R  A0  //where to read
-#define LOAD_2R  A1  //where to read
-#define LOAD_3R  A2  //where to read
-#define LOAD_4R  A3  //where to read
-#define LOAD_5R  A4  //where to read
-#define LOAD_6R  A5  //where to read
+#define LOAD_0R  A0  //where to read
+#define LOAD_1R  A1  //where to read
+#define LOAD_2R  A2  //where to read
+#define LOAD_3R  A3  //where to read
+#define LOAD_4R  A4  //where to read
+#define LOAD_5R  A5  //where to read
 
 // Project dependent Load Write Pin s : IMP: Leave 0 and 1 for Serial
-#define LOAD_1W  0x02  // Which pin to write to
-#define LOAD_2W  0x03  // Which pin to write to
-#define LOAD_3W  0x04  // Which pin to write to
-#define LOAD_4W  0x05  // Which pin to write to
-#define LOAD_5W  0x06  // Which pin to write to
-#define LOAD_6W  0x07  // Which pin to write to
+#define LOAD_0W  0x02  // Which pin to write to
+#define LOAD_1W  0x03  // Which pin to write to
+#define LOAD_2W  0x04  // Which pin to write to
+#define LOAD_3W  0x05  // Which pin to write to
+#define LOAD_4W  0x06  // Which pin to write to
+#define LOAD_5W  0x07  // Which pin to write to
 
 // Priority for the LOAD, currently taking range 1-6
 #define LOAD_PRIO0	0U
@@ -68,6 +68,15 @@
 #define LOAD_MAX_PRIO		(LOAD_PRIO0)
 #define LOAD_MIN_PRIO		(LOAD_PRIO6)
 #define LOAD_PRIO_DEFAULT	(LOAD_PRIO3)
+
+// Ids for the Loads
+#define LOAD_ID0	0U
+#define LOAD_ID1	1U
+#define LOAD_ID2	2U
+#define LOAD_ID3	3U
+#define LOAD_ID4	4U
+#define LOAD_ID5	5U
+#define LOAD_ID6	6U
 
 
 #define LOAD_DATA_LEN	0x10	// 16 bytes of data
