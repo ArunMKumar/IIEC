@@ -56,6 +56,20 @@
 #define LOAD_5W  0x06  // Which pin to write to
 #define LOAD_6W  0x07  // Which pin to write to
 
+// Priority for the LOAD, currently taking range 1-6
+#define LOAD_PRIO0	0U
+#define LOAD_PRIO1	1U
+#define LOAD_PRIO2	2U
+#define LOAD_PRIO3	3U
+#define LOAD_PRIO4	4U
+#define LOAD_PRIO5	5U
+#define LOAD_PRIO6	6U
+
+#define LOAD_MAX_PRIO		(LOAD_PRIO0)
+#define LOAD_MIN_PRIO		(LOAD_PRIO6)
+#define LOAD_PRIO_DEFAULT	(LOAD_PRIO3)
+
+
 #define LOAD_DATA_LEN	0x10	// 16 bytes of data
 #define LOAD_NO_ID		0xFF
 
