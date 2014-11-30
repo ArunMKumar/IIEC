@@ -96,6 +96,8 @@ status_t Load::Task(void){
 
 	//}
 
+	Serial.write("Inside Load Task\n");
+
 	return State;
 }
 

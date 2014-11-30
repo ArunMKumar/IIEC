@@ -52,8 +52,8 @@ typedef union {
 
 #define NUMCHILD	2U
 #define NUMLOADS	4U
-#define NODE_ID		123
-#define NODE_PID	321
+#define NODE_ID		23U	// test
+#define NODE_PID	32U	// test
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    COMMUNICATION	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 /* I2C

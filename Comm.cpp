@@ -36,8 +36,14 @@ Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
 }
 
 status_t Comm::commSetDevice(deviceAttrib_t* data){
+	
 	Device = *data;
-	return COMM_INIT;
+
+	if (COMM_TYPE_I2C == Device.deviceType){
+		Wire.begin(Device.address);	// Initialize the I2C bus on the node
+		status = COMM_INIT;
+	}
+	return status;
 }
 
 status_t Comm::Transmit(id_t address){

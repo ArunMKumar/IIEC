@@ -27,7 +27,7 @@ status_t Node::commInitChild(deviceAttrib_t* data){
 	return commChild.commSetDevice(data);
 }
 
-status_t Node::commInitChild(deviceAttrib_t* data){
+status_t Node::commInitParent(deviceAttrib_t* data){
 
 	return commParent.commSetDevice(data);
 }
@@ -85,7 +85,7 @@ status_t Node::Task(void){
 	Serial.write("\nPID:");
 	Serial.print(PID);
 	Serial.write("\nType:");
-	Serial.print();
+	
 
 	return Status;	
 
