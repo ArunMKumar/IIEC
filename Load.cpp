@@ -47,6 +47,7 @@ uint16_t Load::readLoad(void){
 void Load::writeLoad(uint8_t Logic){
 	// write the requested value to the pin
 	digitalWrite(_wpin, Logic);
+	State = Logic;
 }
 
 void Load::getLoadState(LoadState_t *Buf){
@@ -72,7 +73,7 @@ status_t Load::Task(void){
 	//Step1: Read the current Load
 	DCLoad = readLoad();		// Now we have the latest value
 	Serial.write("Value read");
-	Serial.print()
+	Serial.print(DCLoad);
 
 	//Step2: Adjust the priority
 	/* 
@@ -98,6 +99,13 @@ status_t Load::Task(void){
 	//	*/
 
 	//}
+	if (DCLoad > 500){
+		writeLoad(LOAD_ON);
+	}
+
+	else{
+		writeLoad(LOAD_OFF);
+	}
 
 	
 
