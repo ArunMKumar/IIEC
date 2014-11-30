@@ -12,7 +12,7 @@
 Load::Load(){
 	//default constructor for the load class
 	ID 		= ID_NOT_INIT;
-	State 	= STATE_NOT_INIT;	//current state of the load
+	State 	= LOAD_NOT_INIT;	//current state of the load
 	onTime 	= TIME_NOT_INIT;	// time since load is on
 	offTime	= TIME_NOT_INIT;	// time since load is off
 	PRIO	= PRIO_NOT_INIT;	// assigned priority
@@ -29,9 +29,14 @@ Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 	_wpin = wpin;
 	pinMode(_wpin, PIN_OUTPUT);
 
+	State = LOAD_INIT;
 	this->ID = ID;
 	this->PRIO = prio;
 	DLoad = load;
+	onTime = TIME_NOT_INIT;	// time since load is on
+	offTime = TIME_NOT_INIT;	// time since load is off
+	ASLoad = LOAD_NOT_INIT;	// actual sanctioned load
+	DCLoad = LOAD_NOT_INIT;	// Currently consuming load
 }
 
 
