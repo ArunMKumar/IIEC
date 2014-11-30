@@ -78,6 +78,15 @@
 #define LOAD_ID5	5U
 #define LOAD_ID6	6U
 
+// Load Limits
+#define LOAD_CLASS1		60
+#define LAOD_CLASS2		50
+#define LOAD_CLASS3		40
+#define LOAD_CLASS4		30
+#define LOAD_CLASS5		20
+#define LOAD_CLASS6		10
+
+#define LOAD_CLASS_DEFAULT	(LOAD_CLASS3)
 
 #define LOAD_DATA_LEN	0x10	// 16 bytes of data
 #define LOAD_NO_ID		0xFF

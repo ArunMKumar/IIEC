@@ -76,13 +76,13 @@ class Node{
 	  void setLoadlimit(Load[]);			// set the load limit of the loads
 	  void readLoads(Load[]);				//  Read the current rating of the loads
 
-
+	  status_t getStatus(void);
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node
 
 
-	  status_t getStatus(void);
+	  
 };
 
 
