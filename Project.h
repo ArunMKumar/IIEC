@@ -47,14 +47,19 @@ typedef union {
 /********************************************************************************************
 						Project Specific Configurations
 *********************************************************************************************/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    NODES			 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+
+#define NUMCHILD	2
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    COMMUNICATION	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 /* I2C
 	Use address 0x00 for master
 	for others prefer 0x01 to 0x06
 */
-#define SRC_I2C_ADDRESS		0x01
-#define DEST_I2C_ADDRESS	0x02
+#define SRC_I2C_ADDRESS			0x01
+#define SRC_BLE_ADDRESS			0x00
+#define PARENT_I2C_ADDRESS		0x02
+#define PARENT_BLE_ADDRESS		0x00
 
 /* UART
 	specify the baud rates here

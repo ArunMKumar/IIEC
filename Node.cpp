@@ -16,7 +16,7 @@ Node::Node(){
 	this->PID = NODE_NO_ID;
 }
 
-Node::Node(id_t ID, id_t PID){
+Node::Node(id_t ID, id_t PID, device_t deviceType, baud_t baudRate, id_t Address){
 	// Parameterized constructor for the Node
 	this->ID = ID;
 	this->PID = PID;

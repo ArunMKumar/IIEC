@@ -43,6 +43,10 @@ class Node{
       id_t ID;        	// ID of the node
 	  id_t PID;			// ID of the parent
       prio_t PRIO;   	// Fixed priority of the connected loads
+	  uint8_t childAddr[NUMCHILD];	// Address of the child nodes
+	  /*
+		DPRIO is only meant for the Loads and not for the nodes
+	  */
       //prio_t DPRIO;  	// Priority calculated at runtime so, no DPRIO
       load_t ASL;      	// Assigned loads of the connected loads and nodes
       load_t DCL;      	// Runtime load of the connected loads
@@ -57,12 +61,16 @@ class Node{
 		one node so only 2 instances of communication shall be implemented,
 		one for the parent and the other for the child.
 	  */
-	  //Comm commParent;	// Communication with parent
-	  //Comm commChild;	// Communication with child
+	  Comm commParent;	// Communication with parent
+	  Comm commChild;	// Communication with child
 	  Node();
-      Node(id_t ID, id_t PID);   // Where to read from answer where to act
-      void setNodePRIO(prio_t);			// Calculate the Priority of the node
+      Node(id_t, id_t, device_t, baud_t, id_t);   // Where to read from answer where to act
+
+      void setNodePRIO(prio_t);							// Calculate the Priority of the node
       void setNodeLoads(load_t, load_t, load_t);		//calculate all 3 loads
+	  void getNodeLoads(load_t*, load_t*, load_t*);
+
+
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node
