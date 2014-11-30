@@ -35,6 +35,11 @@ Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
 	}
 }
 
+status_t Comm::commSetDevice(deviceAttrib_t* data){
+	Device = *data;
+	return COMM_INIT;
+}
+
 status_t Comm::Transmit(id_t address){
 	/*
 	This method transmit the data on the bus which is 

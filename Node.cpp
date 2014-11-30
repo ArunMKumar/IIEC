@@ -16,10 +16,20 @@ Node::Node(){
 	this->PID = NODE_NO_ID;
 }
 
-Node::Node(id_t ID, id_t PID, device_t deviceType, baud_t baudRate, id_t Address){
+Node::Node(id_t ID, id_t PID){
 	// Parameterized constructor for the Node
 	this->ID = ID;
 	this->PID = PID;
+}
+
+status_t Node::commInitChild(deviceAttrib_t* data){
+	
+	return commChild.commSetDevice(data);
+}
+
+status_t Node::commInitChild(deviceAttrib_t* data){
+
+	return commParent.commSetDevice(data);
 }
 
 void Node::setNodePRIO(prio_t PRIO){
@@ -69,6 +79,13 @@ status_t Node::Task(void){
 	We shall perform the algorith here, but do need to remember that
 	we should use modular functions to allow for improvements later.
 	*/
+	Serial.write("Node Task Reached\n");
+	Serial.write("ID:");
+	Serial.print(ID);
+	Serial.write("\nPID:");
+	Serial.print(PID);
+	Serial.write("\nType:");
+	Serial.print();
 
 	return Status;	
 

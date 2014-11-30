@@ -66,7 +66,8 @@ class Comm{
 		status_t doneRx;	// Public flag to notify Reception
 
 		Comm();										// Default constructor
-		Comm(device_t, baud_t, id_t); 	// Parameterized constructor
+		Comm(device_t, baud_t, id_t); 				// Parameterized constructor
+		status_t commSetDevice(deviceAttrib_t*);
 		void commCheckRxStatus(uint8_t*);			// Checks the status of the Rx and Tx flags
 		void commSetTxStatus(uint8_t);				// Set the Tx flag on or off
 		void commRxISR(void);						// ISR for incoming communication
