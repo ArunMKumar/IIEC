@@ -6,6 +6,7 @@
  */
 
 #include "Load.h"
+#include "Project.h"
 
 
 Load::Load(){
@@ -78,19 +79,19 @@ status_t Load::Task(void){
 		onTime++;
 	}
 
-	if (0 == (GLOBAL_TICK % 10)){
-		// roughly every second
-		/*
-			Here the priority rises every every time unit
-			which is roughly 1 second in this case.
+	//if (0 == (GLOBAL_TICK % 10)){
+	//	// roughly every second
+	//	/*
+	//		Here the priority rises every every time unit
+	//		which is roughly 1 second in this case.
 
-			Priorities both rise and fall in this case
-			based on the state of the load.
-		*/
+	//		Priorities both rise and fall in this case
+	//		based on the state of the load.
+	//	*/
 
-	}
+	//}
 
-	return;
+	return State;
 }
 
 

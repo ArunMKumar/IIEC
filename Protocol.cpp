@@ -8,23 +8,23 @@ Arun M Kumar			26 Oct 2014
 
 
 status_t getVal(Node* node){
-	
-	uint8_t loc;
-	
-	if (BUF_UNDERFLOW == node->commChild.readInBuffer(&loc)){
-		return BUF_UNDERFLOW;						// if nothing in buffer, then return immedieately
-	}
+	//
+	//uint8_t loc;
+	//
+	//if (BUF_UNDERFLOW == node->commChild.readInBuffer(&loc)){
+	//	return BUF_UNDERFLOW;						// if nothing in buffer, then return immedieately
+	//}
 
-	else{
-		while (FRAME_HEADER != loc){
-			node->commChild.readInBuffer(&loc);		// read till you find the header
-		}
+	//else{
+	//	while (FRAME_HEADER != loc){
+	//		node->commChild.readInBuffer(&loc);		// read till you find the header
+	//	}
 
-		// we have read the frame header, now lets put the data in place.
-	}
-
+	//	// we have read the frame header, now lets put the data in place.
+	//}
+	return node->getStatus();
 }
 
 status_t setVal(Node* node){
-
+	return node->getStatus();
 }

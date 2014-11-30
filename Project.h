@@ -39,8 +39,7 @@ typedef union {
 }float_long_Buffer;
 
 
-
-uint16_t GLOBAL_TICK;
+//uint16_t GLOBAL_TICK;
 
 
 #define TRUE	0x01

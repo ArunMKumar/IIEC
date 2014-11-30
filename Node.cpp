@@ -9,6 +9,7 @@
 
 #include "Node.h"
 
+
 Node::Node(){
 	//Default constructor for the Node
 	this->ID  = NODE_NO_ID;
@@ -44,7 +45,7 @@ status_t Node::TxParent(void){
 		so we can safely use one particular instance for this 
 		task.
 	*/
-	return;
+	return Status;
 }
 
 status_t Node::TxChild(void){
@@ -56,7 +57,7 @@ status_t Node::TxChild(void){
 	task.
 	*/
 
-	return;
+	return Status;
 }
 
 status_t Node::Task(void){
@@ -68,6 +69,8 @@ status_t Node::Task(void){
 	We shall perform the algorith here, but do need to remember that
 	we should use modular functions to allow for improvements later.
 	*/
+
+	return Status;	
 
 }
 

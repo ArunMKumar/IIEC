@@ -7,6 +7,13 @@ Arun M Kumar			24 Nov 2014
 #include "Arduino.h"
 #include "CycBuffer.h"
 
+/*
+	Function to check the endianess            
+*/
+status_t IS_BIG_ENDIAN(){
+	uint16_t val = 0x01;
+	return (!*(uint8_t *)(&val));
+}
 
 CYCBUFFER::CYCBUFFER(){
 	/* here we initialize our buffer*
@@ -80,7 +87,7 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 		 * trick would fail.
 		 */
 		uint8_t highByte, lowByte = 0;
-		if(IS_BIG_ENDIAN){
+		if(IS_BIG_ENDIAN()){
 			// First byte would be high byte
 			readBuffer(&highByte);
 			readBuffer(&lowByte);
@@ -115,8 +122,7 @@ status_t CYCBUFFER::writeBufferWord(uint16_t ele){
 		 * word is placed at the last element before warping then this
 		 * trick would fail.
 		 */
-		uint8_t highByte, lowByte = 0;
-		if(IS_BIG_ENDIAN){
+		if(IS_BIG_ENDIAN()){
 			// First byte would be high byte
 			writeBuffer(ele & HIGH_BYTE);
 			writeBuffer(ele & LOW_BYTE);

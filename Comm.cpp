@@ -15,10 +15,8 @@ Comm::Comm(){
 		Default constructor No Comm type defined
 	*/
 	status		= COMM_NOT_INIT;
-	inDevice.deviceType = COMM_NOT_DEFINED;
-	inDevice.baudRate = COMM_NO_BAUD;
-	outDevice.deviceType = COMM_NOT_DEFINED;
-	outDevice.baudRate = COMM_NO_BAUD;
+	Device.deviceType = COMM_NOT_DEFINED;
+	Device.baudRate = COMM_NO_BAUD;
 }
 
 Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
@@ -43,13 +41,19 @@ status_t Comm::Transmit(id_t address){
 	specified for this Comm instance to the
 	destination address
 	*/
+
+	Serial.write("Inside Transmit\n");
+
+
 	uint8_t data;
 
 	if (FALSE == startTx){
+		Serial.write("startTx Fail\n");
 		return COMM_TX_FAIL;
 	}
 
 	if (COMM_NOT_INIT == status){
+		Serial.write("Init FAil\n");
 		return COMM_TX_FAIL;
 	}
 
@@ -63,7 +67,7 @@ status_t Comm::Transmit(id_t address){
 		*/
 		Wire.beginTransmission(address);		// Start I2C Comm
 
-		while(outBuffer.dataAvailLen){
+		while(outBuffer.dataAvailLen()){
 			/*
 				Transmit all the data in one go
 			*/
@@ -74,6 +78,7 @@ status_t Comm::Transmit(id_t address){
 		Wire.endTransmission();				 // End I2C Comm
 	}
 
+	Serial.write("Transmit End\n");
 
 	return COMM_TX_SUCCESS;
 }
@@ -98,14 +103,17 @@ status_t Comm::commWriteBufferString(uint8_t* data){
 		if the space runs out at runtime, data written will not be revealed
 		check bufferavail before writing anything
 	*/
-	if (BUFFER_LEN > outBuffer.dataAvailLen()){
-
-		while (*data != '\n'){
+	while (BUF_NOERROR == outBuffer.getBufferStatus()){
+		outBuffer.writeBuffer(*data);
+		data += sizeof(uint8_t);
+		if (('\n' == *data) && (1 < outBuffer.dataAvailLen())){
 			outBuffer.writeBuffer(*data);
-			data += sizeof(uint8_t);
+			return BUF_NOERROR;
 		}
-		return outBuffer.getBufferStatus();
+			
 	}
+
+	return outBuffer.getBufferStatus();
 }
 
 status_t Comm::commReadBuffer(uint8_t* loc){

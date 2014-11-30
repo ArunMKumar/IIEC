@@ -38,7 +38,7 @@ Arun M Kumar		28 Nov 2011*/
 //====================================================================================
 
 // Macro to check endianess
-#define IS_BIG_ENDIAN (!(*(uint8_t *)(&(uint16_t)0x01)))
+//#define IS_BIG_ENDIAN (!(*(uint8_t *)(&(uint16_t)0x01)))
 #define HIGH_BYTE		0xFF00
 #define LOW_BYTE		0x00FF
 

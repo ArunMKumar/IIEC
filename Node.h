@@ -65,7 +65,8 @@ class Node{
       void setNodeLoads(load_t, load_t, load_t);		//calculate all 3 loads
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer
-      status_t Task(void);			// cyclic task for every node
+      status_t Task(void);	// cyclic task for every node
+	  status_t getStatus(void);
 };
 
 
