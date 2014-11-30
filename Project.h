@@ -10,11 +10,12 @@
 /* 
 	Arduyino libraries to be used by the project
 */
-#include <Wire.h>
 
 
 #ifndef __PROJECT_H_
 #define __PROJECT_H_
+
+#include "Arduino.h"
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
@@ -77,5 +78,11 @@ typedef union {
 /*	SPI
 	Specify SPI related settings here
 */
+
+
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    METHODS	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+
+void Setup(void);
+void Loop(void);
 
 #endif /* PROJECT_H_ */

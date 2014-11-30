@@ -84,7 +84,9 @@ status_t Node::Task(void){
 	Serial.print(ID);
 	Serial.write("\nPID:");
 	Serial.print(PID);
-	Serial.write("\nType:");
+	
+
+
 	
 
 	return Status;	
