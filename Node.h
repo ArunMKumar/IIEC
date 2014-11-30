@@ -10,6 +10,7 @@
 #define __NODE_H_
 
 #include "Arduino.h"
+#include "Load.h"
 #include "CycBuffer.h"
 #include "Project.h"
 #include "Command.h"
@@ -66,14 +67,19 @@ class Node{
 	  Node();
       Node(id_t, id_t, device_t, baud_t, id_t);   // Where to read from answer where to act
 
-      void setNodePRIO(prio_t);							// Calculate the Priority of the node
-      void setNodeLoads(load_t, load_t, load_t);		//calculate all 3 loads
-	  void getNodeLoads(load_t*, load_t*, load_t*);
+      void setNodePRIO(prio_t);			// Calculate the Priority of the node
+
+	  void getLoadPrio(Load*);			// get priority from the loads	
+	  void setLoadPrio(Load*);			// set priroity of the loads
+	  void getLoadlimit(void);			// get the load limit of the loads, all of them
+	  void setLoadlimit(void);			// set the load limit of the loads
 
 
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node
+
+
 	  status_t getStatus(void);
 };
 

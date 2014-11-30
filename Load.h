@@ -50,8 +50,13 @@ class Load{
 		Load();
 		Load(pin_t, pin_t, id_t, prio_t, load_t);
 		uint8_t readLoad();
+
 		void writeLoad(uint8_t Logic);
 		void getLoadState(LoadState_t*);
+		prio_t getLoadPrio(void);
+		prio_t getLoadDprio(void);
+
+		void getLoad(load_t*, load_t*, load_t*);
 		status_t Task(void); // Contains the cyclic task that need to be called periodically
 };
 
