@@ -32,7 +32,15 @@ status_t Node::commInitParent(deviceAttrib_t* data){
 	return commParent.commSetDevice(data);
 }
 
-void Node::setNodePRIO(LoadState_t loads[], childData childs[]){
+status_t Node::nodeCommInit(deviceAttrib_t* childComm, deviceAttrib_t* parentComm){
+	/*
+		Initializes the comm module for the In and out device
+	*/
+	commInitChild(childComm);
+	commInitChild(parentComm);
+}
+
+void Node::setNodePRIO(LoadState_t loads[], childData_t childs[]){
 	/*
 	 * This method calculates the cumulative
 	 * priority of the node
@@ -48,7 +56,7 @@ void Node::setNodePRIO(LoadState_t loads[], childData childs[]){
 	this-> PRIO = prio_t(product/sum);
 }
 
-void Node::setNodeLoadLimit(LoadState_t loads[], childData childs[]){
+void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	/* This method calculates the various
 	load parameters for the node*/
 	load_t totalDLoad 	= 0x00;

@@ -43,6 +43,10 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
 		status = COMM_INIT;
 	}
+
+	if (COMM_TYPE_BLE == Device.deviceType){
+		// methods for BLE init
+	}
 	return status;
 }
 

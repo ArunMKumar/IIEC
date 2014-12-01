@@ -29,7 +29,7 @@ typedef struct{
 	load_t ASL;
 	load_t DCL;
 	load_t DL;
-}childData;
+}childData_t;
 
 //====================================================================================
 //							NODE CLASS
@@ -67,12 +67,13 @@ class Node{
 	  Node();
       Node(id_t, id_t);   // Where to read from and where to act
 
-      void setNodePRIO(LoadState_t[], childData[]);			// Calculate the Priority of the node
-	  void setNodeLoadLimit(LoadState_t[], childData[]);	// Read all demanded loads and load limit
+      void setNodePRIO(LoadState_t[], childData_t[]);			// Calculate the Priority of the node
+	  void setNodeLoadLimit(LoadState_t[], childData_t[]);	// Read all demanded loads and load limit
 	
 	  status_t commInitParent(deviceAttrib_t*);
 	  status_t commInitChild(deviceAttrib_t*);
-
+	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
+	  status_t nodeInit(void);
 	  status_t getStatus(void);
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer

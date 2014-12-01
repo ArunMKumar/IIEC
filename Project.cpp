@@ -12,6 +12,7 @@ Arun M Kumar						30 Nov 2014
 #include "Project.h"
 #include "Load.h"
 #include "Node.h"
+#include "Comm.h"
 
 
 //====================================================================================
@@ -46,10 +47,18 @@ void fillLoadState(void){
 //====================================================================================
 //							Node Data
 //====================================================================================
+
 /*
-	Creating the Node instanc here
+	child data structure to store the data
+*/
+childData_t childs[NUM_CHILDS];
+/*
+	Creating data structure for parent and child comm
 */
 
+/*
+	Creating Node instance here
+*/
 Node thisNode(NODE_ID, NODE_PID);
 
 
@@ -69,7 +78,6 @@ status_t Node::Task(void){
 	*/
 
 	//Task 1:
-	setNodePRIO();
 
 
 
@@ -87,7 +95,7 @@ void Init(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
-
+	thisNode.nodeCommInit();
 }
 
 void TaskMain(void){
