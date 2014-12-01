@@ -64,6 +64,7 @@ class Node{
 	  */
 	  Comm commParent;	// Communication with parent
 	  Comm commChild;	// Communication with child
+
 	  Node();
       Node(id_t, id_t);   // Where to read from and where to act
 
@@ -75,6 +76,8 @@ class Node{
 	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
 	  status_t nodeInit(void);
 	  status_t getStatus(void);
+
+	  void readChilds(childData_t[]);
       status_t TxParent();	// Transmit the Parent buffer
       status_t TxChild();	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node

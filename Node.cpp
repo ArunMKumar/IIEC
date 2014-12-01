@@ -75,6 +75,14 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DLoad = totalLoad;
 }
 
+void Node::readChilds(childData_t childs[]){
+	/*
+	This method will ping each child module to  send its data 
+	and then read it from the in buffer to updat the values
+	*/
+
+}
+
 status_t Node::TxParent(void){
 	
 	/*

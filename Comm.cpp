@@ -31,6 +31,7 @@ Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
 
 	if (COMM_TYPE_I2C == DeviceType){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
+		Wire.onReceive(commRxISR);// ISR for incoming communication
 		status = COMM_INIT;
 	}
 }
@@ -41,6 +42,7 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 
 	if (COMM_TYPE_I2C == Device.deviceType){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
+		Wire.onReceive(commRxISR);// ISR for incoming communication
 		status = COMM_INIT;
 	}
 
@@ -141,4 +143,11 @@ status_t Comm::commReadBufferWord(uint16_t* loc){
 
 status_t Comm::commReadBufferFloat(uint32f_t* loc){
 	return inBuffer.readBufferFloat(loc);
+}
+
+device_t Comm::commGetDeviceType(void){
+	/*
+	returns the device type for this comm instance
+	*/
+	return  Device.deviceType;
 }

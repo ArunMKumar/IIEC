@@ -63,6 +63,15 @@ childData_t childs[NUM_CHILDS];
 deviceAttrib_t parentDevice = {0x00, 000, 0x00};
 deviceAttrib_t childDevice = { COMM_TYPE_I2C, 0x00, PARENT_I2C_ADDRESS };
 
+status_t Node::nodeInit(void){
+	/*
+		This shall initialize all data structures and comm
+		parameters for the node instance and also do the communication
+		part too.
+	*/
+
+}
+
 status_t Node::Task(void){
 	/*
 	This function shall be executed cyclically everytime.
