@@ -77,9 +77,7 @@ status_t Node::nodeInit(void){
 		part too.
 	*/
 
-	for (int i = 0; i < NUM_CHILDS; i++){
-		thisNode.TxChildByte(SEND_DATA, childAddr[i]); // ask every child to send data
-	}
+
 
 }
 

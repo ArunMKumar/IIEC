@@ -80,14 +80,23 @@ class Node{
 	  status_t nodeInit(void);		// external definition
 	  status_t getStatus(void);
 
-	  status_t readChilds(childData_t[]);	// send command or datat to child(s)
-	  status_t readParent();				// read command and data from parent
+	  /*
+		These four methods shall do all communication for a given node.
+		The buffer is read and is written to. Physical level details are 
+		handled by the Comm instance.
+	  */
+	  status_t readChild(childData_t[]);	// send command or datat to child(s)
+	  status_t readParent();			// read command and data from parent
+	  status_t writeChild(childData_t);	// Write data to the child
+	  status_t writeParent();			// write data to parent
+
+
 	  void setChildData(childData_t[], uint8_t);
 	  void setParentData();
 
       status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
-      status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
-      status_t Task(void);	// cyclic task for every node
+     // status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
+     // status_t Task(void);	// cyclic task for every node
 };
 
 

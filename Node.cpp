@@ -97,15 +97,18 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DLoad = totalLoad;
 }
 
-status_t Node::readChilds(childData_t childs[]){
+status_t Node::readChild(childData_t child[]){
 	/*
 	This module parses the dat received on the In buffer
 	to extract the relevant info from them
+	we do not know where the data for the child will be so 
+	we read all the buffer and place the read data at appropriate
+	place in the childadata place holder
 	*/
 
 	uint8_t temp;
 
-	while (!(commChild.commInDataAvail() % FRAME_LEN)){		// if any data available in the Input buffer
+	if (commChild.commInDataAvail() > FRAME_LEN){		// if any Frame available in the Input buffer
 			commChild.commReadBuffer(&temp);
 
 		if (FRAME_HEADER1 == temp){
@@ -117,7 +120,7 @@ status_t Node::readChilds(childData_t childs[]){
 					child nodes accordingly
 				*/
 				commChild.commReadBuffer(&temp);	// read the ID.
-				setChildData(childs, temp);
+				setChildData(child, temp);
 			}
 			else
 				return TASK_FAILED;
@@ -131,6 +134,14 @@ status_t Node::readParent(){
 	/*
 		Here we read the data and/or command from the parent
 	*/
+	uint8_t temp;
+
+	if (commParent.commInDataAvail()){		// if any Frame available in the Input buffer
+			commChild.commReadBuffer(&temp);
+	// has parent requested data?
+	if (){
+
+	}
 }
 
 void Node::setChildData(childData_t childs[], uint8_t index){
@@ -143,8 +154,8 @@ void Node::setChildData(childData_t childs[], uint8_t index){
 
 void Node::setParentData(){
 	/*
-		Here we write data to the parent on the buffer and 
-		transmit it.
+	Here we write data to the parent on the buffer and
+	transmit it.
 	*/
 }
 
