@@ -151,3 +151,22 @@ device_t Comm::commGetDeviceType(void){
 	*/
 	return  Device.deviceType;
 }
+
+status_t Comm::commWriteInBuffer(uint8_t data){
+	/* 
+		Writes dat to the input buffer
+	*/
+	return inBuffer.writeBuffer(data);
+}
+
+void Comm::commRxISR(uint16_t dataCount){
+	/*
+		Interrupt service routine for the Comm receive event
+	*/
+
+	if (COMM_TYPE_I2C == Device.deviceType){
+		while (0 < Wire.available()){	// if any data available
+			commWriteInBuffer(Wire.read());
+		}
+	}
+}
