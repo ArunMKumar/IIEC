@@ -28,7 +28,7 @@ typedef struct{
 	prio_t DPRIO;
 	load_t ASL;
 	load_t DCL;
-	load_t Dload;
+	load_t DL;
 }childData;
 
 //====================================================================================
@@ -43,15 +43,15 @@ class Node{
   private:
       id_t ID;        	// ID of the node
 	  id_t PID;			// ID of the parent
-      prio_t PRIO;   	// Fixed priority of the connected loads
-	  uint8_t childAddr[NUMCHILD];	// Address of the child nodes
+      prio_t PRIO;   	// dynamic priority of the connected loads
+	  uint8_t childAddr[NUM_CHILDS];	// Address of the child nodes
 	  /*
 		DPRIO is only meant for the Loads and not for the nodes
 	  */
       //prio_t DPRIO;  	// Priority calculated at runtime so, no DPRIO
       load_t ASL;      	// Assigned loads of the connected loads and nodes
       load_t DCL;      	// Runtime load of the connected loads
-      load_t DLoad;	 	// Demanded load
+      load_t DL;	 	// Demanded load
 	  status_t Status;	// Current Status of the Load
 	  
 
@@ -67,14 +67,15 @@ class Node{
 	  Node();
       Node(id_t, id_t);   // Where to read from and where to act
 
-      void setNodePRIO(prio_t);			// Calculate the Priority of the node
-	  void setNodeLoads(load_t, load_t, load_t);
+      void setNodePRIO(LoadState_t[], childData[]);			// Calculate the Priority of the node
+	  void setNodeLoadLimit(LoadState_t[], childData[]);	// Read all demanded loads
 
-	  void getLoadPrio(Load[]);			// get priority from the loads	
-	  void setLoadPrio(Load[]);			// set priroity of the loads
-	  void getLoadlimit(Load[]);			// get the load limit of the loads, all of them
-	  void setLoadlimit(Load[]);			// set the load limit of the loads
-	  void readLoads(Load[]);				//  Read the current rating of the loads
+	 //load_t getLoadPrio(LoadState_t[]);				// get priority from the loads
+	 // void setLoadPrio(prio_t[]);						// set priority of the loads
+	  load_t setNodeCurrentLoad(LoadState_t[],childData[]);	// get the load limit of the loads, all of them
+	  //void setLoadlimit(load_t[]);					// set the load limit of the loads
+	  //void readLoads(LoadState_t[]);				// Read the current rating of the loads
+	  //void readChild(childData[]);
 
 	  status_t commInitParent(deviceAttrib_t*);
 	  status_t commInitChild(deviceAttrib_t*);

@@ -18,7 +18,7 @@
 //====================================================================================
 
 #define LOAD_NOT_INIT 	0x00
-#define LOAD_INIT		0x010
+#define LOAD_INIT		0x01
 #define LOAD_DATA_READY	0x02
 
 #define STATE_NOT_INIT	0x00
@@ -26,11 +26,13 @@
 #define STATE_OFF		0x03
 
 #define TIME_NOT_INIT	0x00
+#define TIME_RESET		0x00
 #define ID_NOT_INIT		0x00
 
 #define PRIO_MIN		1.0f
 #define PRIO_MAX		6.0f
 #define PRIO_NOT_INIT	(PRIO_MAX)	// currently the least priority
+#define PRIO_STEP_SIZE	0.001f
 
 #define PIN_LOW				0x00
 #define PIN_HIGH			0x01
@@ -100,14 +102,14 @@
 // Structure to read the data about the load
 typedef struct{
 	id_t ID;
-	state_t State;	//current state of the load
+	state_t State;	//current state of the load ON or OFF
 	time_t onTime;	// time since load is on
 	time_t offTime;	// time since load is off
 	prio_t PRIO;	// assigned priority
-	prio_t DPRIO;	// Dynamic priority
-	load_t ASLoad;	// actual sanctioned load
-	load_t DCLoad;	// Currently consuming load
-	load_t DLoad;	// demanded load
+	prio_t DPRIO;	// Dynamic priority:
+	load_t ASL;	// actual sanctioned load
+	load_t DCL;	// Currently consuming load: should be read
+	load_t DL;	// demanded load
 }LoadState_t;
 
 
@@ -122,23 +124,28 @@ class Load{
 		pin_t _rpin;
 		pin_t _wpin;
 		state_t State;
+		status_t Status;
 		time_t onTime;
 		time_t offTime;
 		prio_t PRIO;
 		prio_t DPRIO;
-		load_t ASLoad;
-		load_t DCLoad;
+		load_t ASL;
+		load_t DCL;
 		load_t DLoad;
+
+		void logic(void);
 
 	public:
 		Load();
 		Load(pin_t, pin_t, id_t, prio_t, load_t);
 		uint16_t readLoad();	// analog Read return 16 bit value, 10 bit resolution
-
-		void writeLoad(uint8_t Logic);
-		void getLoadState(LoadState_t*);
+		status_t writeLoad(uint8_t Logic);	// write an on or OFF
+		status_t setLoadStatus(uint8_t Logic);
+		status_t getLoadStatus(void);
+		status_t setLoadState(LoadState_t*);
+		status_t getLoadState(LoadState_t*);
 		prio_t getLoadPrio(void);
-		prio_t getLoadDprio(void);
+
 
 		void getLoad(load_t*, load_t*, load_t*);
 		status_t Task(void); // Contains the cyclic task that need to be called periodically

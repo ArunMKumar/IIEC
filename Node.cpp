@@ -32,19 +32,54 @@ status_t Node::commInitParent(deviceAttrib_t* data){
 	return commParent.commSetDevice(data);
 }
 
-void Node::setNodePRIO(prio_t PRIO){
-	/* This method calculates the cumulative
+void Node::setNodePRIO(LoadState_t loads[], childData childs[]){
+	/*
+	 * This method calculates the cumulative
 	 * priority of the node
 	 */
-	this->PRIO = PRIO;
+	prio_t nodePRIO = 0.0f;
+	prio_t product= 1.0f;
+	prio_t sum = 0.0f;
+
+	for(int i=0; i < NUM_LOADS; i++){
+		product *= loads[i].DPRIO;
+		sum 	+= loads[i].DPRIO;
+	}
+	this-> PRIO = prio_t(product/sum);
 }
 
-void Node::setNodeLoads(load_t ASL, load_t DCL, load_t DLoad){
+void Node::setNodeLoads(LoadState_t loads[], childData childs[]){
 	/* This method calculates the various
 	load parameters for the node*/
-	this->ASL = ASL;
-	this->DCL = DCL;
-	this->DLoad = DLoad;
+	load_t totalDLoad 	= 0x00;
+	load_t totalDCL		= 0x00;
+
+	for(int i=0; i < NUM_LOADS; i++){
+		totalDL 	+= loads[i].DL;
+		totalDCL	+= loads[i].DCL;
+	}
+
+	for(int i=0; i < NUM_CHILDS; i++){
+		totalDLoad 	+= childs[i].DLoad;
+		totalDCL	+= childs[i].DCL;
+	}
+
+	this->DLoad = totalLoad;
+}
+
+load_t Node::setNodeCurrentLoad(LoadState_t loads[], childData childs[]){
+	/* This method calculates the various
+	load parameters for the node*/
+	load_t totalLoad = 0x00;
+	for(int i=0; i < NUM_LOADS; i++){
+		totalLoad += loads[i].DL;
+	}
+
+	for(int i=0; i < NUM_CHILDS; i++){
+		totalLoad += childs[i].DL;
+	}
+
+	this->DL = totalLoad;
 }
 
 status_t Node::TxParent(void){
@@ -78,13 +113,14 @@ status_t Node::Task(void){
 
 	We shall perform the algorith here, but do need to remember that
 	we should use modular functions to allow for improvements later.
+
+	Tasks to be performed here are:
+	Task 1: Get priority from child nodes and loads
+	Task 2: calculate the values and decide which loads to switch off
+	Task 3: Communicate the info back to parent
 	*/
-	Serial.write("Node Task Reached\n");
-	Serial.write("ID:");
-	Serial.print(ID);
-	Serial.write("\nPID:");
-	Serial.print(PID);
-	
+
+	//Task 1:
 
 
 	

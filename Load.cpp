@@ -12,7 +12,7 @@
 Load::Load(){
 	//default constructor for the load class
 	ID 		= ID_NOT_INIT;
-	State 	= LOAD_NOT_INIT;	//current state of the load
+	Status 	= LOAD_NOT_INIT;	//current state of the load
 	onTime 	= TIME_NOT_INIT;	// time since load is on
 	offTime	= TIME_NOT_INIT;	// time since load is off
 	PRIO	= PRIO_NOT_INIT;	// assigned priority
@@ -29,14 +29,14 @@ Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 	_wpin = wpin;
 	pinMode(_wpin, PIN_OUTPUT);
 
-	State = LOAD_INIT;
-	this->ID = ID;
-	this->PRIO = prio;
-	DLoad = load;
-	onTime = TIME_NOT_INIT;	// time since load is on
-	offTime = TIME_NOT_INIT;	// time since load is off
-	ASLoad = LOAD_NOT_INIT;	// actual sanctioned load
-	DCLoad = LOAD_NOT_INIT;	// Currently consuming load
+	Status 		= LOAD_INIT;
+	this->ID 	= ID;
+	this->PRIO 	= prio;
+	DLoad 		= load;
+	onTime 		= TIME_NOT_INIT;	// time since load is on
+	offTime 	= TIME_NOT_INIT;	// time since load is off
+	ASLoad 		= LOAD_NOT_INIT;	// actual sanctioned load
+	DCLoad 		= LOAD_NOT_INIT;	// Currently consuming load
 }
 
 uint16_t Load::readLoad(void){
@@ -44,72 +44,121 @@ uint16_t Load::readLoad(void){
 	return analogRead(_rpin);
 }
 
-void Load::writeLoad(uint8_t Logic){
-	// write the requested value to the pin
-	digitalWrite(_wpin, Logic);
-	State = Logic;
+status_t Load::writeLoad(uint8_t Logic){
+
+	if(Logic != State){ // if a new state has been requested
+		State 	= Logic;	// change the state
+		onTime 	= TIME_RESET;	// reset the timers
+		offTime = TIME_RESET;	// reset the timers
+	}
+
+	digitalWrite(State);
+	return State;
 }
 
-void Load::getLoadState(LoadState_t *Buf){
+status_t Load::setLoadStatus(uint8_t Logic){
+	// write the requested value to the pin
+	return State = Logic;
+}
+
+status_t Load::getLoadStatus(void){
+	return State;
+}
+
+status_t Load::setLoadState(LoadState_t* state){
+	/*
+	 * This methods sets he load values as requested
+	 */
+	this->ID 		= state->ID;
+	this->PRIO 		= state->PRIO;
+	this->State 	= state->State;
+	this->ASL 		= state->ASL;
+	this->DCL	 	= state->DCL;
+
+	return LOAD_INIT;
+}
+
+status_t Load::getLoadState(LoadState_t *Buf){
 	Buf-> ID 		= this-> ID;
 	Buf-> State		= this-> State;	//current state of the load
 	Buf-> onTime	= this-> onTime;	// time since load is on
 	Buf-> offTime	= this-> offTime;	// time since load is off
 	Buf-> PRIO		= this-> PRIO;	// assigned priority
 	Buf-> DPRIO		= this-> DPRIO;	// Dynamic priority
-	Buf-> ASLoad	= this-> ASLoad;	// actual sanctioned load
-	Buf-> DCLoad	= this-> DCLoad;	// Currently consuming load
-	Buf-> DLoad		= this-> DLoad;	// demanded load
+	Buf-> ASL		= this-> ASL;	// actual sanctioned load
+	Buf-> DCL		= this-> DCL;	// Currently consuming load
+	Buf-> DL		= this-> DL;	// demanded load
+
+	return LOAD_INIT;
 }
+
+prio_t Load::getLoadPrio(void){
+	/*
+	 * return the dynamic priority as of now
+	 */
+	return DPRIO;
+}
+
+void Load::logic(void){
+	static uint16_t loadTicks = 0;
+
+	if(LOAD_ON == State){
+			/*
+			 * Set the On/OffTime, on every tenth call to the task
+			 * this increments by one
+			 */
+			if(!(loadTicks %10)){	// on each multiple of 10 ticks
+				onTime++;
+			}
+
+			if(DPRIO < PRIO){	// If currently at higher priority than the
+				DPRIO += PRIO_STEP_SIZE;
+			}
+
+			if(DPRIO > PRIO){
+				DPRIO = PRIO;	//if the value overshoots
+			}
+		}
+
+
+	if(LOAD_OFF == State){
+			/*
+			 * Set the On/OffTime, on every tenth call to the task
+			 * this increments by one
+			 */
+			if(!(loadTicks %10)){
+				offTime++;
+			}
+
+			DPRIO -= PRIO_STEP_SIZE;	//Increasse the priority if load is off
+
+			if(LOAD_MAX_PRIO > DPRIO){
+				DPRIO = LOAD_MAX_PRIO;	// if the value undershoots
+			}
+		}
+
+	loadTicks ++;
+}
+
 
 status_t Load::Task(void){
 	//Debug
 	Serial.write("Inside Load Task\n");
-
 	/*
-	Periodic task that need to be performed by each load
-	*/
+	 * Task  that is executed cyclically for every load
+	 * Tasks to be done:
+	 * 1. Read Current Load
+	 * 2. Adjust priority
+	 */
+	//TASK1:
+	readLoad();
+	//Task2:
+	logic();
 
-	//Step1: Read the current Load
-	DCLoad = readLoad();		// Now we have the latest value
-	Serial.write("Value read");
-	Serial.print(DCLoad);
+	//Debug
+	Serial.write("Exit  Load Task\n");
 
-	//Step2: Adjust the priority
-	/* 
-	If load has been Off and PRIO less than assigned PRIO
-	then keep rising the PRIO towards the Higher Priority
-	*/
-	if (LOAD_OFF == State){
-		offTime++;
-	}
-
-	else if (LOAD_ON == State){
-		onTime++;
-	}
-
-	//if (0 == (GLOBAL_TICK % 10)){
-	//	// roughly every second
-	//	/*
-	//		Here the priority rises every every time unit
-	//		which is roughly 1 second in this case.
-
-	//		Priorities both rise and fall in this case
-	//		based on the state of the load.
-	//	*/
-
-	//}
-	if (DCLoad > 500){
-		writeLoad(LOAD_ON);
-	}
-
-	else{
-		writeLoad(LOAD_OFF);
-	}
-
-	
-
-	return State;
+	return Status;
 }
 
 

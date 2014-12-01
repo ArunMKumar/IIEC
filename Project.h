@@ -24,8 +24,8 @@ typedef float uint32f_t;
 typedef uint8_t id_t;
 typedef uint8_t device_t;
 typedef uint16_t baud_t;	// Arduino specific, other arch may req more data
-typedef uint16_t load_t;
-typedef uint16_t time_t;
+typedef uint32_t load_t;
+typedef uint32_t time_t;
 typedef uint8_t state_t;
 typedef uint8_t status_t;
 typedef uint8_t pin_t;
@@ -33,6 +33,7 @@ typedef uint8_t comm_t;
 typedef float prio_t;
 typedef uint8_t cmd_t;
 
+#define TIME_MAX 	0xFFFFFFFF	// uint32MAX
 
 // For converting Float to bytes and bytes to float
 typedef union {
@@ -51,8 +52,8 @@ typedef union {
 *********************************************************************************************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    NODES			 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
-#define NUMCHILD	2U
-#define NUMLOADS	4U
+#define NUM_CHILDS	2U
+#define NUM_LOADS	4U
 #define NODE_ID		23U	// test
 #define NODE_PID	32U	// test
 
