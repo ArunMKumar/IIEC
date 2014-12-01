@@ -37,6 +37,7 @@ void fillLoadState(void){
 		the node task, instead of calling load class member functions again and again
 		this keeps the flow clean as it acts as a central holding are for data about
 		all nodes and loads.
+		Call this cyclically
 	*/
 	for (int i = 0; i < NUM_LOADS; i++){
 		Load1.getLoadState(&Loads[i]);
@@ -47,6 +48,10 @@ void fillLoadState(void){
 //====================================================================================
 //							Node Data
 //====================================================================================
+/*
+Creating Node instance here
+*/
+Node thisNode(NODE_ID, NODE_PID);
 
 /*
 	child data structure to store the data
@@ -55,12 +60,8 @@ childData_t childs[NUM_CHILDS];
 /*
 	Creating data structure for parent and child comm
 */
-
-/*
-	Creating Node instance here
-*/
-Node thisNode(NODE_ID, NODE_PID);
-
+deviceAttrib_t parentDevice = {0x00, 000, 0x00};
+deviceAttrib_t childDevice = { COMM_TYPE_I2C, 0x00, PARENT_I2C_ADDRESS };
 
 status_t Node::Task(void){
 	/*
