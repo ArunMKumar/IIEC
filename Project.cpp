@@ -33,6 +33,32 @@ Load Load4(LOAD_3R, LOAD_3W, LOAD_ID3, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 Node thisNode(NODE_ID, NODE_PID);
 
 
+status_t Node::Task(void){
+	/*
+	This function shall be executed cyclically everytime.
+	This shall perform the periodic tasks that needs to be done for the
+	node, eg. Calculating the Priorities and the Load allowance.
+
+	We shall perform the algorith here, but do need to remember that
+	we should use modular functions to allow for improvements later.
+
+	Tasks to be performed here are:
+	Task 1: Get priority from child nodes and loads
+	Task 2: calculate the values and decide which loads to switch off
+	Task 3: Communicate the info back to parent
+	*/
+
+	//Task 1:
+	setNodePRIO();
+
+
+
+
+	return Status;
+
+}
+
+
 /*
 Now lets create the basic functions Init and Task
 */
@@ -43,9 +69,6 @@ void Init(){
 	*/
 
 }
-
-
-
 
 void TaskMain(void){
 

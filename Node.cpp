@@ -90,29 +90,6 @@ status_t Node::TxChild(void){
 	return Status;
 }
 
-status_t Node::Task(void){
-	/*
-	This function shall be executed cyclically everytime. 
-	This shall perform the periodic tasks that needs to be done for the
-	node, eg. Calculating the Priorities and the Load allowance.
-
-	We shall perform the algorith here, but do need to remember that
-	we should use modular functions to allow for improvements later.
-
-	Tasks to be performed here are:
-	Task 1: Get priority from child nodes and loads
-	Task 2: calculate the values and decide which loads to switch off
-	Task 3: Communicate the info back to parent
-	*/
-
-	//Task 1:
-
-
-	
-
-	return Status;	
-
-}
 
 
 
