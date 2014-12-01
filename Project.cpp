@@ -13,19 +13,39 @@ Arun M Kumar						30 Nov 2014
 #include "Load.h"
 #include "Node.h"
 
+
+//====================================================================================
+//							Load Data
+//====================================================================================
 /*
 	First we need to initialize the loads.
 	For the time being we use 4 loads and work with them
 
 		Initializing the Loads instances here
 */
-
-Load Load1(LOAD_0R, LOAD_0W, LOAD_ID0, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
+Load Load1(LOAD_0R, LOAD_0W, LOAD_ID0, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);		// A0,A1 etc. will work with Arduino IDE, ignore error here
 Load Load2(LOAD_1R, LOAD_1W, LOAD_ID1, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 Load Load3(LOAD_2R, LOAD_2W, LOAD_ID2, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 Load Load4(LOAD_3R, LOAD_3W, LOAD_ID3, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 
+LoadState_t Loads[NUM_LOADS];
 
+void fillLoadState(void){
+	/*
+		This fills the data from each load into a structure that can be used well by
+		the node task, instead of calling load class member functions again and again
+		this keeps the flow clean as it acts as a central holding are for data about
+		all nodes and loads.
+	*/
+	for (int i = 0; i < NUM_LOADS; i++){
+		Load1.getLoadState(&Loads[i]);
+	}
+	
+}
+
+//====================================================================================
+//							Node Data
+//====================================================================================
 /*
 	Creating the Node instanc here
 */
