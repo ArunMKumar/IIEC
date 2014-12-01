@@ -75,14 +75,15 @@ class Node{
 	  status_t nodeInitParent(deviceAttrib_t*);
 	  status_t nodeInitChild(deviceAttrib_t*);
 	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
-
-	  void nodeSetChildAddr(uint8_t[]);
+	  status_t nodeSetChildAddr(uint8_t[]);
 
 	  status_t nodeInit(void);		// external definition
 	  status_t getStatus(void);
 
-	  status_t readChilds(childData_t[]);
+	  status_t readChilds(childData_t[]);	// send command or datat to child(s)
+	  status_t readParent();				// read command and data from parent
 	  void setChildData(childData_t[], uint8_t);
+	  void setParentData();
 
       status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
       status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
