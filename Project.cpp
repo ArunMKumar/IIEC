@@ -70,6 +70,10 @@ status_t Node::nodeInit(void){
 		part too.
 	*/
 
+	for (int i = 0; i < NUM_CHILDS; i++){
+		thisNode.commChild.commWriteBuffer();
+	}
+
 }
 
 status_t Node::Task(void){

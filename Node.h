@@ -78,8 +78,8 @@ class Node{
 	  status_t getStatus(void);
 
 	  void readChilds(childData_t[]);
-      status_t TxParent();	// Transmit the Parent buffer
-      status_t TxChild();	// Transmit the child buffer
+      status_t TxParent(uint8_t);	// Transmit the Parent buffer
+      status_t TxChild(uint8_t, uint8_t addr);	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node
 };
 

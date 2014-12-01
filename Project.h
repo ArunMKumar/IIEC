@@ -64,8 +64,8 @@ typedef union {
 */
 #define SRC_I2C_ADDRESS			0x01
 #define SRC_BLE_ADDRESS			0x00
-#define PARENT_I2C_ADDRESS		0x02
-#define PARENT_BLE_ADDRESS		0x00
+#define PARENT_ADDRESS			0x02
+
 
 /* UART
 	specify the baud rates here

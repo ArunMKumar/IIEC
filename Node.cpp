@@ -80,10 +80,10 @@ void Node::readChilds(childData_t childs[]){
 	This method will ping each child module to  send its data 
 	and then read it from the in buffer to updat the values
 	*/
-
+	
 }
 
-status_t Node::TxParent(void){
+status_t Node::TxParent(uint8_t data){
 	
 	/*
 		No issuess in the current project as both
@@ -91,10 +91,17 @@ status_t Node::TxParent(void){
 		so we can safely use one particular instance for this 
 		task.
 	*/
+
+	commParent.commWriteBuffer(data);
+	commParent.commSetTxStatus(TRUE);	// Set to false after transmitting
+
+	commParent.Transmit(PARENT_ADDRESS);
+	commParent.commSetTxStatus(FALSE);
+
 	return Status;
 }
 
-status_t Node::TxChild(void){
+status_t Node::TxChild(uint8_t data, uint8_t addr){
 
 	/*
 	No issuess in the current project as both
@@ -102,6 +109,12 @@ status_t Node::TxChild(void){
 	so we can safely use one particular instance for this
 	task.
 	*/
+
+	commChild.commWriteBuffer(data);
+	commChild.commSetTxStatus(TRUE);
+
+	commChild.Transmit(addr);
+	commChild.commSetTxStatus(FALSE);
 
 	return Status;
 }

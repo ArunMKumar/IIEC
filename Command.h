@@ -21,6 +21,9 @@ Arun M Kumar				24 Nov 2014*/
 //====================================================================================
 
 #define FRAME_LEN		0x0A
+#define FRAME_HEADER1	0xFF
+#define FRAME_HEADER2	0xAA
+#define SEND_DATA		0xFA
 
 //====================================================================================
 //							TASK COMMANDS

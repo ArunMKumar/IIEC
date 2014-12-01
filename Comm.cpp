@@ -52,6 +52,13 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 	return status;
 }
 
+void Comm::commSetTxStatus(uint8_t status){
+	/*
+		Set the Tx status as TRUE or FALSE
+	*/
+	startTx = status;
+}
+
 status_t Comm::Transmit(id_t address){
 	/*
 	This method transmit the data on the bus which is 
