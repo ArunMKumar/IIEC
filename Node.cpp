@@ -169,6 +169,18 @@ void Node::setParentData(){
 	Here we write data to the parent on the buffer and
 	transmit it.
 	*/
+
+	commParent.commWriteBuffer(DATA_FRAME_HEADER1);	// write frame heade1 to buffer
+	commParent.commWriteBuffer(DATA_FRAME_HEADER2);	// write frame heade1 to buffer
+	commParent.commWriteBuffer(ID);					// write frame heade1 to buffer
+	commParent.commWriteBuffer(PID);				// write frame heade1 to buffer
+	commParent.commWriteBufferFloat(PRIO);			// write frame heade1 to buffer
+	commParent.commWriteBufferWord(ASL);			// write frame heade1 to buffer
+	commParent.commWriteBufferWord(DCL);			// write frame heade1 to buffer
+	commParent.commWriteBufferWord(DL);				// write frame heade1 to buffer
+
+	commParent.commSetTxStatus(TRUE);
+	commParent.Transmit(PARENT_ADDRESS);
 }
 
 //status_t Node::TxParentByte(uint8_t data){

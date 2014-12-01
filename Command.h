@@ -25,7 +25,7 @@ Arun M Kumar				24 Nov 2014*/
 #define DATA_FRAME_HEADER2	0xAA
 
 // Command sent by the parent to the child
-#define CMD_FRAME_LEN		0x04		// modify as needed
+#define CMD_FRAME_LEN		0x07		// modify as needed
 #define CMD_FRAME_HEADER1	0x80
 #define CMD_FRAME_HEADER2	0x08
 #define SEND_DATA			0x01

@@ -63,8 +63,9 @@ typedef union {
 	Use address 0x00 for master
 	for others prefer 0x01 to 0x06
 */
-#define SRC_I2C_ADDRESS			0x00
-#define SRC_BLE_ADDRESS			0x00
+
+//Address independent of the medium
+#define SRC_ADDRESS				0x00
 #define PARENT_ADDRESS			0x02
 
 

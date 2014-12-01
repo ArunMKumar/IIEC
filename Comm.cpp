@@ -102,6 +102,9 @@ status_t Comm::Transmit(id_t address){
 		Wire.endTransmission();				 // End I2C Comm
 	}
 
+	/*
+	####################	I2C		#########################
+	*/
 	Serial.write("Transmit End\n");
 
 	return COMM_TX_SUCCESS;

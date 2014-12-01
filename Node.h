@@ -94,7 +94,7 @@ class Node{
 	  void setChildData(childData_t[], uint8_t);
 	  void setParentData();
 
-      status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
+      // status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
      // status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
      // status_t Task(void);	// cyclic task for every node
 };
