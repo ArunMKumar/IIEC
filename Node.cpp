@@ -48,7 +48,7 @@ void Node::setNodePRIO(LoadState_t loads[], childData childs[]){
 	this-> PRIO = prio_t(product/sum);
 }
 
-void Node::setNodeLoads(LoadState_t loads[], childData childs[]){
+void Node::setNodeLoadLimit(LoadState_t loads[], childData childs[]){
 	/* This method calculates the various
 	load parameters for the node*/
 	load_t totalDLoad 	= 0x00;
@@ -60,26 +60,11 @@ void Node::setNodeLoads(LoadState_t loads[], childData childs[]){
 	}
 
 	for(int i=0; i < NUM_CHILDS; i++){
-		totalDLoad 	+= childs[i].DLoad;
+		totalDLoad 	+= childs[i].DL;
 		totalDCL	+= childs[i].DCL;
 	}
 
 	this->DLoad = totalLoad;
-}
-
-load_t Node::setNodeCurrentLoad(LoadState_t loads[], childData childs[]){
-	/* This method calculates the various
-	load parameters for the node*/
-	load_t totalLoad = 0x00;
-	for(int i=0; i < NUM_LOADS; i++){
-		totalLoad += loads[i].DL;
-	}
-
-	for(int i=0; i < NUM_CHILDS; i++){
-		totalLoad += childs[i].DL;
-	}
-
-	this->DL = totalLoad;
 }
 
 status_t Node::TxParent(void){

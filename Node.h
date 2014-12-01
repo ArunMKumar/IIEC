@@ -68,15 +68,8 @@ class Node{
       Node(id_t, id_t);   // Where to read from and where to act
 
       void setNodePRIO(LoadState_t[], childData[]);			// Calculate the Priority of the node
-	  void setNodeLoadLimit(LoadState_t[], childData[]);	// Read all demanded loads
-
-	 //load_t getLoadPrio(LoadState_t[]);				// get priority from the loads
-	 // void setLoadPrio(prio_t[]);						// set priority of the loads
-	  load_t setNodeCurrentLoad(LoadState_t[],childData[]);	// get the load limit of the loads, all of them
-	  //void setLoadlimit(load_t[]);					// set the load limit of the loads
-	  //void readLoads(LoadState_t[]);				// Read the current rating of the loads
-	  //void readChild(childData[]);
-
+	  void setNodeLoadLimit(LoadState_t[], childData[]);	// Read all demanded loads and load limit
+	
 	  status_t commInitParent(deviceAttrib_t*);
 	  status_t commInitChild(deviceAttrib_t*);
 
