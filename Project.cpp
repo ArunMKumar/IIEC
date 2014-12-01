@@ -71,7 +71,7 @@ status_t Node::nodeInit(void){
 	*/
 
 	for (int i = 0; i < NUM_CHILDS; i++){
-		thisNode.commChild.commWriteBuffer();
+		thisNode.TxChildByte(SEND_DATA, );
 	}
 
 }

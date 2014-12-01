@@ -71,15 +71,19 @@ class Node{
       void setNodePRIO(LoadState_t[], childData_t[]);			// Calculate the Priority of the node
 	  void setNodeLoadLimit(LoadState_t[], childData_t[]);	// Read all demanded loads and load limit
 	
-	  status_t commInitParent(deviceAttrib_t*);
-	  status_t commInitChild(deviceAttrib_t*);
+	  status_t nodeInitParent(deviceAttrib_t*);
+	  status_t nodeInitChild(deviceAttrib_t*);
 	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
+
+	  void nodeSetChildAddr(uint8_t[]);
+
 	  status_t nodeInit(void);
 	  status_t getStatus(void);
 
 	  void readChilds(childData_t[]);
-      status_t TxParent(uint8_t);	// Transmit the Parent buffer
-      status_t TxChild(uint8_t, uint8_t addr);	// Transmit the child buffer
+
+      status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
+      status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
       status_t Task(void);	// cyclic task for every node
 };
 

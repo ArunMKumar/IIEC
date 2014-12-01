@@ -22,14 +22,26 @@ Node::Node(id_t ID, id_t PID){
 	this->PID = PID;
 }
 
-status_t Node::commInitChild(deviceAttrib_t* data){
+status_t Node::nodeInitChild(deviceAttrib_t* data){
 	
 	return commChild.commSetDevice(data);
 }
 
-status_t Node::commInitParent(deviceAttrib_t* data){
+status_t Node::nodeInitParent(deviceAttrib_t* data){
 
 	return commParent.commSetDevice(data);
+}
+
+void Node::nodeSetChildAddr(uint8_t addr[NUM_CHILDS]){
+	/*
+		This methods sets the addresses of the childs with which
+		we need to communciate
+	*/
+
+	for (int i = 0; i < NUM_CHILDS; i++){
+		childAddr[i] = addr[i];
+	}
+
 }
 
 status_t Node::nodeCommInit(deviceAttrib_t* childComm, deviceAttrib_t* parentComm){
@@ -83,7 +95,7 @@ void Node::readChilds(childData_t childs[]){
 	
 }
 
-status_t Node::TxParent(uint8_t data){
+status_t Node::TxParentByte(uint8_t data){
 	
 	/*
 		No issuess in the current project as both
@@ -101,7 +113,7 @@ status_t Node::TxParent(uint8_t data){
 	return Status;
 }
 
-status_t Node::TxChild(uint8_t data, uint8_t addr){
+status_t Node::TxChildByte(uint8_t data, uint8_t addr){
 
 	/*
 	No issuess in the current project as both
