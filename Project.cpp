@@ -49,19 +49,28 @@ void fillLoadState(void){
 //							Node Data
 //====================================================================================
 /*
-Creating Node instance here
-*/
-Node thisNode(NODE_ID, NODE_PID);
-
-/*
 	child data structure to store the data
 */
-childData_t childs[NUM_CHILDS];
+childData_t childs[NUM_CHILDS]; // Change as per project
+
+/*
+	This array contains the I2C addresses of the childs that we need to ocmmunicate with
+*/
+addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
+
 /*
 	Creating data structure for parent and child comm
 */
 deviceAttrib_t parentDevice = {0x00, 000, 0x00};
-deviceAttrib_t childDevice = { COMM_TYPE_I2C, 0x00, PARENT_I2C_ADDRESS };
+deviceAttrib_t childDevice = { COMM_TYPE_I2C, 0x00, SRC_I2C_ADDRESS };
+
+
+/*
+Creating Node instance here
+*/
+Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
+
+
 
 status_t Node::nodeInit(void){
 	/*

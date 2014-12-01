@@ -32,6 +32,7 @@ typedef uint8_t pin_t;
 typedef uint8_t comm_t;
 typedef float prio_t;
 typedef uint8_t cmd_t;
+typedef uint8_t addr_t;
 
 #define TIME_MAX 	0xFFFFFFFF	// uint32MAX
 
@@ -62,9 +63,14 @@ typedef union {
 	Use address 0x00 for master
 	for others prefer 0x01 to 0x06
 */
-#define SRC_I2C_ADDRESS			0x01
+#define SRC_I2C_ADDRESS			0x00
 #define SRC_BLE_ADDRESS			0x00
 #define PARENT_ADDRESS			0x02
+
+#define CHILD1_I2C_ADDR			0x01
+#define CHILD2_I2C_ADDR			0x02
+#define CHILD3_I2C_ADDR			0x03
+#define CHILD4_I2C_ADDR			0x04 // define more if necessary
 
 
 /* UART

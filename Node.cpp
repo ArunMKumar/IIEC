@@ -22,6 +22,26 @@ Node::Node(id_t ID, id_t PID){
 	this->PID = PID;
 }
 
+Node::Node(id_t ID, id_t PID, deviceAttrib_t* child, deviceAttrib_t* parent, addr_t childAddr[]){
+	/*
+		Overloaded constructor for initializing everything
+	*/
+	this->ID = ID;
+	this->PID = PID;
+	nodeCommInit(child, parent);
+	nodeSetChildAddr(childAddr);
+}
+
+void Node::nodeSetChildAddr(addr_t childAddr[]){
+	/*
+		Sets the address of the child 
+	*/
+
+	for (int i = 0; i < NUM_CHILDS; i++){
+		this->childAddr[i] = childAddr[i];
+	}
+}
+
 status_t Node::nodeInitChild(deviceAttrib_t* data){
 	
 	return commChild.commSetDevice(data);

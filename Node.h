@@ -67,6 +67,7 @@ class Node{
 
 	  Node();
       Node(id_t, id_t);   // Where to read from and where to act
+	  Node(id_t, id_t, deviceAttrib_t*, deviceAttrib_t*, addr_t[]);
 
       void setNodePRIO(LoadState_t[], childData_t[]);			// Calculate the Priority of the node
 	  void setNodeLoadLimit(LoadState_t[], childData_t[]);	// Read all demanded loads and load limit
