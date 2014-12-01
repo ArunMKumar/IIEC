@@ -108,13 +108,13 @@ status_t Node::readChild(childData_t child[]){
 
 	uint8_t temp;
 
-	if (commChild.commInDataAvail() > FRAME_LEN){		// if any Frame available in the Input buffer
+	if (commChild.commInDataAvail() > DATA_FRAME_LEN){		// if any Frame available in the Input buffer
 			commChild.commReadBuffer(&temp);
 
-		if (FRAME_HEADER1 == temp){
+		if (DATA_FRAME_HEADER1 == temp){
 				commChild.commReadBuffer(&temp);	// read the second byte
 
-			if (FRAME_HEADER2 == temp){	// Verify that we have received both the headers
+			if (DATA_FRAME_HEADER2 == temp){	// Verify that we have received both the headers
 				/*
 					Now we shall read the ID provided and based on the ID place the
 					child nodes accordingly
@@ -137,10 +137,22 @@ status_t Node::readParent(){
 	uint8_t temp;
 
 	if (commParent.commInDataAvail()){		// if any Frame available in the Input buffer
-			commChild.commReadBuffer(&temp);
-	// has parent requested data?
-	if (){
+		commParent.commReadBuffer(&temp);
+		// has parent requested data?
+		if (CMD_FRAME_HEADER1 == temp){			// header 1 match
+			commParent.commReadBuffer(&temp);	// read header 2
+			if (CMD_FRAME_HEADER2 == temp){		//header 2 match : definitely a frame
+				commParent.commReadBuffer(&temp); // get the command
 
+				if (SEND_DATA == temp){
+					setParentData();	// this will write the data to the buffer with the headers
+				}
+
+				else if (SET_ASL == temp){ // Parent wants to set the assigned load
+					commParent.commReadBufferWord(&ASL);	// get the assigned load from the buffer
+				}
+			}
+		}
 	}
 }
 

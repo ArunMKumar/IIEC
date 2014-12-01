@@ -20,14 +20,16 @@ Arun M Kumar				24 Nov 2014*/
 //							PROTOCOL COMMANDS
 //====================================================================================
 
-#define DATA_FRAME_LEN	20U			// 20 bytes for one frame
+#define DATA_FRAME_LEN		20U			// 20 bytes for one frame
 #define DATA_FRAME_HEADER1	0xFF
 #define DATA_FRAME_HEADER2	0xAA
 
-// Command sent bythe parent to the child
-#define CMD_FRAME_LEN	
-#define SEND_DATA		0xFA
-#define	SET_ASL			0x
+// Command sent by the parent to the child
+#define CMD_FRAME_LEN		0x04		// modify as needed
+#define CMD_FRAME_HEADER1	0x80
+#define CMD_FRAME_HEADER2	0x08
+#define SEND_DATA			0x01
+#define	SET_ASL				0x02
 
 //====================================================================================
 //							TASK COMMANDS
