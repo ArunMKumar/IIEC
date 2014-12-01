@@ -71,8 +71,8 @@ public:
 	status_t fillRandom(void);
 	status_t readBuffer(uint8_t*);
 	status_t writeBuffer(uint8_t);
-	status_t readBufferWord(uint16_t*);
-	status_t writeBufferWord(uint16_t);
+	status_t readBufferWord(uint32_t*);
+	status_t writeBufferWord(uint32_t);
 	status_t readBufferFloat(uint32f_t *);	// To read a float value
 	status_t writeBufferFloat(uint32f_t);	// To write a float value
 	status_t readBufferln(uint8_t*,uint16_t);

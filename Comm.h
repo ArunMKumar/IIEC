@@ -79,14 +79,17 @@ class Comm{
 		void setCommStatus(status_t);
 
 		status_t commWriteBuffer(uint8_t);
-		status_t commWriteBufferWord(uint16_t);
+		status_t commWriteBufferWord(uint32_t);
 		status_t commWriteBufferFloat(uint32f_t);
 		status_t commWriteBufferString(uint8_t*);
 
 		status_t commWriteInBuffer(uint8_t);
 		status_t commReadBuffer(uint8_t*);
-		status_t commReadBufferWord(uint16_t*);
+		status_t commReadBufferWord(uint32_t*);
 		status_t commReadBufferFloat(uint32f_t*);
+
+		uint8_t commInDataAvail();
+		uint8_t commOutDataAvail();
 		
 		device_t commGetDeviceType(void);
 };

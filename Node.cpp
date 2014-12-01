@@ -107,12 +107,41 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DLoad = totalLoad;
 }
 
-void Node::readChilds(childData_t childs[]){
+status_t Node::readChilds(childData_t childs[]){
 	/*
-	This method will ping each child module to  send its data 
-	and then read it from the in buffer to updat the values
+	This module parses the dat received on the In buffer
+	to extract the relevant info from them
 	*/
+
+	uint8_t temp;
+
+	while (!(commChild.commInDataAvail() % FRAME_LEN)){		// if any data available in the Input buffer
+			commChild.commReadBuffer(&temp);
+
+		if (FRAME_HEADER1 == temp){
+				commChild.commReadBuffer(&temp);	// read the second byte
+
+			if (FRAME_HEADER2 == temp){	// Verify that we have received both the headers
+				/*
+					Now we shall read the ID provided and based on the ID place the
+					child nodes accordingly
+				*/
+				commChild.commReadBuffer(&temp);	// read the ID.
+				setChildData(childs, temp);
+			}
+			else
+				return TASK_FAILED;
+		}
+	}
 	
+}
+
+void Node::setChildData(childData_t childs[], uint8_t index){
+	commChild.commReadBuffer(&childs[index].PID);	// get the PID
+	commChild.commReadBufferFloat(&childs[index].PRIO);
+	commChild.commReadBufferWord(&childs[index].ASL);
+	commChild.commReadBufferWord(&childs[index].DL);
+	commChild.commReadBufferWord(&childs[index].DCL);
 }
 
 status_t Node::TxParentByte(uint8_t data){
@@ -125,8 +154,8 @@ status_t Node::TxParentByte(uint8_t data){
 	*/
 
 	commParent.commWriteBuffer(data);
+	
 	commParent.commSetTxStatus(TRUE);	// Set to false after transmitting
-
 	commParent.Transmit(PARENT_ADDRESS);
 	commParent.commSetTxStatus(FALSE);
 
@@ -143,8 +172,8 @@ status_t Node::TxChildByte(uint8_t data, uint8_t addr){
 	*/
 
 	commChild.commWriteBuffer(data);
-	commChild.commSetTxStatus(TRUE);
 
+	commChild.commSetTxStatus(TRUE);
 	commChild.Transmit(addr);
 	commChild.commSetTxStatus(FALSE);
 

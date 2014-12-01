@@ -113,7 +113,7 @@ status_t Comm::commWriteBuffer(uint8_t data){
 	return outBuffer.writeBuffer(data);
 }
 
-status_t Comm::commWriteBufferWord(uint16_t data){
+status_t Comm::commWriteBufferWord(uint32_t data){
 	return outBuffer.writeBufferWord(data);
 }
 
@@ -144,7 +144,7 @@ status_t Comm::commReadBuffer(uint8_t* loc){
 	return inBuffer.readBuffer(loc);
 }
 
-status_t Comm::commReadBufferWord(uint16_t* loc){
+status_t Comm::commReadBufferWord(uint32_t* loc){
 	return inBuffer.readBufferWord(loc);
 }
 
@@ -176,4 +176,12 @@ void Comm::commRxISR(uint16_t dataCount){
 			commWriteInBuffer(Wire.read());
 		}
 	}
+}
+
+uint8_t Comm::commInDataAvail(){
+	return inBuffer.dataAvailLen();
+}
+
+uint8_t Comm::commOutDataAvail(){
+	return outBuffer.dataAvailLen();
 }

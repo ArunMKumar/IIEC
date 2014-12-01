@@ -70,8 +70,6 @@ Creating Node instance here
 */
 Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
 
-
-
 status_t Node::nodeInit(void){
 	/*
 		This shall initialize all data structures and comm
@@ -80,7 +78,7 @@ status_t Node::nodeInit(void){
 	*/
 
 	for (int i = 0; i < NUM_CHILDS; i++){
-		thisNode.TxChildByte(SEND_DATA, );
+		thisNode.TxChildByte(SEND_DATA, childAddr[i]); // ask every child to send data
 	}
 
 }

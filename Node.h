@@ -25,7 +25,7 @@ typedef struct{
 	id_t ID;
 	id_t PID;
 	prio_t PRIO;
-	prio_t DPRIO;
+//	prio_t DPRIO;		Nodes do not have DPRIO, they only have PRIO
 	load_t ASL;
 	load_t DCL;
 	load_t DL;
@@ -78,10 +78,11 @@ class Node{
 
 	  void nodeSetChildAddr(uint8_t[]);
 
-	  status_t nodeInit(void);
+	  status_t nodeInit(void);		// external definition
 	  status_t getStatus(void);
 
-	  void readChilds(childData_t[]);
+	  status_t readChilds(childData_t[]);
+	  void setChildData(childData_t[], uint8_t);
 
       status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
       status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer

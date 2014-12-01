@@ -69,7 +69,7 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	return Status;
 }
 
-status_t CYCBUFFER::readBufferWord(uint16_t *loc){
+status_t CYCBUFFER::readBufferWord(uint32_t *loc){
 	/*
 	 * This Method reads a 16bit value from the buffer
 	 * and puts it into an appropriate location
@@ -86,18 +86,45 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 		 * word is placed at the last element before warping then this
 		 * trick would fail.
 		 */
-		uint8_t highByte, lowByte = 0;
-		if(IS_BIG_ENDIAN()){
-			// First byte would be high byte
-			readBuffer(&highByte);
-			readBuffer(&lowByte);
-			*loc = (((uint16_t)highByte << 8) | (uint16_t)lowByte);
+		uint8_t temp;
+		uint32_t result;
+
+		if(IS_BIG_ENDIAN()){		
+				/*
+				* Here we convert the written data to float
+				*/
+				readBuffer(&temp);
+				result |= ((uint32_t)temp << 24);	// first byte
+
+				readBuffer(&temp);
+				result |= ((uint32_t)temp << 16);	// second byte
+
+				readBuffer(&temp);
+				result |= ((uint32_t)temp << 8);	// third byte
+
+				readBuffer(&temp);
+				result |= (uint32_t)temp;	// fourth byte
+
+				*loc = result;
 		}
+
 		else{
-			// read low byte first
-			readBuffer(&lowByte);
-			readBuffer(&highByte);
-			*loc = (((uint16_t)lowByte << 8) | (uint16_t)highByte);
+			/*
+			* Here we convert the written data to float
+			*/
+			readBuffer(&temp);
+			result |= ((uint32_t)temp);	// first byte
+
+			readBuffer(&temp);
+			result |= ((uint32_t)temp << 8);	// second byte
+
+			readBuffer(&temp);
+			result |= ((uint32_t)temp << 16);	// third byte
+
+			readBuffer(&temp);
+			result |= ((uint32_t)temp <<24);	// fourth byte
+
+			*loc = result;
 		}
 	}
 
@@ -105,7 +132,7 @@ status_t CYCBUFFER::readBufferWord(uint16_t *loc){
 	return Status;
 }
 
-status_t CYCBUFFER::writeBufferWord(uint16_t ele){
+status_t CYCBUFFER::writeBufferWord(uint32_t ele){
 	/*
 	 * This method writes a 16bit data onto the buffer.
 	 * The data to be written is passed as a parameter.

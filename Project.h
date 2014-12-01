@@ -67,6 +67,13 @@ typedef union {
 #define SRC_BLE_ADDRESS			0x00
 #define PARENT_ADDRESS			0x02
 
+
+#define CHILD1_ID				0x01
+#define CHILD2_ID				0x02
+#define CHILD3_ID				0x03
+#define CHILD4_ID				0x04	// define more if necessary
+
+
 #define CHILD1_I2C_ADDR			0x01
 #define CHILD2_I2C_ADDR			0x02
 #define CHILD3_I2C_ADDR			0x03
