@@ -118,6 +118,8 @@ status_t Node::nodeInit(void){
 
 	//TASK2 :request childs to send data, calculate priority based on that
 
+	reqChildData();
+
 	//TASK3: wait for parent to send ASL.
 
 	//Assign ASL to children and Loads

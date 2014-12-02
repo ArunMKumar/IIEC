@@ -95,6 +95,7 @@ class Node{
 	  status_t ProtocolWriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t ProtocolWriteParent();								// write data to parent
 	  void ProtocolHandleParentCmd(uint8_t);
+	  void ProtocolReqChildData(void);
 	 // void ProtocolHandleChildData(uint8_t); Currently not required, let it be for now
 	 
 	

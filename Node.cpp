@@ -227,7 +227,7 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 			is connected so we can safely set the COMM_ESTABLISHED_PARENT
 			to TRUE.
 		*/
-		COMM_ESTABLISHED_PARENT = TRUE; 
+		COMM_ESTABLISHED_PARENT = TRUE;		// The parent is there!! Great.
 		commParent.commWriteBuffer(CMD_FRAME_HEADER1);
 		commParent.commWriteBuffer(CMD_FRAME_HEADER2);
 		commParent.commWriteBuffer(CMD_ACK);
@@ -240,6 +240,19 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 	/*
 		Add response to more commnads as needed
 	*/
+}
+
+void Node::ProtocolReqChildData(void){
+	/*
+		This method sends the CMD_SEND_DATA command to the child
+		to get the info
+	*/
+	uint8_t Command[1] = { CMD_SEND_DATA };
+	uint8_t temp[3];
+	for (int i = 0; i < NUM_CHILDS; i++){
+		ProtocolWriteChild(Command, 1, childAddr[i]);
+	}
+
 }
 
 
