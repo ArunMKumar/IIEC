@@ -220,6 +220,13 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		commParent.commSetTxStatus(TRUE);
 		commParent.Transmit(PARENT_ADDRESS);
 		break;
+
+	case CMD_SEND_ACK:
+		/*
+			Parent has requested an Acknowledgement. This means parent 
+			is connected so we can safely set the COMM_ESTABLISHED_PARENT
+			to TRUE.
+		*/
 	}
 
 	/*

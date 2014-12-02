@@ -84,7 +84,7 @@ status_t Node::establishCommChild(){
 	 * nodes
 	 * IMP: readchild is a cyclic task and should not be used now
 	 */
-
+	
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	uint8_t temp[3];
 	for(int i=0; i < NUM_CHILDS; i++){
@@ -101,9 +101,18 @@ status_t Node::nodeInit(void){
 		Loads are initilaized during this module
 	*/
 	//TASK1: establish communication with the child and parent
-	if (FALSE == COMM_ESTABLISHED){
-		thisNode.establishCommChild();
-		thisNode.establishCommParent();
+	if (NUM_CHILDS){
+		if (FALSE == COMM_ESTABLISHED_CHILD){
+			thisNode.establishCommChild();
+		}
+	}
+
+	if (NUM_PARENT){
+		if (FALSE == COMM_ESTABLISHED_PARENT){
+			thisNode.establishCommParent();
+		}
+	
+		
 	}
 
 

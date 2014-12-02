@@ -54,6 +54,7 @@ typedef union {
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    NODES			 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
 #define NUM_CHILDS	2U
+#define NUM_PARENT	1U
 #define NUM_LOADS	4U
 #define NODE_ID		23U	// test
 #define NODE_PID	32U	// test
