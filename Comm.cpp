@@ -49,6 +49,8 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
 		Wire.onReceive(commRxISR);// ISR for incoming communication
 		status = COMM_INIT;
+		// Debug:
+		Serial.write("I2C initialized\n");
 	}
 
 	if (COMM_TYPE_BLE == Device.deviceType){
@@ -61,6 +63,9 @@ void Comm::commSetTxStatus(uint8_t status){
 	/*
 		Set the Tx status as TRUE or FALSE
 	*/
+	// Debug:
+	Serial.write("Inside Comm set Tx satus\n");
+
 	startTx = status;
 }
 
@@ -132,6 +137,10 @@ status_t Comm::getCommStatus(void){
 status_t Comm::commWriteBuffer(uint8_t data){
 	/*This module writes data to the comm instance's 
 	out buffer one byte at a time*/
+
+	// Debug:
+	Serial.write("Enter Comm Write Buffer \n");
+
 	return outBuffer.writeBuffer(data);
 }
 

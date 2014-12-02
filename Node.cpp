@@ -194,6 +194,10 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 	/*
 		cyclic task to get data from child
 	*/
+		// Debug:
+		Serial.write("Enter Protocol write Child\n");
+
+
 	commChild.commWriteBuffer(CMD_FRAME_HEADER1);
 	commChild.commWriteBuffer(CMD_FRAME_HEADER2);
 	for(uint8_t i=0; i< len; i++){
@@ -201,6 +205,9 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 	}
 	commChild.commSetTxStatus(TRUE);
 	commChild.Transmit(address);
+
+	// Debug:
+	Serial.write("Exit Protocol write Child\n");
 
 	return TX_SUCCESS;
 

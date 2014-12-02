@@ -83,11 +83,15 @@ status_t Node::establishCommChild(){
 	 * nodes
 	 * IMP: readchild is a cyclic task and should not be used now
 	 */
-	
+	// Debug:
+	Serial.write("Inside establish Comm Child\n");
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	for(uint8_t i=0; i < NUM_CHILDS; i++){
 			thisNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
+
+	// Debug:
+	Serial.write("Exit Establish comm child\n");
 
 	return TASK_NO_ERROR;
 
@@ -101,6 +105,11 @@ status_t Node::nodeInit(void){
 		Loads are initilaized during this module
 	*/
 
+	// Debug:
+	Serial.write("Inside nodeInit\n");
+	Serial.write("InitDone val: ");
+	Serial.print(INIT_DONE);
+
 	if (FALSE == INIT_DONE){
 
 		//TASK1: establish communication with the child and parent
@@ -109,6 +118,8 @@ status_t Node::nodeInit(void){
 				establishCommChild();
 			}
 		}
+		// Debug:
+		Serial.write("DoneTask1\n");
 
 		/*if (NUM_PARENT){
 			if (FALSE == COMM_ESTABLISHED_PARENT){
@@ -119,17 +130,23 @@ status_t Node::nodeInit(void){
 
 		//TASK2 :request childs to send data, calculate priority based on that
 		ProtocolReqChildData();
+		// Debug:
+		Serial.write("DoneTask2\n");
 		//thisNode.ProtocolDLRequest();
 
 		//TASK3: wait for parent to send ASL.
 
 		while(getStatus());
+		// Debug:
+		Serial.write("DoneTask3\n");
 
 		//Assign ASL to children and Loads
 		ProtocolAssignLoads();
+		// Debug:
+		Serial.write("DoneTask4\n");
 
 		//Start Allocation and launch tasks
-		INIT_DONE = TRUE;
+		//INIT_DONE = TRUE;
 	}
 	return TASK_NO_ERROR;
 }

@@ -54,6 +54,9 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	 * This return the state of the bus after the writing process.
 	 * The element to be written is passed as the parameter.
 	 */
+	//debug:
+	Serial.write("Enter CYC Write Buffer \n");
+
 	if (OVERFLOW){
 		Status = BUF_OVERFLOW;
 		return Status;		// check for overflow
@@ -66,6 +69,9 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	}
 	
 	Status = BUF_NOERROR;
+
+	//debug:
+	Serial.write("Exit CYC Write Buffer \n");
 	return Status;
 }
 
@@ -86,8 +92,8 @@ status_t CYCBUFFER::readBufferWord(uint32_t *loc){
 		 * word is placed at the last element before warping then this
 		 * trick would fail.
 		 */
-		uint8_t temp;
-		uint32_t result;
+		uint8_t temp = 0U;
+		uint32_t result = 0U;
 
 		if(IS_BIG_ENDIAN()){		
 				/*
