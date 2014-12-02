@@ -102,7 +102,7 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 //							Comm protocol handling
 //====================================================================================
 
-status_t Node::ProtocolreadChild(childData_t child[]){
+status_t Node::ProtocolReadChild(childData_t child[]){
 	/*
 	This module parses the dat received on the In buffer
 	to extract the relevant info from them
@@ -125,7 +125,7 @@ status_t Node::ProtocolreadChild(childData_t child[]){
 					child nodes accordingly
 				*/
 				commChild.commReadBuffer(&temp);	// read the ID.
-				ProtocolreadChildData(child, temp);
+				ProtocolReadChildData(child, temp);
 			}
 			else
 				return TASK_FAILED;
@@ -135,7 +135,7 @@ status_t Node::ProtocolreadChild(childData_t child[]){
 	
 }
 
-status_t Node::ProtocolreadParent(){
+status_t Node::ProtocolReadParent(){
 	/*
 		Here we read the data and/or command from the parent
 		run these on an interrupt
@@ -157,7 +157,7 @@ status_t Node::ProtocolreadParent(){
 	}
 }
 
-status_t Node::ProtocolwriteChild(uint8_t Command[], uint8_t len, addr_t address){
+status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address){
 	/*
 		cyclic task to get data from child
 	*/
@@ -173,7 +173,7 @@ status_t Node::ProtocolwriteChild(uint8_t Command[], uint8_t len, addr_t address
 
 }
 
-status_t Node::ProtocolwriteParent(){
+status_t Node::ProtocolWriteParent(){
 	/* Cyclic task to write data to parent */
 	ProtocolsetParentData();
 	commParent.commSetTxStatus(TRUE);

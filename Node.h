@@ -92,7 +92,7 @@ class Node{
 	  status_t ProtocolReadChild(childData_t[]);					// read data from child(s)
 	  void ProtocolReadChildData(childData_t[], uint8_t);			// read data for a specific child
 	  status_t ProtocolReadParent();								// read command and data from parent
-	  status_t ProtocoRriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
+	  status_t ProtocolWriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t ProtocolWriteParent();								// write data to parent
 	  void ProtocolHandleParentCmd(uint8_t);
 	 // void ProtocolHandleChildData(uint8_t); Currently not required, let it be for now
