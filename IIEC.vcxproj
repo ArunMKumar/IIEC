@@ -84,6 +84,7 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="IIEC.ino" />
+    <None Include="res\Arduino_Pro_Mini\Arduino-Pro-Mini-schematic.pdf" />
     <None Include="Test\Comm\Comm.ino" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

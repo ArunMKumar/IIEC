@@ -56,5 +56,6 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="IIEC.ino" />
+    <None Include="res\Arduino_Pro_Mini\Arduino-Pro-Mini-schematic.pdf" />
   </ItemGroup>
 </Project>
