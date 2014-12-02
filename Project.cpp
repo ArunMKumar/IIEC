@@ -119,6 +119,7 @@ status_t Node::nodeInit(void){
 
 		//TASK2 :request childs to send data, calculate priority based on that
 		thisNode.ProtocolReqChildData();
+		thisNode.ProtocolDLRequest();
 
 		//TASK3: wait for parent to send ASL.
 

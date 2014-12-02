@@ -96,6 +96,7 @@ class Node{
 	  status_t ProtocolWriteParent();								// write data to parent
 	  void ProtocolHandleParentCmd(uint8_t);						// Handles the command received from the parent.
 	  void ProtocolReqChildData(void);								// Request data from the child nodes
+	  void ProtocolDLRequest(void);									// Request the parent for the Demanded load
 	  void ProtocolAssignLoads(void);								// Assigns the loads to the children
 	 // void ProtocolHandleChildData(uint8_t); Currently not required, let it be for now
 	 
