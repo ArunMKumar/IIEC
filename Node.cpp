@@ -120,7 +120,7 @@ status_t Node::readChild(childData_t child[]){
 					child nodes accordingly
 				*/
 				commChild.commReadBuffer(&temp);	// read the ID.
-				setChildData(child, temp);
+				readChildData(child, temp);
 			}
 			else
 				return TASK_FAILED;
@@ -156,15 +156,13 @@ status_t Node::readParent(){
 	}
 }
 
-void Node::setChildData(childData_t childs[], uint8_t index){
-	commChild.commReadBuffer(&childs[index].PID);	// get the PID
-	commChild.commReadBufferFloat(&childs[index].PRIO);
-	commChild.commReadBufferWord(&childs[index].ASL);
-	commChild.commReadBufferWord(&childs[index].DL);
-	commChild.commReadBufferWord(&childs[index].DCL);
+status_t Node::writeChild(uint8_t childIndex){
+	/*
+		write a piece of info to a particular child node.	
+	*/
 }
 
-void Node::setParentData(){
+void Node::setParentData(void){
 	/*
 	Here we write data to the parent on the buffer and
 	transmit it.
@@ -181,6 +179,14 @@ void Node::setParentData(){
 
 	commParent.commSetTxStatus(TRUE);
 	commParent.Transmit(PARENT_ADDRESS);
+}
+
+void Node::readChildData(childData_t childs[], uint8_t index){
+	commChild.commReadBuffer(&childs[index].PID);	// get the PID
+	commChild.commReadBufferFloat(&childs[index].PRIO);
+	commChild.commReadBufferWord(&childs[index].ASL);
+	commChild.commReadBufferWord(&childs[index].DL);
+	commChild.commReadBufferWord(&childs[index].DCL);
 }
 
 //status_t Node::TxParentByte(uint8_t data){

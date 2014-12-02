@@ -53,6 +53,9 @@ class Node{
       load_t DCL;      	// Runtime load of the connected loads
       load_t DL;	 	// Demanded load
 	  status_t Status;	// Current Status of the Load
+
+
+	  void readChildData(childData_t[], uint8_t);
 	  
 
   public:
@@ -85,13 +88,13 @@ class Node{
 		The buffer is read and is written to. Physical level details are 
 		handled by the Comm instance.
 	  */
-	  status_t readChild(childData_t[]);	// send command or datat to child(s)
-	  status_t readParent();			// read command and data from parent
-	  status_t writeChild(childData_t);	// Write data to the child
-	  status_t writeParent();			// write data to parent
+	  status_t readChild(childData_t[]);	// read data from child(s)
+	  status_t readParent();				// read command and data from parent
+	  status_t writeChild(uint8_t);		// Write data to the child
+	  status_t writeParent();				// write data to parent
 
 
-	  void setChildData(childData_t[], uint8_t);
+	  void setChildData();
 	  void setParentData();
 
       // status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
