@@ -150,7 +150,7 @@ status_t Node::ProtocolreadParent(){
 			if (CMD_FRAME_HEADER2 == temp){		//header 2 match : definitely a frame
 				commParent.commReadBuffer(&temp); // get the command
 
-				ProtocolHandleParentCmd(temp);
+				ProtocolHandleParentCmd(temp);		// handle the command
 			
 			}
 		}
@@ -206,7 +206,25 @@ void Node::ProtocolreadChildData(childData_t childs[], uint8_t index){
 }
 
 void Node::ProtocolHandleParentCmd(uint8_t Command){
+	/*
+		This method prepares the response to the various commands that are issued by the 
+		Parent.
+	*/
+	switch (Command){
 
+	case CMD_SEND_DATA:
+		/* 
+			The parent has requested the data of the child
+		*/
+		ProtocolsetParentData();
+		commParent.commSetTxStatus(TRUE);
+		commParent.Transmit(PARENT_ADDRESS);
+		break;
+	}
+
+	/*
+		Add response to more commnads as needed
+	*/
 }
 
 
