@@ -142,6 +142,10 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 				*/
 				commChild.commReadBuffer(&temp);	// read the ID.
 				ProtocolReadChildData(child, temp);
+				if (FALSE == CHILD_DATA_RECEIVED){
+					CHILD_DATA_RECEIVED = TRUE;	// we have received the data from the CHILD, one time use only
+				}
+				
 			}
 			else
 				return TASK_FAILED;
@@ -258,6 +262,11 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		if (NODE_NOT_INIT == Status){
 			commParent.commReadBufferWord(&ASL);
 		}
+
+		if (FALSE == ASL_RECEIVED){
+			ASL_RECEIVED = TRUE;
+		}
+
 		break;
 		/*
 		Add response to more commnads as needed

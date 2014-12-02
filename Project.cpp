@@ -100,37 +100,40 @@ status_t Node::nodeInit(void){
 		part too.
 		Loads are initilaized during this module
 	*/
-	//TASK1: establish communication with the child and parent
-	if (NUM_CHILDS){
-		if (FALSE == COMM_ESTABLISHED_CHILD){
-			thisNode.establishCommChild();
+
+	if (FALSE == INIT_DONE){
+
+		//TASK1: establish communication with the child and parent
+		if (NUM_CHILDS){
+			if (FALSE == COMM_ESTABLISHED_CHILD){
+				thisNode.establishCommChild();
+			}
 		}
-	}
 
-	if (NUM_PARENT){
-		if (FALSE == COMM_ESTABLISHED_PARENT){
-			thisNode.establishCommParent();
+		if (NUM_PARENT){
+			if (FALSE == COMM_ESTABLISHED_PARENT){
+				thisNode.establishCommParent();
+			}
 		}
-	
-		
+
+
+		//TASK2 :request childs to send data, calculate priority based on that
+		thisNode.ProtocolReqChildData();
+
+		//TASK3: wait for parent to send ASL.
+
+		while (thisNode.getStatus());
+
+		//Assign ASL to children and Loads
+		thisNode.ProtocolAssignLoads();
+
+		//Start Allocation and launch tasks
+		INIT_DONE = TRUE;
 	}
-
-
-	//TASK2 :request childs to send data, calculate priority based on that
-
-	reqChildData();
-
-	//TASK3: wait for parent to send ASL.
-
-	//Assign ASL to children and Loads
-
-	//Start Allocation and launch tasks
 
 }
 
-
-
-status_t Node::Task(void){
+//status_t Node::Task(void){
 	/*
 	This function shall be executed cyclically everytime.
 	This shall perform the periodic tasks that needs to be done for the

@@ -46,6 +46,9 @@ typedef union {
 // These variables shall be used in Init.
 extern status_t COMM_ESTABLISHED_CHILD;
 extern status_t COMM_ESTABLISHED_PARENT;
+extern status_t CHILD_DATA_RECEIVED;
+extern status_t ASL_RECEIVED;
+extern status_t INIT_DONE;
 
 //uint16_t GLOBAL_TICK;
 
