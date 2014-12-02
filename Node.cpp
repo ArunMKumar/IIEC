@@ -150,19 +150,8 @@ status_t Node::ProtocolreadParent(){
 			if (CMD_FRAME_HEADER2 == temp){		//header 2 match : definitely a frame
 				commParent.commReadBuffer(&temp); // get the command
 
-				if (CMD_SEND_DATA == temp){
-					ProtocolsetParentData();	// this will write the data to the buffer with the headers
-				}
-
-				else if (CMD_SET_ASL == temp){ // Parent wants to set the assigned load
-					commParent.commReadBufferWord(&ASL);	// get the next byte assigned load from the buffer
-				}
-
-				else if(CMD_SEND_ACK == temp){
-					commParent.commWriteBufferWord(CMD_ACK);	// send ack
-					commParent.commSetTxStatus(TRUE);
-					commParent.Transmit(PARENT_ADDRESS);
-				}
+				ProtocolHandleParentCmd(temp);
+			
 			}
 		}
 	}
@@ -214,6 +203,10 @@ void Node::ProtocolreadChildData(childData_t childs[], uint8_t index){
 	commChild.commReadBufferWord(&childs[index].ASL);
 	commChild.commReadBufferWord(&childs[index].DL);
 	commChild.commReadBufferWord(&childs[index].DCL);
+}
+
+void Node::ProtocolHandleParentCmd(uint8_t Command){
+
 }
 
 
