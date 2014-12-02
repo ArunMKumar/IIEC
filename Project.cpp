@@ -69,7 +69,10 @@ Creating Node instance here
 Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
 
 uint8_t Command_Buffer[CMD_FRAME_LEN];
-status_t COMM_ESTABLISHED = FALSE;
+status_t COMM_ESTABLISHED_CHILD = FALSE;
+
+
+status_t COMM_ESTABLISHED_PARENT = FALSE;
 status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
 status_t ASL_RECEIVED = FALSE;
@@ -83,7 +86,7 @@ status_t Node::establishCommChild(){
 	 * IMP: readchild is a cyclic task and should not be used now
 	 */
 
-	uint8_t Command[1] = { CMD_SEND_DATA };
+	uint8_t Command[1] = { CMD_SEND_ACK };
 	uint8_t temp[3];
 	for(int i=0; i < NUM_CHILDS; i++){
 			writeChild(Command, 1, childAddr[i]);

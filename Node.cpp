@@ -97,7 +97,12 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DLoad = totalLoad;
 }
 
-status_t Node::readChild(childData_t child[]){
+
+//====================================================================================
+//							Comm protocol handling
+//====================================================================================
+
+status_t Node::ProtocolreadChild(childData_t child[]){
 	/*
 	This module parses the dat received on the In buffer
 	to extract the relevant info from them
@@ -120,7 +125,7 @@ status_t Node::readChild(childData_t child[]){
 					child nodes accordingly
 				*/
 				commChild.commReadBuffer(&temp);	// read the ID.
-				readChildData(child, temp);
+				ProtocolreadChildData(child, temp);
 			}
 			else
 				return TASK_FAILED;
@@ -130,7 +135,7 @@ status_t Node::readChild(childData_t child[]){
 	
 }
 
-status_t Node::readParent(){
+status_t Node::ProtocolreadParent(){
 	/*
 		Here we read the data and/or command from the parent
 		run these on an interrupt
@@ -146,7 +151,7 @@ status_t Node::readParent(){
 				commParent.commReadBuffer(&temp); // get the command
 
 				if (CMD_SEND_DATA == temp){
-					setParentData();	// this will write the data to the buffer with the headers
+					ProtocolsetParentData();	// this will write the data to the buffer with the headers
 				}
 
 				else if (CMD_SET_ASL == temp){ // Parent wants to set the assigned load
@@ -163,7 +168,7 @@ status_t Node::readParent(){
 	}
 }
 
-status_t Node::writeChild(uint8_t Command[], uint8_t len, addr_t address){
+status_t Node::ProtocolwriteChild(uint8_t Command[], uint8_t len, addr_t address){
 	/*
 		cyclic task to get data from child
 	*/
@@ -179,15 +184,15 @@ status_t Node::writeChild(uint8_t Command[], uint8_t len, addr_t address){
 
 }
 
-status_t Node::writeParent(){
+status_t Node::ProtocolwriteParent(){
 	/* Cyclic task to write data to parent */
-	setParentData();
+	ProtocolsetParentData();
 	commParent.commSetTxStatus(TRUE);
 	commParent.Transmit(PARENT_ADDRESS);
 	return TX_SUCCESS;
 }
 
-void Node::setParentData(void){
+void Node::ProtocolsetParentData(void){
 	/*
 	Here we write data to the parent on the buffer and
 	transmit it.
@@ -203,7 +208,7 @@ void Node::setParentData(void){
 	commParent.commWriteBufferWord(DL);				// write frame heade1 to buffer
 }
 
-void Node::readChildData(childData_t childs[], uint8_t index){
+void Node::ProtocolreadChildData(childData_t childs[], uint8_t index){
 	commChild.commReadBuffer(&childs[index].PID);	// get the PID
 	commChild.commReadBufferFloat(&childs[index].PRIO);
 	commChild.commReadBufferWord(&childs[index].ASL);
