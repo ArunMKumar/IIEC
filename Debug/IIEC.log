@@ -1,0 +1,22 @@
+﻿Build started 12/2/2014 5:57:39 PM.
+     1>Project "C:\arduino\arduino-1.0.5-r2\libraries\IIEC\IIEC.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Comm.cpp CycBuffer.cpp Load.cpp Node.cpp Project.cpp Protocol.cpp
+         Protocol.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         Project.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         Node.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         Load.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         CycBuffer.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         Comm.cpp
+     1>c:\arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h(8): fatal error C1083: Cannot open include file: 'avr/pgmspace.h': No such file or directory
+         Generating Code...
+     1>Done Building Project "C:\arduino\arduino-1.0.5-r2\libraries\IIEC\IIEC.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:04.02
