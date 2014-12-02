@@ -261,8 +261,9 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		it we shall know by the Status.
 		we have to change the status here if we have received the ASL*/
 		if (NODE_NOT_INIT == Status){
-			commParent.commReadBufferWord(&ASL);
+			Status = NODE_INIT;
 		}
+		commParent.commReadBufferWord(&ASL);
 
 		if (FALSE == ASL_RECEIVED){
 			ASL_RECEIVED = TRUE;
