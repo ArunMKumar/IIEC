@@ -227,6 +227,14 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 			is connected so we can safely set the COMM_ESTABLISHED_PARENT
 			to TRUE.
 		*/
+		COMM_ESTABLISHED_PARENT = TRUE; 
+		commParent.commWriteBuffer(CMD_FRAME_HEADER1);
+		commParent.commWriteBuffer(CMD_FRAME_HEADER2);
+		commParent.commWriteBuffer(CMD_ACK);
+		commParent.commSetTxStatus(TRUE);
+		commParent.Transmit(PARENT_ADDRESS);
+		break;
+
 	}
 
 	/*

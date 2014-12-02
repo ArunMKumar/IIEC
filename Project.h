@@ -43,6 +43,10 @@ typedef union {
 }float_long_Buffer;
 
 
+// These variables shall be used in Init.
+extern status_t COMM_ESTABLISHED_CHILD;
+extern status_t COMM_ESTABLISHED_PARENT;
+
 //uint16_t GLOBAL_TICK;
 
 
