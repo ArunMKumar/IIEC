@@ -97,7 +97,7 @@ void Node::setNodePRIO(LoadState_t loads[], childData_t childs[]){
 void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	/* This method calculates the various
 	load parameters for the node*/
-	load_t totalDLoad 	= 0x00;
+	load_t totalDL 	= 0x00;
 	load_t totalDCL		= 0x00;
 
 	for(int i=0; i < NUM_LOADS; i++){
@@ -106,11 +106,12 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	}
 
 	for(int i=0; i < NUM_CHILDS; i++){
-		totalDLoad 	+= childs[i].DL;
+		totalDL 	+= childs[i].DL;
 		totalDCL	+= childs[i].DCL;
 	}
 
-	this->DLoad = totalLoad;
+	this->DL	= totalDL;
+	this->DCL	= totalDCL;
 }
 
 
@@ -287,4 +288,9 @@ void Node::ProtocolReqChildData(void){
 		ProtocolWriteChild(Command, 1, childAddr[i]);
 	}
 
+}
+
+void Node::ProtocolAssignLoads(void){
+	/* This method assigns the loads to the 
+	child nodes, the actual load sanctioned may be different*/
 }
