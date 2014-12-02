@@ -57,4 +57,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Test\Comm\Comm.ino" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="IIEC.ino" />
+  </ItemGroup>
 </Project>
