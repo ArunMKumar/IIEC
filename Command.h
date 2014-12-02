@@ -15,7 +15,11 @@ Arun M Kumar				24 Nov 2014*/
 #define NODE_NO_ID		0xFA
 
 #define NODE_NOT_INIT	0x00
-#define NODE_INIT		0x03
+#define NODE_INIT		0x01
+#define NODE_ERROR		0x02	// add more error codes as per requirement
+#define CHILD_NOT_INIT	0x00
+#define CHILD_INIT		0x01
+#define CHILD_INIT		0x02	// add more error codes as per requirement
 //====================================================================================
 //							PROTOCOL COMMANDS
 //====================================================================================

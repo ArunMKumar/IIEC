@@ -224,6 +224,7 @@ void Node::ProtocolreadChildData(childData_t childs[], uint8_t index){
 	commChild.commReadBufferWord(&childs[index].ASL);
 	commChild.commReadBufferWord(&childs[index].DL);
 	commChild.commReadBufferWord(&childs[index].DCL);
+	childs[index].Status = 
 }
 
 void Node::ProtocolHandleParentCmd(uint8_t Command){

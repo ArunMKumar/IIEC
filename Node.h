@@ -28,6 +28,7 @@ typedef struct{
 	load_t ASL;
 	load_t DCL;
 	load_t DL;
+	status_t Status;	// has the data been received?? this is as of now.
 }childData_t;
 
 //====================================================================================
