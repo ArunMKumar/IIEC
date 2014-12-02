@@ -58,8 +58,8 @@ status_t Node::nodeCommInit(deviceAttrib_t* childComm, deviceAttrib_t* parentCom
 	/*
 		Initializes the comm module for the In and out device
 	*/
-	commInitChild(childComm);
-	commInitChild(parentComm);
+	nodeInitChild(childComm);
+	nodeInitChild(parentComm);
 }
 
 void Node::setNodePRIO(LoadState_t loads[], childData_t childs[]){
@@ -210,16 +210,6 @@ void Node::readChildData(childData_t childs[], uint8_t index){
 	commChild.commReadBufferWord(&childs[index].DL);
 	commChild.commReadBufferWord(&childs[index].DCL);
 }
-
-
-/*
-status_t Node::establishCommParent(){
-	/*
-	 * this module establishes communication with the
-	 * parent
-	 *
-}*/
-
 
 
 

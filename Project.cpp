@@ -70,6 +70,7 @@ Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
 
 uint8_t Command_Buffer[CMD_FRAME_LEN];
 status_t COMM_ESTABLISHED = FALSE;
+status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
 status_t ASL_RECEIVED = FALSE;
 
@@ -82,21 +83,11 @@ status_t Node::establishCommChild(){
 	 * IMP: readchild is a cyclic task and should not be used now
 	 */
 
-	uint8_t Command[1] = CMD_SEND_ACK;
+	uint8_t Command[1] = { CMD_SEND_DATA };
 	uint8_t temp[3];
 	for(int i=0; i < NUM_CHILDS; i++){
-		TryAgain:
 			writeChild(Command, 1, childAddr[i]);
-			while(3 > commChild.commInDataAvail());	// wait till data arrives
-
-			for(int j=0; j < CMD_FRAME_LEN; j++){
-				commChild.commReadBuffer(&temp[j]);
-			}
-
-			if(CMD_ACK == temp[3]) continue;
-			else
-				goto TryAgain;
-	}
+		}
 
 }
 
@@ -108,8 +99,11 @@ status_t Node::nodeInit(void){
 		Loads are initilaized during this module
 	*/
 	//TASK1: establish communication with the child and parent
-	thisNode.establishCommChild();
-	thisNode.establishCommParent();
+	if (FALSE == COMM_ESTABLISHED){
+		thisNode.establishCommChild();
+		thisNode.establishCommParent();
+	}
+
 
 	//TASK2 :request childs to send data, calculate priority based on that
 
@@ -122,30 +116,6 @@ status_t Node::nodeInit(void){
 }
 
 
-status_t Node::establishCommChild(){
-	/*
-	 * This module establishes communication with the child
-	 * nodes
-	 * IMP: readchild is a cyclic task and should not be used now
-	 */
-
-	uint8_t Command[1] = CMD_SEND_ACK;
-	uint8_t temp[3];
-	for(int i=0; i < NUM_CHILDS; i++){
-		TryAgain:
-			writeChild(Command, 1, childAddr[i]);
-			while(3 > commChild.commInDataAvail());	// wait till data arrives
-
-			for(int j=0; j < CMD_FRAME_LEN; j++){
-				commChild.commReadBuffer(&temp[j]);
-			}
-
-			if(CMD_ACK == temp[3]) continue;
-			else
-				goto TryAgain;
-	}
-
-}
 
 status_t Node::Task(void){
 	/*
