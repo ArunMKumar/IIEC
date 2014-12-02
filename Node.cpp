@@ -251,11 +251,20 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		commParent.Transmit(PARENT_ADDRESS);
 		break;
 
+	case CMD_SET_ASL:
+		/*Parent has sent the ASL, if this is the first time it has sent
+		it we shall know by the Status.
+		we have to change the status here if we have received the ASL*/
+		if (NODE_NOT_INIT == Status){
+			commParent.commReadBufferWord(&ASL);
+		}
+		break;
+		/*
+		Add response to more commnads as needed
+		*/
 	}
 
-	/*
-		Add response to more commnads as needed
-	*/
+	
 }
 
 void Node::ProtocolReqChildData(void){
