@@ -131,7 +131,7 @@ class Load{
 		prio_t DPRIO;
 		load_t ASL;
 		load_t DCL;
-		load_t DLoad;
+		load_t DL;
 
 		void logic(void);
 

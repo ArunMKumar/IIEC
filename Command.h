@@ -19,7 +19,7 @@ Arun M Kumar				24 Nov 2014*/
 #define NODE_ERROR		0x02	// add more error codes as per requirement
 #define CHILD_NOT_INIT	0x00
 #define CHILD_INIT		0x01
-#define CHILD_INIT		0x02	// add more error codes as per requirement
+#define CHILD_ERROR		0x02	// add more error codes as per requirement
 //====================================================================================
 //							PROTOCOL COMMANDS
 //====================================================================================

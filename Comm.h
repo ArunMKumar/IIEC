@@ -71,15 +71,17 @@ class Comm{
 		Comm();										// Default constructor
 		Comm(device_t, baud_t, id_t); 				// Parameterized constructor
 		status_t commSetDevice(deviceAttrib_t*);
+		device_t getDeviceType(void);
 		void commCheckRxStatus(uint8_t*);			// Checks the status of the Rx and Tx flags
 		void commSetTxStatus(uint8_t);				// Set the Tx flag on or off
 
-		void commRxISR(uint16_t);						// ISR for incoming communication
+		//void commRxISR(int);						// ISR for incoming communication
 
 		status_t commTask(void);					// Cyclic task to manage the buffers
 		status_t Transmit(id_t);					// Transmit to  a particular node
 
 		void setCommStatus(status_t);
+		status_t getCommStatus(void);
 
 		status_t commWriteBuffer(uint8_t);
 		status_t commWriteBufferWord(uint32_t);
@@ -96,5 +98,8 @@ class Comm{
 		
 		device_t commGetDeviceType(void);
 };
+
+
+void commRxISR(int);
 
 #endif

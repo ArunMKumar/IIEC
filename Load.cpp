@@ -17,9 +17,9 @@ Load::Load(){
 	offTime	= TIME_NOT_INIT;	// time since load is off
 	PRIO	= PRIO_NOT_INIT;	// assigned priority
 	DPRIO	= PRIO_NOT_INIT;	// Dynamic priority
-	ASLoad	= LOAD_NOT_INIT;	// actual sanctioned load
-	DCLoad	= LOAD_NOT_INIT;	// Currently consuming load
-	DLoad	= LOAD_NOT_INIT;	// demanded load
+	ASL		= LOAD_NOT_INIT;	// actual sanctioned load
+	DCL		= LOAD_NOT_INIT;	// Currently consuming load
+	DL		= LOAD_NOT_INIT;	// demanded load
 }
 
 
@@ -32,11 +32,11 @@ Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 	Status 		= LOAD_INIT;
 	this->ID 	= ID;
 	this->PRIO 	= prio;
-	DLoad 		= load;
+	DL	 		= load;
 	onTime 		= TIME_NOT_INIT;	// time since load is on
 	offTime 	= TIME_NOT_INIT;	// time since load is off
-	ASLoad 		= LOAD_NOT_INIT;	// actual sanctioned load
-	DCLoad 		= LOAD_NOT_INIT;	// Currently consuming load
+	ASL	 		= LOAD_NOT_INIT;	// actual sanctioned load
+	DCL	 		= LOAD_NOT_INIT;	// Currently consuming load
 }
 
 uint16_t Load::readLoad(void){
@@ -52,7 +52,7 @@ status_t Load::writeLoad(uint8_t Logic){
 		offTime = TIME_RESET;	// reset the timers
 	}
 
-	digitalWrite(State);
+	digitalWrite(_wpin, State);
 	return State;
 }
 

@@ -100,9 +100,10 @@ class Node{
 	  void ProtocolDLRequest(void);									// Request the parent for the Demanded load
 	  void ProtocolAssignLoads(void);								// Assigns the loads to the children
 	
-	  void Task(void);
+	  status_t Task(void);
 	  status_t establishCommChild();		//establish communication with child nodes
-	  status_t establishCommParent();		// establish communication with parent node
+	 // status_t establishCommParent();		// establish communication with parent node : This should happen automatically on receiveing a byte from Parent
+											// refer ProtocolHandleParentCmd()
 };
 
 #endif /* NODE_H_ */

@@ -39,7 +39,7 @@ void fillLoadState(void){
 		all nodes and loads.
 		Call this cyclically
 	*/
-	for (int i = 0; i < NUM_LOADS; i++){
+	for (uint8_t i = 0; i < NUM_LOADS; i++){
 		Load1.getLoadState(&Loads[i]);
 	}
 	
@@ -47,35 +47,34 @@ void fillLoadState(void){
 
 
 
-//====================================================================================
-//							Node Data
-//====================================================================================
-/*
-	child data structure to store the data
-*/
-childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
-/*
-	This array contains the I2C addresses of the childs that we need to ocmmunicate with
-*/
-addr_t childAddr[NUM_CHILDS] = {CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
-/*
-	Creating data structure for parent and child comm
-*/
-deviceAttrib_t parentDevice = {PARENT_COMM_TYPE, 000, PARENT_ADDRESS};
-deviceAttrib_t childDevice = {CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
-/*
-Creating Node instance here
-*/
-Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
+	//====================================================================================
+	//							Node Data
+	//====================================================================================
+	/*
+		child data structure to store the data
+		*/
+	childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
+	/*
+		This array contains the I2C addresses of the childs that we need to ocmmunicate with
+		*/
+	addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
+	/*
+		Creating data structure for parent and child comm
+		*/
+	deviceAttrib_t parentDevice = { PARENT_COMM_TYPE, 000, PARENT_ADDRESS };
+	deviceAttrib_t childDevice = { CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
+	/*
+	Creating Node instance here
+	*/
+	extern Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
 
-uint8_t Command_Buffer[CMD_FRAME_LEN];
-status_t COMM_ESTABLISHED = FALSE;
-status_t COMM_ESTABLISHED_CHILD = FALSE;
-status_t COMM_ESTABLISHED_PARENT = FALSE;
-status_t INIT_DONE = FALSE;
-status_t CHILD_DATA_RECEIVED = FALSE;
-status_t ASL_RECEIVED = FALSE;
-
+	uint8_t Command_Buffer[CMD_FRAME_LEN];
+	status_t COMM_ESTABLISHED = FALSE;
+	status_t COMM_ESTABLISHED_CHILD = FALSE;
+	status_t COMM_ESTABLISHED_PARENT = FALSE;
+	status_t INIT_DONE = FALSE;
+	status_t CHILD_DATA_RECEIVED = FALSE;
+	status_t ASL_RECEIVED = FALSE;
 
 
 status_t Node::establishCommChild(){
@@ -86,10 +85,11 @@ status_t Node::establishCommChild(){
 	 */
 	
 	uint8_t Command[1] = { CMD_SEND_ACK };
-	uint8_t temp[3];
-	for(int i=0; i < NUM_CHILDS; i++){
+	for(uint8_t i=0; i < NUM_CHILDS; i++){
 			thisNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
+
+	return TASK_NO_ERROR;
 
 }
 
@@ -106,32 +106,32 @@ status_t Node::nodeInit(void){
 		//TASK1: establish communication with the child and parent
 		if (NUM_CHILDS){
 			if (FALSE == COMM_ESTABLISHED_CHILD){
-				thisNode.establishCommChild();
+				establishCommChild();
 			}
 		}
 
-		if (NUM_PARENT){
+		/*if (NUM_PARENT){
 			if (FALSE == COMM_ESTABLISHED_PARENT){
 				thisNode.establishCommParent();
 			}
-		}
+		}*/
 
 
 		//TASK2 :request childs to send data, calculate priority based on that
-		thisNode.ProtocolReqChildData();
-		thisNode.ProtocolDLRequest();
+		ProtocolReqChildData();
+		//thisNode.ProtocolDLRequest();
 
 		//TASK3: wait for parent to send ASL.
 
-		while (thisNode.getStatus());
+		while(getStatus());
 
 		//Assign ASL to children and Loads
-		thisNode.ProtocolAssignLoads();
+		ProtocolAssignLoads();
 
 		//Start Allocation and launch tasks
 		INIT_DONE = TRUE;
 	}
-
+	return TASK_NO_ERROR;
 }
 
 status_t Node::Task(void){
@@ -155,7 +155,6 @@ status_t Node::Task(void){
 
 }
 
-
 /*
 Now lets create the basic functions Init and Task
 */
@@ -164,7 +163,7 @@ void Init(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
-	thisNode.nodeCommInit();
+	//thisNode.nodeCommInit();
 }
 
 void TaskMain(void){

@@ -7,8 +7,8 @@ Arun M Kumar		25 NOV 2014
 
 
 #include "Comm.h"
-#include "Wire.h"
 #include "Command.h"
+#include <Wire.h>
 
 Comm::Comm(){
 	/*
@@ -34,6 +34,11 @@ Comm::Comm(device_t DeviceType, baud_t Baud, id_t address){
 		Wire.onReceive(commRxISR);// ISR for incoming communication
 		status = COMM_INIT;
 	}
+}
+
+device_t Comm::getDeviceType(){
+	/* Returns the device type of the comm module*/
+	return Device.deviceType;
 }
 
 status_t Comm::commSetDevice(deviceAttrib_t* data){
@@ -110,6 +115,20 @@ status_t Comm::Transmit(id_t address){
 	return COMM_TX_SUCCESS;
 }
 
+void Comm::setCommStatus(status_t Status){
+	/*
+		Sets the status of the comm module
+	*/
+	this-> status = Status;
+}
+
+status_t Comm::getCommStatus(void){
+	/*
+		returns the status of the comm module
+	*/
+	return status;
+}
+
 status_t Comm::commWriteBuffer(uint8_t data){
 	/*This module writes data to the comm instance's 
 	out buffer one byte at a time*/
@@ -169,17 +188,7 @@ status_t Comm::commWriteInBuffer(uint8_t data){
 	return inBuffer.writeBuffer(data);
 }
 
-void Comm::commRxISR(uint16_t dataCount){
-	/*
-		Interrupt service routine for the Comm receive event
-	*/
 
-	if (COMM_TYPE_I2C == Device.deviceType){
-		while (0 < Wire.available()){	// if any data available
-			commWriteInBuffer(Wire.read());
-		}
-	}
-}
 
 uint8_t Comm::commInDataAvail(){
 	return inBuffer.dataAvailLen();

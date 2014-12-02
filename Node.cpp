@@ -48,12 +48,19 @@ Node::Node(id_t ID, id_t PID, deviceAttrib_t* child, deviceAttrib_t* parent, add
 	Status = NODE_NOT_INIT;
 }
 
+status_t Node::getStatus(void){
+	/*
+		Returns the status of the node
+	*/
+	return Status;
+}
+
 status_t Node::nodeSetChildAddr(addr_t childAddr[]){
 	/*
 		Sets the address of the child 
 	*/
 
-	for (int i = 0; i < NUM_CHILDS; i++){
+	for (uint8_t i = 0; i < NUM_CHILDS; i++){
 		this->childAddr[i] = childAddr[i];
 	}
 
@@ -76,6 +83,12 @@ status_t Node::nodeCommInit(deviceAttrib_t* childComm, deviceAttrib_t* parentCom
 	*/
 	nodeInitChild(childComm);
 	nodeInitChild(parentComm);
+	if ((COMM_INIT == commChild.getCommStatus()) && \
+		(COMM_INIT == commParent.getCommStatus())){
+		return COMM_INIT;
+	}
+
+	return COMM_NOT_INIT;
 }
 
 void Node::setNodePRIO(LoadState_t loads[], childData_t childs[]){
@@ -83,11 +96,10 @@ void Node::setNodePRIO(LoadState_t loads[], childData_t childs[]){
 	 * This method calculates the cumulative
 	 * priority of the node
 	 */
-	prio_t nodePRIO = 0.0f;
 	prio_t product= 1.0f;
 	prio_t sum = 0.0f;
 
-	for(int i=0; i < NUM_LOADS; i++){
+	for(uint8_t i=0; i < NUM_LOADS; i++){
 		product *= loads[i].DPRIO;
 		sum 	+= loads[i].DPRIO;
 	}
@@ -100,12 +112,12 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	load_t totalDL 	= 0x00;
 	load_t totalDCL		= 0x00;
 
-	for(int i=0; i < NUM_LOADS; i++){
+	for(uint8_t i=0; i < NUM_LOADS; i++){
 		totalDL 	+= loads[i].DL;
 		totalDCL	+= loads[i].DCL;
 	}
 
-	for(int i=0; i < NUM_CHILDS; i++){
+	for(uint8_t i=0; i < NUM_CHILDS; i++){
 		totalDL 	+= childs[i].DL;
 		totalDCL	+= childs[i].DCL;
 	}
@@ -113,7 +125,6 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DL	= totalDL;
 	this->DCL	= totalDCL;
 }
-
 
 //====================================================================================
 //							Comm protocol handling
@@ -176,6 +187,7 @@ status_t Node::ProtocolReadParent(){
 			}
 		}
 	}
+	return TASK_NO_ERROR;
 }
 
 status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address){
@@ -184,7 +196,7 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 	*/
 	commChild.commWriteBuffer(CMD_FRAME_HEADER1);
 	commChild.commWriteBuffer(CMD_FRAME_HEADER2);
-	for(int i=0; i< len; i++){
+	for(uint8_t i=0; i< len; i++){
 		commChild.commWriteBuffer(Command[i]);
 	}
 	commChild.commSetTxStatus(TRUE);
@@ -285,8 +297,7 @@ void Node::ProtocolReqChildData(void){
 		to get the info
 	*/
 	uint8_t Command[1] = { CMD_SEND_DATA };
-	uint8_t temp[3];
-	for (int i = 0; i < NUM_CHILDS; i++){
+	for (uint8_t i = 0; i < NUM_CHILDS; i++){
 		ProtocolWriteChild(Command, 1, childAddr[i]);
 	}
 

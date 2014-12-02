@@ -16,6 +16,8 @@
 #define __PROJECT_H_
 
 #include "Arduino.h"
+#include "Project.h"
+
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
@@ -104,7 +106,7 @@ extern status_t INIT_DONE;
 
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    METHODS	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-
+//extern Node node;
 void Setup(void);
 void Loop(void);
 
