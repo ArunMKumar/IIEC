@@ -25,7 +25,6 @@ typedef struct{
 	id_t ID;
 	id_t PID;
 	prio_t PRIO;
-//	prio_t DPRIO;		Nodes do not have DPRIO, they only have PRIO
 	load_t ASL;
 	load_t DCL;
 	load_t DL;
@@ -56,6 +55,8 @@ class Node{
 
 
 	  void readChildData(childData_t[], uint8_t);
+	  void setChildData();
+	  void setParentData();
 	  
 
   public:
@@ -90,16 +91,14 @@ class Node{
 	  */
 	  status_t readChild(childData_t[]);	// read data from child(s)
 	  status_t readParent();				// read command and data from parent
-	  status_t writeChild(uint8_t);		// Write data to the child
+	  status_t writeChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t writeParent();				// write data to parent
 
+	  status_t establishCommChild();		//establish communication with child nodes
+	  status_t establishCommParent();		// establish communication with parent node
 
-	  void setChildData();
-	  void setParentData();
 
-      // status_t TxParentByte(uint8_t);	// Transmit the Parent buffer, one parent supported so no addr required here
-     // status_t TxChildByte(uint8_t, uint8_t addr);	// Transmit the child buffer
-     // status_t Task(void);	// cyclic task for every node
+
 };
 
 

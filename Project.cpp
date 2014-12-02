@@ -45,6 +45,8 @@ void fillLoadState(void){
 	
 }
 
+
+
 //====================================================================================
 //							Node Data
 //====================================================================================
@@ -52,32 +54,96 @@ void fillLoadState(void){
 	child data structure to store the data
 */
 childData_t childs[NUM_CHILDS]; // Change as per project
-
 /*
 	This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
-addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
-
+addr_t childAddr[NUM_CHILDS] = {CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
 /*
 	Creating data structure for parent and child comm
 */
-deviceAttrib_t parentDevice = {0x00, 000, 0x00};
-deviceAttrib_t childDevice = { COMM_TYPE_I2C, 0x00, SRC_I2C_ADDRESS };
-
-
+deviceAttrib_t parentDevice = {PARENT_COMM_TYPE, 000, PARENT_ADDRESS};
+deviceAttrib_t childDevice = {CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
 /*
 Creating Node instance here
 */
 Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
+
+uint8_t Command_Buffer[CMD_FRAME_LEN];
+status_t COMM_ESTABLISHED = FALSE;
+status_t CHILD_DATA_RECEIVED = FALSE;
+status_t ASL_RECEIVED = FALSE;
+
+
+
+status_t Node::establishCommChild(){
+	/*
+	 * This module establishes communication with the child
+	 * nodes
+	 * IMP: readchild is a cyclic task and should not be used now
+	 */
+
+	uint8_t Command[1] = CMD_SEND_ACK;
+	uint8_t temp[3];
+	for(int i=0; i < NUM_CHILDS; i++){
+		TryAgain:
+			writeChild(Command, 1, childAddr[i]);
+			while(3 > commChild.commInDataAvail());	// wait till data arrives
+
+			for(int j=0; j < CMD_FRAME_LEN; j++){
+				commChild.commReadBuffer(&temp[j]);
+			}
+
+			if(CMD_ACK == temp[3]) continue;
+			else
+				goto TryAgain;
+	}
+
+}
 
 status_t Node::nodeInit(void){
 	/*
 		This shall initialize all data structures and comm
 		parameters for the node instance and also do the communication
 		part too.
+		Loads are initilaized during this module
 	*/
+	//TASK1: establish communication with the child and parent
+	thisNode.establishCommChild();
+	thisNode.establishCommParent();
+
+	//TASK2 :request childs to send data, calculate priority based on that
+
+	//TASK3: wait for parent to send ASL.
+
+	//Assign ASL to children and Loads
+
+	//Start Allocation and launch tasks
+
+}
 
 
+status_t Node::establishCommChild(){
+	/*
+	 * This module establishes communication with the child
+	 * nodes
+	 * IMP: readchild is a cyclic task and should not be used now
+	 */
+
+	uint8_t Command[1] = CMD_SEND_ACK;
+	uint8_t temp[3];
+	for(int i=0; i < NUM_CHILDS; i++){
+		TryAgain:
+			writeChild(Command, 1, childAddr[i]);
+			while(3 > commChild.commInDataAvail());	// wait till data arrives
+
+			for(int j=0; j < CMD_FRAME_LEN; j++){
+				commChild.commReadBuffer(&temp[j]);
+			}
+
+			if(CMD_ACK == temp[3]) continue;
+			else
+				goto TryAgain;
+	}
 
 }
 

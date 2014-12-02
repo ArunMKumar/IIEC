@@ -133,6 +133,7 @@ status_t Node::readChild(childData_t child[]){
 status_t Node::readParent(){
 	/*
 		Here we read the data and/or command from the parent
+		run these on an interrupt
 	*/
 	uint8_t temp;
 
@@ -144,22 +145,46 @@ status_t Node::readParent(){
 			if (CMD_FRAME_HEADER2 == temp){		//header 2 match : definitely a frame
 				commParent.commReadBuffer(&temp); // get the command
 
-				if (SEND_DATA == temp){
+				if (CMD_SEND_DATA == temp){
 					setParentData();	// this will write the data to the buffer with the headers
 				}
 
-				else if (SET_ASL == temp){ // Parent wants to set the assigned load
-					commParent.commReadBufferWord(&ASL);	// get the assigned load from the buffer
+				else if (CMD_SET_ASL == temp){ // Parent wants to set the assigned load
+					commParent.commReadBufferWord(&ASL);	// get the next byte assigned load from the buffer
+				}
+
+				else if(CMD_SEND_ACK == temp){
+					commParent.commWriteBufferWord(CMD_ACK);	// send ack
+					commParent.commSetTxStatus(TRUE);
+					commParent.Transmit(PARENT_ADDRESS);
 				}
 			}
 		}
 	}
 }
 
-status_t Node::writeChild(uint8_t childIndex){
+status_t Node::writeChild(uint8_t Command[], uint8_t len, addr_t address){
 	/*
-		write a piece of info to a particular child node.	
+		cyclic task to get data from child
 	*/
+	commChild.commWriteBuffer(CMD_FRAME_HEADER1);
+	commChild.commWriteBuffer(CMD_FRAME_HEADER2);
+	for(int i=0; i< len; i++){
+		commChild.commWriteBuffer(Command[i]);
+	}
+	commChild.commSetTxStatus(TRUE);
+	commChild.Transmit(address);
+
+	return TX_SUCCESS;
+
+}
+
+status_t Node::writeParent(){
+	/* Cyclic task to write data to parent */
+	setParentData();
+	commParent.commSetTxStatus(TRUE);
+	commParent.Transmit(PARENT_ADDRESS);
+	return TX_SUCCESS;
 }
 
 void Node::setParentData(void){
@@ -176,9 +201,6 @@ void Node::setParentData(void){
 	commParent.commWriteBufferWord(ASL);			// write frame heade1 to buffer
 	commParent.commWriteBufferWord(DCL);			// write frame heade1 to buffer
 	commParent.commWriteBufferWord(DL);				// write frame heade1 to buffer
-
-	commParent.commSetTxStatus(TRUE);
-	commParent.Transmit(PARENT_ADDRESS);
 }
 
 void Node::readChildData(childData_t childs[], uint8_t index){
@@ -189,41 +211,14 @@ void Node::readChildData(childData_t childs[], uint8_t index){
 	commChild.commReadBufferWord(&childs[index].DCL);
 }
 
-//status_t Node::TxParentByte(uint8_t data){
-//	
-//	/*
-//		No issuess in the current project as both
-//		Parent and child nodes are in different comm instace
-//		so we can safely use one particular instance for this 
-//		task.
-//	*/
-//
-//	commParent.commWriteBuffer(data);
-//	
-//	commParent.commSetTxStatus(TRUE);	// Set to false after transmitting
-//	commParent.Transmit(PARENT_ADDRESS);
-//	commParent.commSetTxStatus(FALSE);
-//
-//	return Status;
-//}
-//
-//status_t Node::TxChildByte(uint8_t data, uint8_t addr){
-//
-//	/*
-//	No issuess in the current project as both
-//	Parent and child nodes are in different comm instace
-//	so we can safely use one particular instance for this
-//	task.
-//	*/
-//
-//	commChild.commWriteBuffer(data);
-//
-//	commChild.commSetTxStatus(TRUE);
-//	commChild.Transmit(addr);
-//	commChild.commSetTxStatus(FALSE);
-//
-//	return Status;
-//}
+
+/*
+status_t Node::establishCommParent(){
+	/*
+	 * this module establishes communication with the
+	 * parent
+	 *
+}*/
 
 
 

@@ -26,6 +26,9 @@ Arun M Kumar		25 Nov 2011
 #define COMM_TYPE_BLE		0x03	// Communication over BLE
 #define COMM_TYPE_SPI		0x04	// Communication over SPI
 
+#define PARENT_COMM_TYPE	COMM_TYPE_I2C
+#define CHILD_COMM_TYPE		COMM_TYPE_I2C
+
 
 #define COMM_NOT_INIT		0x00
 #define COMM_INIT			0x01
