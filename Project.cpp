@@ -53,7 +53,7 @@ void fillLoadState(void){
 /*
 	child data structure to store the data
 */
-childData_t childs[NUM_CHILDS]; // Change as per project
+childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
 /*
 	This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
@@ -134,7 +134,7 @@ status_t Node::nodeInit(void){
 
 }
 
-//status_t Node::Task(void){
+status_t Node::Task(void){
 	/*
 	This function shall be executed cyclically everytime.
 	This shall perform the periodic tasks that needs to be done for the
@@ -151,10 +151,7 @@ status_t Node::nodeInit(void){
 
 	//Task 1:
 
-
-
-
-	return Status;
+	return thisNode.getStatus();
 
 }
 

@@ -99,10 +99,8 @@ class Node{
 	  void ProtocolReqChildData(void);								// Request data from the child nodes
 	  void ProtocolDLRequest(void);									// Request the parent for the Demanded load
 	  void ProtocolAssignLoads(void);								// Assigns the loads to the children
-	 // void ProtocolHandleChildData(uint8_t); Currently not required, let it be for now
-	 
 	
-
+	  void Task(void);
 	  status_t establishCommChild();		//establish communication with child nodes
 	  status_t establishCommParent();		// establish communication with parent node
 };
