@@ -12,14 +12,25 @@
 
 Node::Node(){
 	//Default constructor for the Node
-	this->ID  = NODE_NO_ID;
-	this->PID = NODE_NO_ID;
+	this->ID	= NODE_NO_ID;
+	this->PID	= NODE_NO_ID;
+	this->PRIO	= PRIO_NOT_INIT;
+	this->ASL	= LOAD_NOT_INIT;
+	this->DL	= LOAD_NOT_INIT;
+	this->DCL	= LOAD_NOT_INIT;
+	Status = NODE_NOT_INIT;
 }
 
 Node::Node(id_t ID, id_t PID){
 	// Parameterized constructor for the Node
 	this->ID = ID;
 	this->PID = PID;
+
+	this->PRIO = PRIO_NOT_INIT;
+	this->ASL = LOAD_NOT_INIT;
+	this->DL = LOAD_NOT_INIT;
+	this->DCL = LOAD_NOT_INIT;
+	Status = NODE_NOT_INIT;
 }
 
 Node::Node(id_t ID, id_t PID, deviceAttrib_t* child, deviceAttrib_t* parent, addr_t childAddr[]){
@@ -30,6 +41,11 @@ Node::Node(id_t ID, id_t PID, deviceAttrib_t* child, deviceAttrib_t* parent, add
 	this->PID = PID;
 	nodeCommInit(child, parent);
 	nodeSetChildAddr(childAddr);
+	this->PRIO = PRIO_NOT_INIT;
+	this->ASL = LOAD_NOT_INIT;
+	this->DL = LOAD_NOT_INIT;
+	this->DCL = LOAD_NOT_INIT;
+	Status = NODE_NOT_INIT;
 }
 
 status_t Node::nodeSetChildAddr(addr_t childAddr[]){
@@ -254,7 +270,3 @@ void Node::ProtocolReqChildData(void){
 	}
 
 }
-
-
-
-
