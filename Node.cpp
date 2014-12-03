@@ -137,7 +137,10 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 	place in the childadata place holder
 	*/
 
-	uint8_t temp;
+	uint8_t temp, iD;
+
+	if (0 == NUM_CHILDS)
+		return TASK_NO_ERROR;		// if there are no childs then there is no point in being here.
 
 	if (commChild.commInDataAvail() > DATA_FRAME_LEN){		// if any Frame available in the Input buffer
 			commChild.commReadBuffer(&temp);
@@ -160,9 +163,19 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 			else
 				return TASK_FAILED;
 		}
+
+		else if (CMD_FRAME_HEADER1 == temp){
+			commChild.commReadBuffer(&temp);	// read the second byte
+			if (CMD_FRAME_HEADER2 == temp){		// Second header for command also present
+				commChild.commReadBuffer(&temp);	// read the ID
+				iD = temp;
+				commChild.commReadBuffer(&temp);	// read the command
+				ProtocolHandleChildCmd(child, temp, iD);
+			}
+		}
+
 	}
 	return TASK_NO_ERROR;
-	
 }
 
 status_t Node::ProtocolReadParent(){
@@ -170,9 +183,12 @@ status_t Node::ProtocolReadParent(){
 		Here we read the data and/or command from the parent
 		run these on an interrupt
 	*/
+
+	if (0 == NUM_PARENT)
+		return TASK_NO_ERROR;	// if there is no parent then no point in being here
 	uint8_t temp;
 
-	if (commParent.commInDataAvail()){		// if any Frame available in the Input buffer
+	if (commParent.commInDataAvail() > DATA_FRAME_LEN){		// if any Frame available in the Input buffer
 		commParent.commReadBuffer(&temp);
 		// has parent requested data?
 		if (CMD_FRAME_HEADER1 == temp){			// header 1 match
@@ -185,7 +201,6 @@ status_t Node::ProtocolReadParent(){
 			}
 		}
 	}
-	return TASK_NO_ERROR;
 }
 
 status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address){
@@ -195,6 +210,8 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 		// Debug:
 		Serial.write("Enter Protocol write Child\n");
 
+		if (0 == NUM_CHILDS)
+			return TASK_NO_ERROR;	// if there are no childs then no point in being here
 
 	commChild.commWriteBuffer(CMD_FRAME_HEADER1);
 	commChild.commWriteBuffer(CMD_FRAME_HEADER2);
@@ -213,6 +230,9 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 
 status_t Node::ProtocolWriteParent(){
 	/* Cyclic task to write data to parent */
+
+	if (0 == NUM_PARENT)
+		return TASK_NO_ERROR;	 // if there are no parents then no point in being here
 	ProtocolsetParentData();
 	commParent.commSetTxStatus(TRUE);
 	commParent.Transmit(PARENT_ADDRESS);
@@ -269,6 +289,7 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		COMM_ESTABLISHED_PARENT = TRUE;		// The parent is there!! Great.
 		commParent.commWriteBuffer(CMD_FRAME_HEADER1);
 		commParent.commWriteBuffer(CMD_FRAME_HEADER2);
+		commParent.commWriteBuffer(ID);
 		commParent.commWriteBuffer(CMD_ACK);
 		commParent.commSetTxStatus(TRUE);
 		commParent.Transmit(PARENT_ADDRESS);
@@ -294,6 +315,33 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 	}
 
 	
+}
+
+void Node::ProtocolHandleChildCmd(childData_t childs[], uint8_t Command, uint8_t iD){
+	/*
+		Actions to be taken when command received from the child
+	*/
+	switch (Command){
+
+	case CMD_ACK:
+		/*
+			This means that the child has responded to an ACK command
+			we should set the appropriate variable
+			"COMM_ESTABLISHED_CHILD"
+		*/
+		for (uint8_t i = 0; i < NUM_CHILDS; i++){
+			if (iD == childs[i].ID){
+				childs[i].CommEstablished = TRUE;
+			}
+			
+		}
+		
+		break;
+
+		/*
+			Add  more commnads as needed
+		*/
+	}
 }
 
 void Node::ProtocolReqChildData(void){

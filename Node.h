@@ -29,6 +29,7 @@ typedef struct{
 	load_t DCL;
 	load_t DL;
 	status_t Status;	// has the data been received?? this is as of now.
+	status_t CommEstablished;
 }childData_t;
 
 //====================================================================================
@@ -96,6 +97,7 @@ class Node{
 	  status_t ProtocolWriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t ProtocolWriteParent();								// write data to parent
 	  void ProtocolHandleParentCmd(uint8_t);						// Handles the command received from the parent.
+	  void ProtocolHandleChildCmd(childData_t[], uint8_t, uint8_t);							// Handles the command received from the child.
 	  void ProtocolReqChildData(void);								// Request data from the child nodes
 	  void ProtocolDLRequest(void);									// Request the parent for the Demanded load
 	  void ProtocolAssignLoads(void);								// Assigns the loads to the children

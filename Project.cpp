@@ -22,7 +22,7 @@ Arun M Kumar						30 Nov 2014
 
 uint8_t Command_Buffer[CMD_FRAME_LEN];
 status_t COMM_ESTABLISHED = FALSE;
-status_t COMM_ESTABLISHED_CHILD = FALSE;
+//status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
 status_t COMM_ESTABLISHED_PARENT = FALSE;
 status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
@@ -103,13 +103,23 @@ status_t Node::establishCommChild(){
 	 both of these are handled in the ProtocolReadchild and ProtocolReadParent methods
 
 	 */
+
+	uint8_t numTries = 0;
+	uint8_t Command[1] = { CMD_SEND_ACK };
 	// Debug:
 	Serial.write("Inside establish Comm Child\n");
-	uint8_t Command[1] = { CMD_SEND_ACK };
-	for(uint8_t i=0; i < NUM_CHILDS; i++){
+
+	while ((FALSE == COMM_ESTABLISHED_CHILD) || (FALSE == COMM_ESTABLISHED_PARENT)){
+		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
 
+		MyNode.ProtocolReadChild();		// see if child has responded
+		MyNode.ProtocolReadParent();	
+		delay(10);
+		numTries++;
+	}
+	
 	// Debug:
 	Serial.write("Exit Establish comm child\n");
 
@@ -127,7 +137,6 @@ status_t Node::nodeInit(void){
 
 	// Task 0: Initialize the Node data structure
 	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
-
 	while (COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
 
 	MyNode.establishCommChild();		// Here we establish the communication with the child.

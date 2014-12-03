@@ -45,13 +45,6 @@ typedef union {
 }float_long_Buffer;
 
 
-// These variables shall be used in Init.
-extern status_t COMM_ESTABLISHED_CHILD;
-extern status_t COMM_ESTABLISHED_PARENT;
-extern status_t CHILD_DATA_RECEIVED;
-extern status_t ASL_RECEIVED;
-extern status_t INIT_DONE;
-
 //uint16_t GLOBAL_TICK;
 
 
@@ -103,6 +96,13 @@ extern status_t INIT_DONE;
 /*	SPI
 	Specify SPI related settings here
 */
+
+// These variables shall be used in Init.
+//extern status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
+extern status_t COMM_ESTABLISHED_PARENT;
+extern status_t CHILD_DATA_RECEIVED;
+extern status_t ASL_RECEIVED;
+extern status_t INIT_DONE;
 
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    METHODS	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
