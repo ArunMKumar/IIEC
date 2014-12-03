@@ -70,6 +70,7 @@ typedef union {
 //Address independent of the medium
 #define SRC_ADDRESS				0x00
 #define PARENT_ADDRESS			0x02
+#define COMM_NUM_TRIES			0x04
 
 
 #define CHILD1_ID				0x01
@@ -100,6 +101,7 @@ typedef union {
 // These variables shall be used in Init.
 //extern status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
 extern status_t COMM_ESTABLISHED_PARENT;
+extern status_t COMM_ESTABLISHED_CHILD;
 extern status_t CHILD_DATA_RECEIVED;
 extern status_t ASL_RECEIVED;
 extern status_t INIT_DONE;

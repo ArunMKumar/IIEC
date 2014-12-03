@@ -22,7 +22,7 @@ Arun M Kumar						30 Nov 2014
 
 uint8_t Command_Buffer[CMD_FRAME_LEN];
 status_t COMM_ESTABLISHED = FALSE;
-//status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
+status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
 status_t COMM_ESTABLISHED_PARENT = FALSE;
 status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
@@ -102,6 +102,16 @@ void ChildInit(void){
 	//childs[3].ID = CHILD2_ID;
 }
 
+status_t checkChildComm(void){
+	/*
+		Check if all children have been initialized
+	*/
+	for (uint8_t i = 0; i < NUM_CHILDS; i++){
+		if (FALSE == childs[i].CommEstablished);
+		return FALSE;
+	}
+	return TRUE;
+}
 status_t Node::establishCommChild(){
 	/*
 	 * This module establishes communication with the child
@@ -125,11 +135,19 @@ status_t Node::establishCommChild(){
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
-
+		delay(200);		// lets wait for some time
 		MyNode.ProtocolReadChild();		// see if child has responded
 		MyNode.ProtocolReadParent();	
 		delay(10);
 		numTries++;
+		COMM_ESTABLISHED_CHILD = checkChildComm();	// even if one child is uninitialized we try again
+
+		if (COMM_NUM_TRIES <= numTries){
+			/*
+				If we have tried the specified number of times we exit anyhow
+			*/
+			break;
+		}
 	}
 	
 	// Debug:
