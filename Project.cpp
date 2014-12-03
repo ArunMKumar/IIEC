@@ -22,7 +22,7 @@ Arun M Kumar						30 Nov 2014
 
 uint8_t Command_Buffer[CMD_FRAME_LEN];
 status_t COMM_ESTABLISHED = FALSE;
-status_t COMM_ESTABLISHED_CHILD[NUM_CHILDS];
+status_t COMM_ESTABLISHED_CHILDS;
 status_t COMM_ESTABLISHED_PARENT = FALSE;
 status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
@@ -45,8 +45,7 @@ LoadState_t Loads[NUM_LOADS];
 child data structure to store the data
 */
 childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
-childs[1].ID = CHILD1_ID;
-childs[2].ID = CHILD2_ID;
+
 /*
 This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
@@ -112,6 +111,7 @@ status_t checkChildComm(void){
 	}
 	return TRUE;
 }
+
 status_t Node::establishCommChild(){
 	/*
 	 * This module establishes communication with the child
@@ -140,7 +140,7 @@ status_t Node::establishCommChild(){
 		MyNode.ProtocolReadParent();	
 		delay(10);
 		numTries++;
-		COMM_ESTABLISHED_CHILD = checkChildComm();	// even if one child is uninitialized we try again
+		COMM_ESTABLISHED_CHILDS = checkChildComm();	// even if one child is uninitialized we try again
 
 		if (COMM_NUM_TRIES <= numTries){
 			/*
