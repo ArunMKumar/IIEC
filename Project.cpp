@@ -64,8 +64,6 @@ Node MyNode(NODE_ID, NODE_PID); // all other features shall be initialized in th
 //							Load Data
 //====================================================================================
 
-
-
 void fillLoadState(void){
 	/*
 		This fills the data from each load into a structure that can be used well by
@@ -80,7 +78,6 @@ void fillLoadState(void){
 	
 }
 
-
 status_t Node::establishCommChild(){
 	/*
 	 * This module establishes communication with the child
@@ -91,7 +88,7 @@ status_t Node::establishCommChild(){
 	Serial.write("Inside establish Comm Child\n");
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	for(uint8_t i=0; i < NUM_CHILDS; i++){
-			thisNode.ProtocolWriteChild(Command, 1, childAddr[i]);
+			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
 
 	// Debug:
@@ -181,7 +178,14 @@ void Init(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
-	//thisNode.nodeCommInit();
+	// Task 0: Initialize the Node data structure
+	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
+	
+	while(COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
+
+	// Task 1: We have to Initialize the Child and Load Data structure
+	fillLoadState();	// Fill the Load Data structure with the initialized data
+
 }
 
 void TaskMain(void){

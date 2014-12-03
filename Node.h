@@ -80,7 +80,7 @@ class Node{
 	  status_t nodeInitParent(deviceAttrib_t*);
 	  status_t nodeInitChild(deviceAttrib_t*);
 	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
-	  status_t nodeSetChildAddr(uint8_t[]);
+	  status_t nodeSetChildAddr(addr_t[]);
 
 	  status_t nodeInit(void);		// external definition
 	  status_t getStatus(void);

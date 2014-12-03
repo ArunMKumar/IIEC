@@ -202,8 +202,6 @@ status_t Comm::commWriteInBuffer(uint8_t data){
 	return inBuffer.writeBuffer(data);
 }
 
-
-
 uint8_t Comm::commInDataAvail(){
 	return inBuffer.dataAvailLen();
 }

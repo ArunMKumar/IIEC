@@ -81,10 +81,9 @@ status_t Node::nodeCommInit(deviceAttrib_t* childComm, deviceAttrib_t* parentCom
 	/*
 		Initializes the comm module for the In and out device
 	*/
-	nodeInitChild(childComm);
-	nodeInitChild(parentComm);
-	if ((COMM_INIT == commChild.getCommStatus()) && \
-		(COMM_INIT == commParent.getCommStatus())){
+		
+	if ((COMM_INIT == nodeInitChild(childComm)) && \
+		(COMM_INIT == nodeInitParent(parentComm))){
 		return COMM_INIT;
 	}
 
