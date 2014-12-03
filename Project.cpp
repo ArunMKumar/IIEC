@@ -180,12 +180,11 @@ status_t Node::nodeInit(void){
 	}
 
 	// Comm is established now, lets request DATA from the child.
-	MyNode.requestChildLoads();
+	MyNode.requestChildLoads(childs);
+	delay(200);	// lets  wait some more time for the response to come
 	MyNode.ProtocolReadChild(childs);	// read the childs
-
-	delay(200);	// lets  wait some more time.
-
-	MyNode.Calculate
+	
+	//MyNode.setNodeLoadLimit();	//request the demand from the child nodes
 
 	return TASK_NO_ERROR;
 }
@@ -219,18 +218,24 @@ void Init(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
-		// Task 1: We have to Initialize the Child and Load Data structure
+	// Task 1: We have to Initialize the Child and Load Data structure
 	LoadInit();	// Fill the Load Data structure with the initialized data
 
 	ChildInit(); // Fill the ChildDdta Holder with Child ID
 
 
-	if(TASK_FAILED == MyNode.nodeInit()){	// Initialize the node and associated communication
+	if (TASK_FAILED == MyNode.nodeInit()){	// Initialize the node and associated communication
 		INIT_DONE = FALSE;
 		return;
+	}
+	INIT_DONE = TRUE;
 }
 
 void TaskMain(void){
+
+	if (TRUE == INIT_DONE){
+
+	}
 
 }
 
