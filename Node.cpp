@@ -255,7 +255,18 @@ void Node::ProtocolsetParentData(void){
 	commParent.commWriteBufferWord(DL);				// write frame heade1 to buffer
 }
 
-void Node::ProtocolreadChildData(childData_t childs[], uint8_t index){
+void Node::ProtocolreadChildData(childData_t childs[], uint8_t ID){
+	/*
+	Fills data in the appropriate loaction in Child Data
+	*/
+	uint8_t index = 0x00;
+	for (uint8_t i = 0; i < NUM_CHILDS; i++){
+		if (ID == childs[i].ID){
+			index = i;
+			break;
+		}
+	}
+
 	commChild.commReadBuffer(&childs[index].PID);	// get the PID
 	commChild.commReadBufferFloat(&childs[index].PRIO);
 	commChild.commReadBufferWord(&childs[index].ASL);

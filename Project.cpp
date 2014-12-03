@@ -100,8 +100,6 @@ void ChildInit(void){
 	childs[1].ID = CHILD1_ID;
 	//childs[2].ID = CHILD2_ID;
 	//childs[3].ID = CHILD2_ID;
-
-
 }
 
 status_t Node::establishCommChild(){
