@@ -45,6 +45,9 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 	
 	Device = *data;
 
+	// Debug:
+	Serial.write("CommSetDevice Called\n");
+
 	if (COMM_TYPE_I2C == Device.deviceType){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
 		Wire.onReceive(commRxISR);// ISR for incoming communication
@@ -56,6 +59,8 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 	if (COMM_TYPE_BLE == Device.deviceType){
 		// methods for BLE init
 	}
+	//debug
+	Serial.write("CommSetDevice Exit\n");
 	return status;
 }
 

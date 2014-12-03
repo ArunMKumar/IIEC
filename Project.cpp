@@ -109,6 +109,7 @@ status_t Node::nodeInit(void){
 	Serial.write("Inside nodeInit\n");
 	Serial.write("InitDone val: ");
 	Serial.print(INIT_DONE);
+	Serial.write('\n');
 
 	if (FALSE == INIT_DONE){
 
