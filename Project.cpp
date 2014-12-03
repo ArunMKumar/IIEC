@@ -45,6 +45,8 @@ LoadState_t Loads[NUM_LOADS];
 child data structure to store the data
 */
 childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
+childs[1].ID = CHILD1_ID;
+childs[2].ID = CHILD2_ID;
 /*
 This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
@@ -88,7 +90,19 @@ void LoadTask(void){
 //====================================================================================
 //							Node Methods
 //====================================================================================
+void ChildInit(void){
+	/*
+		initialize the child data structure with IDs,
+		EDIT MANUALLY
+	*/
 
+	childs[0].ID = CHILD1_ID;
+	childs[1].ID = CHILD1_ID;
+	//childs[2].ID = CHILD2_ID;
+	//childs[3].ID = CHILD2_ID;
+
+
+}
 
 status_t Node::establishCommChild(){
 	/*
@@ -175,7 +189,10 @@ void Init(){
 	Do what we normally keep for Setup function in the sketches
 	*/
 		// Task 1: We have to Initialize the Child and Load Data structure
-	fillLoadState();	// Fill the Load Data structure with the initialized data
+	LoadInit();	// Fill the Load Data structure with the initialized data
+
+	ChildInit(); // Fill the ChildDdta Holder with Child ID
+
 
 	MyNode.nodeInit();	// Initialize the node and associated communication
 
