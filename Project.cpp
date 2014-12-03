@@ -61,10 +61,10 @@ Node MyNode(NODE_ID, NODE_PID); // all other features shall be initialized in th
 
 
 //====================================================================================
-//							Load Data
+//							Load Methods
 //====================================================================================
 
-void fillLoadState(void){
+void LoadInit(void){
 	/*
 		This fills the data from each load into a structure that can be used well by
 		the node task, instead of calling load class member functions again and again
@@ -78,11 +78,30 @@ void fillLoadState(void){
 	
 }
 
+void LoadTask(void){
+	/*
+		Rouitine tasks to e performed by each load is to be placed here
+	*/
+	
+}
+
+//====================================================================================
+//							Node Methods
+//====================================================================================
+
+
 status_t Node::establishCommChild(){
 	/*
 	 * This module establishes communication with the child
 	 * nodes
 	 * IMP: readchild is a cyclic task and should not be used now
+
+	 Note: CMD_SEND_ACK verifies that parent is there, so if the child receives it
+	 then it means that the parent is up and alive, for the parent if the child sends
+	 ACK back then that means that child is present.
+
+	 both of these are handled in the ProtocolReadchild and ProtocolReadParent methods
+
 	 */
 	// Debug:
 	Serial.write("Inside establish Comm Child\n");
@@ -106,50 +125,14 @@ status_t Node::nodeInit(void){
 		Loads are initilaized during this module
 	*/
 
-	// Debug:
-	Serial.write("Inside nodeInit\n");
-	Serial.write("InitDone val: ");
-	Serial.print(INIT_DONE);
-	Serial.write('\n');
+	// Task 0: Initialize the Node data structure
+	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
 
-	if (FALSE == INIT_DONE){
+	while (COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
 
-		//TASK1: establish communication with the child and parent
-		if (NUM_CHILDS){
-			if (FALSE == COMM_ESTABLISHED_CHILD){
-				establishCommChild();
-			}
-		}
-		// Debug:
-		Serial.write("DoneTask1\n");
-
-		/*if (NUM_PARENT){
-			if (FALSE == COMM_ESTABLISHED_PARENT){
-				thisNode.establishCommParent();
-			}
-		}*/
+	MyNode.establishCommChild();		// Here we establish the communication with the child.
 
 
-		//TASK2 :request childs to send data, calculate priority based on that
-		ProtocolReqChildData();
-		// Debug:
-		Serial.write("DoneTask2\n");
-		//thisNode.ProtocolDLRequest();
-
-		//TASK3: wait for parent to send ASL.
-
-		while(getStatus());
-		// Debug:
-		Serial.write("DoneTask3\n");
-
-		//Assign ASL to children and Loads
-		ProtocolAssignLoads();
-		// Debug:
-		Serial.write("DoneTask4\n");
-
-		//Start Allocation and launch tasks
-		//INIT_DONE = TRUE;
-	}
 	return TASK_NO_ERROR;
 }
 
@@ -174,17 +157,18 @@ status_t Node::Task(void){
 
 }
 
+
+/*******************************************************************************************
+			Methods to be exported to the arduino sketch
+********************************************************************************************/
 void Init(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
-	// Task 0: Initialize the Node data structure
-	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
-	
-	while(COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
-
-	// Task 1: We have to Initialize the Child and Load Data structure
+		// Task 1: We have to Initialize the Child and Load Data structure
 	fillLoadState();	// Fill the Load Data structure with the initialized data
+
+	MyNode.nodeInit();	// Initialize the node and associated communication
 
 }
 
