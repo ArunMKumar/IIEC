@@ -22,7 +22,6 @@ Load::Load(){
 	DL		= LOAD_NOT_INIT;	// demanded load
 }
 
-
 Load::Load(pin_t rpin, pin_t wpin, id_t ID, prio_t prio, load_t load){
 	// Parameterized constructor for the load type class
 	_rpin = rpin;
@@ -139,7 +138,6 @@ void Load::logic(void){
 
 	loadTicks ++;
 }
-
 
 status_t Load::Task(void){
 	//Debug

@@ -73,17 +73,20 @@ void LoadInit(void){
 		all nodes and loads.
 		Call this cyclically
 	*/
-	for (uint8_t i = 0; i < NUM_LOADS; i++){
-		Load1.getLoadState(&Loads[i]);
-	}
-	
+		Load1.getLoadState(&Loads[0]);
+		Load2.getLoadState(&Loads[1]);
+		Load3.getLoadState(&Loads[2]);
+		Load4.getLoadState(&Loads[3]);	
 }
 
 void LoadTask(void){
 	/*
-		Rouitine tasks to e performed by each load is to be placed here
+		Rouitine tasks to be performed by each load is to be placed here
 	*/
-	
+	Load1.Task();
+	Load2.Task();
+	Load3.Task();
+	Load4.Task();
 }
 
 //====================================================================================
@@ -203,10 +206,8 @@ status_t Node::Task(void){
 	Task 2: calculate the values and decide which loads to switch off
 	Task 3: Communicate the info back to parent
 	*/
-
-	//Task 1:
-
-	return thisNode.getStatus();
+	setNodePRIO(Loads, childs);
+	setNodeLoadLimit(Loads, childs);
 
 }
 
@@ -235,8 +236,14 @@ void TaskMain(void){
 
 	if (TRUE == INIT_DONE){
 
+		LoadTask();			// Perform then load tasks of reading and writing
+		MyNode.Task();		// Cyclic task of Nodes.
+
 	}
 
+	// Communication occurs always, so be ready to respond.
+	MyNode.ProtocolReadChild(childs);
+	MyNode.ProtocolReadParent();
 }
 
 

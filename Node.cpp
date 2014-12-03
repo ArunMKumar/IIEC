@@ -240,9 +240,9 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 	return TX_SUCCESS;
 
 }
-
+/*
 status_t Node::ProtocolWriteParent(){
-	/* Cyclic task to write data to parent */
+	/* Cyclic task to write data to parent 
 
 	if (0 == NUM_PARENT)
 		return TASK_NO_ERROR;	 // if there are no parents then no point in being here
@@ -251,7 +251,7 @@ status_t Node::ProtocolWriteParent(){
 	commParent.Transmit(PARENT_ADDRESS);
 	return TX_SUCCESS;
 }
-
+*/
 void Node::ProtocolsetParentData(void){
 	/*
 	Here we write data to the parent on the buffer and
