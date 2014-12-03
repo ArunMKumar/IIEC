@@ -82,6 +82,7 @@ class Node{
 	  status_t nodeInitChild(deviceAttrib_t*);
 	  status_t nodeCommInit(deviceAttrib_t*, deviceAttrib_t*);
 	  status_t nodeSetChildAddr(addr_t[]);
+	  status_t requestChildLoads(void);
 
 	  status_t nodeInit(void);		// external definition
 	  status_t getStatus(void);

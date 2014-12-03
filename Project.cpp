@@ -95,10 +95,10 @@ void ChildInit(void){
 		EDIT MANUALLY
 	*/
 
-	childs[0].ID = CHILD1_ID;
-	childs[1].ID = CHILD1_ID;
-	//childs[2].ID = CHILD2_ID;
-	//childs[3].ID = CHILD2_ID;
+	childs[0].ID = CHILD1_ID; childs[0].DL = 0x00; childs[0].PRIO = LOAD_PRIO_DEFAULT;
+	childs[1].ID = CHILD1_ID; childs[1].DL = 0x00; childs[1].PRIO = LOAD_PRIO_DEFAULT;
+	//childs[2].ID = CHILD2_ID; childs[2].DL = 0x00; childs[2].PRIO = LOAD_PRIO_DEFAULT;
+	//childs[3].ID = CHILD2_ID; childs[3].DL = 0x00; childs[3].PRIO = LOAD_PRIO_DEFAULT;
 }
 
 status_t checkChildComm(void){
@@ -136,7 +136,7 @@ status_t Node::establishCommChild(){
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
 		delay(200);		// lets wait for some time
-		MyNode.ProtocolReadChild();		// see if child has responded
+		MyNode.ProtocolReadChild(childs);		// see if child has responded
 		MyNode.ProtocolReadParent();	
 		delay(10);
 		numTries++;
@@ -171,6 +171,21 @@ status_t Node::nodeInit(void){
 
 	MyNode.establishCommChild();		// Here we establish the communication with the child.
 
+	if ((FALSE == COMM_ESTABLISHED_CHILDS) || (FALSE == COMM_ESTABLISHED_PARENT)){
+		/*
+			We failed to establish the communication between the nodes, 
+			so init has failed
+		*/
+		return TASK_FAILED;
+	}
+
+	// Comm is established now, lets request DATA from the child.
+	MyNode.requestChildLoads();
+	MyNode.ProtocolReadChild(childs);	// read the childs
+
+	delay(200);	// lets  wait some more time.
+
+	MyNode.Calculate
 
 	return TASK_NO_ERROR;
 }
@@ -210,8 +225,9 @@ void Init(){
 	ChildInit(); // Fill the ChildDdta Holder with Child ID
 
 
-	MyNode.nodeInit();	// Initialize the node and associated communication
-
+	if(TASK_FAILED == MyNode.nodeInit()){	// Initialize the node and associated communication
+		INIT_DONE = FALSE;
+		return;
 }
 
 void TaskMain(void){

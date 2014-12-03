@@ -124,6 +124,18 @@ void Node::setNodeLoadLimit(LoadState_t loads[], childData_t childs[]){
 	this->DCL	= totalDCL;
 }
 
+status_t Node::requestChildLoads(void){
+	/*
+		This method explicitly requests data from the childs
+	*/
+	uint8_t Command[1] = { CMD_SEND_DATA };
+
+	for(uint8_t i = 0; i < NUM_CHILDS; i++){
+		ProtocolWriteChild(Command, 1, childAddr[i]);
+	}
+}
+
+
 //====================================================================================
 //							Comm protocol handling
 //====================================================================================
