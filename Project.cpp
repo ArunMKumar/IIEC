@@ -5,6 +5,10 @@ Contains the task structure and the tasks that need to be completed.
 Do all that you would do in the sketch here, then just use this call
 in the sketch.
 
+All tasks are defined here and the superset of these are exported as 
+setup and loop for the arduio sketch to load.
+The objects and everything else shall be created here.
+
 Arun M Kumar						30 Nov 2014
 */
 
@@ -24,14 +28,11 @@ status_t INIT_DONE = FALSE;
 status_t CHILD_DATA_RECEIVED = FALSE;
 status_t ASL_RECEIVED = FALSE;
 
-//====================================================================================
-//							Load Data
-//====================================================================================
 /*
-	First we need to initialize the loads.
-	For the time being we use 4 loads and work with them
+First we need to initialize the loads.
+For the time being we use 4 loads and work with them
 
-		Initializing the Loads instances here
+Initializing the Loads instances here
 */
 Load Load1(LOAD_0R, LOAD_0W, LOAD_ID0, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);		// A0,A1 etc. will work with Arduino IDE, ignore error here
 Load Load2(LOAD_1R, LOAD_1W, LOAD_ID1, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
@@ -39,6 +40,31 @@ Load Load3(LOAD_2R, LOAD_2W, LOAD_ID2, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 Load Load4(LOAD_3R, LOAD_3W, LOAD_ID3, LOAD_PRIO_DEFAULT, LOAD_CLASS_DEFAULT);
 
 LoadState_t Loads[NUM_LOADS];
+
+/*
+child data structure to store the data
+*/
+childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
+/*
+This array contains the I2C addresses of the childs that we need to ocmmunicate with
+*/
+addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
+/*
+Creating data structure for parent and child comm
+*/
+deviceAttrib_t parentDevice = { PARENT_COMM_TYPE, 000, PARENT_ADDRESS };
+deviceAttrib_t childDevice = { CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
+/*
+Creating Node instance here
+*/
+Node MyNode(NODE_ID, NODE_PID); // all other features shall be initialized in the setup module.
+
+
+//====================================================================================
+//							Load Data
+//====================================================================================
+
+
 
 void fillLoadState(void){
 	/*
@@ -53,30 +79,6 @@ void fillLoadState(void){
 	}
 	
 }
-
-
-
-	//====================================================================================
-	//							Node Data
-	//====================================================================================
-	/*
-		child data structure to store the data
-		*/
-	childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
-	/*
-		This array contains the I2C addresses of the childs that we need to ocmmunicate with
-		*/
-	addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
-	/*
-		Creating data structure for parent and child comm
-		*/
-	deviceAttrib_t parentDevice = { PARENT_COMM_TYPE, 000, PARENT_ADDRESS };
-	deviceAttrib_t childDevice = { CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
-	/*
-	Creating Node instance here
-	*/
-	extern Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
-
 
 
 status_t Node::establishCommChild(){
@@ -174,10 +176,6 @@ status_t Node::Task(void){
 	return thisNode.getStatus();
 
 }
-
-/*
-Now lets create the basic functions Init and Task
-*/
 
 void Init(){
 	/*
