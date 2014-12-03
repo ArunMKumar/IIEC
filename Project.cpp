@@ -15,6 +15,15 @@ Arun M Kumar						30 Nov 2014
 #include "Comm.h"
 
 
+
+uint8_t Command_Buffer[CMD_FRAME_LEN];
+status_t COMM_ESTABLISHED = FALSE;
+status_t COMM_ESTABLISHED_CHILD = FALSE;
+status_t COMM_ESTABLISHED_PARENT = FALSE;
+status_t INIT_DONE = FALSE;
+status_t CHILD_DATA_RECEIVED = FALSE;
+status_t ASL_RECEIVED = FALSE;
+
 //====================================================================================
 //							Load Data
 //====================================================================================
@@ -68,13 +77,6 @@ void fillLoadState(void){
 	*/
 	extern Node thisNode(NODE_ID, NODE_PID, &childDevice, &parentDevice, childAddr);
 
-	uint8_t Command_Buffer[CMD_FRAME_LEN];
-	status_t COMM_ESTABLISHED = FALSE;
-	status_t COMM_ESTABLISHED_CHILD = FALSE;
-	status_t COMM_ESTABLISHED_PARENT = FALSE;
-	status_t INIT_DONE = FALSE;
-	status_t CHILD_DATA_RECEIVED = FALSE;
-	status_t ASL_RECEIVED = FALSE;
 
 
 status_t Node::establishCommChild(){
