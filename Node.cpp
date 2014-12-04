@@ -154,7 +154,6 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 	*/
 
 	uint8_t temp =0, iD =0;
-	//ProtocolReadChildData(child, temp);
 	if (0 == NUM_CHILDS)
 		return TASK_NO_ERROR;		// if there are no childs then there is no point in being here.
 

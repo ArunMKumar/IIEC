@@ -134,9 +134,21 @@ status_t Node::establishCommChild(){
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	// Debug:
 	Serial.write("Inside establish Comm Child\n");
+	Serial.write("Values:");
+		Serial.print(COMM_ESTABLISHED_CHILDS);
+	Serial.print(COMM_ESTABLISHED_PARENT);
+	Serial.write("\n");
 
 	while ((FALSE == COMM_ESTABLISHED_CHILDS) || (FALSE == COMM_ESTABLISHED_PARENT)){
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
+			//Debug:
+			Serial.print("============================\n");
+			Serial.write("Sending to child device:" );
+			Serial.print(childAddr[i]);
+			Serial.write("\n");
+			Serial.print("============================\n");
+				
+
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
 		delay(200);		// lets wait for some time
@@ -221,6 +233,10 @@ void ProjectInit(){
 	Do what we normally keep for Setup function in the sketches
 	*/
 	// Task 1: We have to Initialize the Child and Load Data structure
+	//debug
+	Serial.write("Inside Project Init");
+
+
 	LoadInit();	// Fill the Load Data structure with the initialized data
 
 	ChildInit(); // Fill the ChildDdta Holder with Child ID
@@ -231,9 +247,16 @@ void ProjectInit(){
 		return;
 	}
 	INIT_DONE = TRUE;
+
+	//debug
+	Serial.write("Exit Project Init");
 }
 
 void ProjectTaskMain(void){
+
+
+	//debug:
+	Serial.write("Inside Task Main\n");
 
 	if (TRUE == INIT_DONE){
 
@@ -245,6 +268,10 @@ void ProjectTaskMain(void){
 	// Communication occurs always, so be ready to respond.
 	MyNode.ProtocolReadChild(childs);
 	MyNode.ProtocolReadParent();
+
+	//debug:
+	Serial.write("Exit Task Main\n");
+
 }
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    ISRs	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
