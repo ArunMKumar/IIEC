@@ -8,6 +8,7 @@ Arun M Kumar		25 NOV 2014
 
 #include "Comm.h"
 #include "Command.h"
+#include "Project.h"
 #include <Wire.h>
 
 Comm::Comm(){

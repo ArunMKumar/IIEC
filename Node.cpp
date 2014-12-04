@@ -129,10 +129,13 @@ status_t Node::requestChildLoads(childData_t childs[]){
 		This method explicitly requests data from the childs
 	*/
 	uint8_t Command[1] = { CMD_SEND_DATA };
+	if (NUM_CHILDS){
+		for (uint8_t i = 0; i < NUM_CHILDS; i++){
+			ProtocolWriteChild(Command, 1, childAddr[i]);
+		}
 
-	for(uint8_t i = 0; i < NUM_CHILDS; i++){
-		ProtocolWriteChild(Command, 1, childAddr[i]);
 	}
+	return TASK_NO_ERROR;
 
 }
 
@@ -150,8 +153,8 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 	place in the childadata place holder
 	*/
 
-	uint8_t temp, iD;
-
+	uint8_t temp =0, iD =0;
+	//ProtocolReadChildData(child, temp);
 	if (0 == NUM_CHILDS)
 		return TASK_NO_ERROR;		// if there are no childs then there is no point in being here.
 
@@ -214,6 +217,8 @@ status_t Node::ProtocolReadParent(){
 			}
 		}
 	}
+
+	return TASK_NO_ERROR;
 }
 
 status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address){
@@ -268,7 +273,7 @@ void Node::ProtocolsetParentData(void){
 	commParent.commWriteBufferWord(DL);				// write frame heade1 to buffer
 }
 
-void Node::ProtocolreadChildData(childData_t childs[], uint8_t ID){
+void Node::ProtocolReadChildData(childData_t childs[], uint8_t ID){
 	/*
 	Fills data in the appropriate loaction in Child Data
 	*/

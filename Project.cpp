@@ -17,6 +17,7 @@ Arun M Kumar						30 Nov 2014
 #include "Load.h"
 #include "Node.h"
 #include "Comm.h"
+#include <Wire.h>
 
 
 
@@ -134,7 +135,7 @@ status_t Node::establishCommChild(){
 	// Debug:
 	Serial.write("Inside establish Comm Child\n");
 
-	while ((FALSE == COMM_ESTABLISHED_CHILD) || (FALSE == COMM_ESTABLISHED_PARENT)){
+	while ((FALSE == COMM_ESTABLISHED_CHILDS) || (FALSE == COMM_ESTABLISHED_PARENT)){
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
@@ -215,7 +216,7 @@ status_t Node::Task(void){
 /*******************************************************************************************
 			Methods to be exported to the arduino sketch
 ********************************************************************************************/
-void Init(){
+void ProjectInit(){
 	/*
 	Do what we normally keep for Setup function in the sketches
 	*/
@@ -232,7 +233,7 @@ void Init(){
 	INIT_DONE = TRUE;
 }
 
-void TaskMain(void){
+void ProjectTaskMain(void){
 
 	if (TRUE == INIT_DONE){
 
@@ -246,4 +247,14 @@ void TaskMain(void){
 	MyNode.ProtocolReadParent();
 }
 
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    ISRs	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+void commRxISR(int count){
+	/*
+		ISR for the dats received on the I2C bus
+	*/
+
+	while (0 < Wire.available()){
+		MyNode.commChild.commWriteInBuffer(Wire.read());	// Project specific implementation
+	}
+}
 

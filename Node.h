@@ -56,7 +56,7 @@ class Node{
 	  status_t Status;	// Current Status of the Load
 
 
-	  void ProtocolreadChildData(childData_t[], uint8_t);
+	  void ProtocolReadChildData(childData_t[], uint8_t);
 	  void ProtocolsetChildData(void);
 	  void ProtocolsetParentData(void);
 	  
@@ -93,7 +93,7 @@ class Node{
 		handled by the Comm instance.
 	  */
 	  status_t ProtocolReadChild(childData_t[]);					// read data from child(s)
-	  void ProtocolReadChildData(childData_t[], uint8_t);			// read data for a specific child
+	  //void ProtocolReadChildData(uint8_t, uint8_t);			// read data for a specific child
 	  status_t ProtocolReadParent();								// read command and data from parent
 	  status_t ProtocolWriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t ProtocolWriteParent();								// write data to parent

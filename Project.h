@@ -109,7 +109,11 @@ extern status_t INIT_DONE;
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    METHODS	 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 //extern Node node;
-void Setup(void);
-void Loop(void);
+void ProjectInit(void);
+void ProjectTaskMain(void);
+
+
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    ISR		 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+void commRxISR(int);
 
 #endif /* PROJECT_H_ */
