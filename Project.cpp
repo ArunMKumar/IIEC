@@ -50,7 +50,7 @@ childData_t childs[NUM_CHILDS]; // Change as per project, declared in global sco
 /*
 This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
-addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
+
 addr_t childAddrtest = CHILD1_I2C_ADDR;
 /*
 Creating data structure for parent and child comm
@@ -134,12 +134,14 @@ status_t Node::establishCommChild(){
 	uint8_t numTries = 0;
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	// Debug:
+	
 	Serial.write("Inside establish Comm Child\n");
 	Serial.write("Values:");
 		Serial.print(COMM_ESTABLISHED_CHILDS);
 	Serial.print(COMM_ESTABLISHED_PARENT);
 	Serial.write("\n");
-
+	
+	Serial.write("V:");
 	while ((FALSE == COMM_ESTABLISHED_CHILDS) || (FALSE == COMM_ESTABLISHED_PARENT)){
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			//Debug:
@@ -148,7 +150,9 @@ status_t Node::establishCommChild(){
 			Serial.print(childAddr[i]);
 			Serial.write("\n");
 			Serial.print("============================\n");
-				
+			
+			Serial.print(childAddr[i],DEC);
+			
 
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
@@ -168,7 +172,7 @@ status_t Node::establishCommChild(){
 	}
 	
 	// Debug:
-	Serial.write("Exit Establish comm child\n");
+	//Serial.write("Exit Establish comm child\n");
 
 	return TASK_NO_ERROR;
 
@@ -181,19 +185,18 @@ status_t Node::nodeInit(void){
 		part too.
 		Loads are initilaized during this module
 	*/
+	
 	Serial.write("Inside Node_INITd\n");
 	// Task 0: Initialize the Node data structure
+	addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
 	//debug::
 	Serial.write("checking address\n");
 	Serial.write("Address:");
 	Serial.print(childAddr[0], DEC);
 	Serial.write("\n");
-	Serial.print(childAddr[1], DEC);
+	Serial.print(CHILD1_I2C_ADDR, DEC);
 	Serial.write("\n");
-	Serial.print(childAddrtest, DEC);
-	Serial.write("\n");
-	Serial.print('A', DEC);
-	Serial.write("\n");
+	
 
 	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
 	while (COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
@@ -214,7 +217,7 @@ status_t Node::nodeInit(void){
 	MyNode.ProtocolReadChild(childs);	// read the childs
 	
 	//MyNode.setNodeLoadLimit();	//request the demand from the child nodes
-	Serial.write("Exit Node_INITd\n");
+	//Serial.write("Exit Node_INITd\n");
 	return TASK_NO_ERROR;
 }
 
@@ -249,11 +252,11 @@ void ProjectInit(){
 	//debug
 	delay(4000);
 	Serial.write("Inside Project Init\n");
-
-
 	LoadInit();	// Fill the Load Data structure with the initialized data
 
 	ChildInit(); // Fill the ChildDdta Holder with Child ID
+
+	MyNode.nodeInit();
 
 
 	if (TASK_FAILED == MyNode.nodeInit()){	// Initialize the node and associated communication
@@ -270,7 +273,7 @@ void ProjectTaskMain(void){
 
 
 	//debug:
-	Serial.write("Inside Task Main\n");
+	//Serial.write("Inside Task Main\n");
 
 	if (TRUE == INIT_DONE){
 
@@ -284,7 +287,7 @@ void ProjectTaskMain(void){
 	MyNode.ProtocolReadParent();
 
 	//debug:
-	Serial.write("Exit Task Main\n");
+	//Serial.write("Exit Task Main\n");
 
 }
 

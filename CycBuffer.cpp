@@ -55,7 +55,7 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	 * The element to be written is passed as the parameter.
 	 */
 	//debug:
-	Serial.write("Enter CYC Write Buffer \n");
+	//Serial.write("Enter CYC Write Buffer \n");
 
 	if (OVERFLOW){
 		Status = BUF_OVERFLOW;
@@ -71,7 +71,7 @@ status_t CYCBUFFER::writeBuffer(uint8_t ele){
 	Status = BUF_NOERROR;
 
 	//debug:
-	Serial.write("Exit CYC Write Buffer \n");
+	//Serial.write("Exit CYC Write Buffer \n");
 	return Status;
 }
 

@@ -86,7 +86,7 @@ class Comm{
 		status_t commWriteBuffer(uint8_t);
 		status_t commWriteBufferWord(uint32_t);
 		status_t commWriteBufferFloat(uint32f_t);
-		status_t commWriteBufferString(uint8_t*);
+	//	status_t commWriteBufferString(uint8_t*);
 
 		status_t commWriteInBuffer(uint8_t);
 		status_t commReadBuffer(uint8_t*);

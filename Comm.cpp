@@ -47,21 +47,21 @@ status_t Comm::commSetDevice(deviceAttrib_t* data){
 	Device = *data;
 
 	// Debug:
-	Serial.write("CommSetDevice Called\n");
+	//Serial.write("CommSetDevice Called\n");
 
 	if (COMM_TYPE_I2C == Device.deviceType){
 		Wire.begin(Device.address);	// Initialize the I2C bus on the node
 		Wire.onReceive(commRxISR);// ISR for incoming communication
 		status = COMM_INIT;
 		// Debug:
-		Serial.write("I2C initialized\n");
+		//Serial.write("I2C initialized\n");
 	}
 
 	if (COMM_TYPE_BLE == Device.deviceType){
 		// methods for BLE init
 	}
 	//debug
-	Serial.write("CommSetDevice Exit\n");
+	//Serial.write("CommSetDevice Exit\n");
 	return status;
 }
 
@@ -70,7 +70,7 @@ void Comm::commSetTxStatus(uint8_t status){
 		Set the Tx status as TRUE or FALSE
 	*/
 	// Debug:
-	Serial.write("Inside Comm set Tx satus\n");
+	//Serial.write("Inside Comm set Tx satus\n");
 
 	startTx = status;
 }
@@ -145,7 +145,7 @@ status_t Comm::commWriteBuffer(uint8_t data){
 	out buffer one byte at a time*/
 
 	// Debug:
-	Serial.write("Enter Comm Write Buffer \n");
+	//Serial.write("Enter Comm Write Buffer \n");
 
 	return outBuffer.writeBuffer(data);
 }
@@ -157,13 +157,13 @@ status_t Comm::commWriteBufferWord(uint32_t data){
 status_t Comm::commWriteBufferFloat(uint32f_t data){
 	return outBuffer.writeBufferFloat(data);
 }
-
+/*
 status_t Comm::commWriteBufferString(uint8_t* data){
 	/* 
 		Method writes string contents till space is available
 		if the space runs out at runtime, data written will not be revealed
 		check bufferavail before writing anything
-	*/
+	
 	while (BUF_NOERROR == outBuffer.getBufferStatus()){
 		outBuffer.writeBuffer(*data);
 		data += sizeof(uint8_t);
@@ -175,7 +175,7 @@ status_t Comm::commWriteBufferString(uint8_t* data){
 	}
 
 	return outBuffer.getBufferStatus();
-}
+}*/
 
 status_t Comm::commReadBuffer(uint8_t* loc){
 	return inBuffer.readBuffer(loc);

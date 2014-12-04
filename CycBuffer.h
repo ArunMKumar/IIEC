@@ -29,7 +29,7 @@ Arun M Kumar		28 Nov 2011*/
 //							BUFFER STATUSES
 //====================================================================================
 // defining parameters
-#define BUFFER_LEN		100U
+#define BUFFER_LEN		50U
 
 // Defining the error codes
 #define BUF_NOERROR		0x00

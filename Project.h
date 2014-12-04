@@ -79,7 +79,7 @@ typedef union {
 #define CHILD4_ID				0x04	// define more if necessary
 
 
-#define CHILD1_I2C_ADDR			0x10
+#define CHILD1_I2C_ADDR			0x01
 #define CHILD2_I2C_ADDR			0x02
 #define CHILD3_I2C_ADDR			0x03
 #define CHILD4_I2C_ADDR			0x04 // define more if necessary

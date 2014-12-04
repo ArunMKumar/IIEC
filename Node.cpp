@@ -225,7 +225,7 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 		cyclic task to get data from child
 	*/
 		// Debug:
-		Serial.write("Enter Protocol write Child\n");
+		//Serial.write("Enter Protocol write Child\n");
 
 		if (0 == NUM_CHILDS)
 			return TASK_NO_ERROR;	// if there are no childs then no point in being here
@@ -239,7 +239,7 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 	commChild.Transmit(address);
 
 	// Debug:
-	Serial.write("Exit Protocol write Child\n");
+	//Serial.write("Exit Protocol write Child\n");
 
 	return TX_SUCCESS;
 

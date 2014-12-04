@@ -141,7 +141,7 @@ void Load::logic(void){
 
 status_t Load::Task(void){
 	//Debug
-	Serial.write("Inside Load Task\n");
+	//Serial.write("Inside Load Task\n");
 	/*
 	 * Task  that is executed cyclically for every load
 	 * Tasks to be done:
@@ -154,7 +154,7 @@ status_t Load::Task(void){
 	logic();
 
 	//Debug
-	Serial.write("Exit  Load Task\n");
+	//Serial.write("Exit  Load Task\n");
 
 	return Status;
 }
