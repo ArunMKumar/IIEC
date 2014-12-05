@@ -178,7 +178,7 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 			else
 				return TASK_FAILED;
 		}
-
+		/*
 		else if (CMD_FRAME_HEADER1 == temp){
 			commChild.commReadBuffer(&temp);	// read the second byte
 			if (CMD_FRAME_HEADER2 == temp){		// Second header for command also present
@@ -188,7 +188,7 @@ status_t Node::ProtocolReadChild(childData_t child[]){
 				ProtocolHandleChildCmd(child, temp, iD);
 			}
 		}
-
+		*/
 	}
 	return TASK_NO_ERROR;
 }
@@ -329,7 +329,7 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		commParent.commWriteBuffer(CMD_ACK);
 		commParent.commSetTxStatus(TRUE);
 		commParent.Transmit(PARENT_ADDRESS);
-		Serial.print("Sending SEND_ACK from Parent: ");
+		Serial.print("Senfd SEND_ACK from Parent: ");
 		break;
 
 	case CMD_SET_ASL:
@@ -400,3 +400,26 @@ void Node::ProtocolAssignLoads(void){
 	/* This method assigns the loads to the 
 	child nodes, the actual load sanctioned may be different*/
 }
+
+
+status_t Node::ProtocolSetResponse(childData_t * child){
+	/* Gets the command response from a single child*/
+	uint8_t temp;
+	if (0 == NUM_CHILDS)
+		return TASK_NO_ERROR;		// if there are no childs then there is no point in being here.
+
+	if (commChild.commInDataAvail() > DATA_FRAME_LEN){		// if any Frame available in the Input buffer
+		commChild.commReadBuffer(&temp);
+		if (CMD_FRAME_HEADER1 == temp){
+			commChild.commReadBuffer(&temp);	// read the second byte
+			if (CMD_FRAME_HEADER2 == temp){		// Second header for command also present
+				commChild.commReadBuffer(&temp);	// read the ID
+				commChild.commReadBuffer(&temp);
+				ProtocolHandleParentCmd(temp);	// HAndle the command
+
+			}
+		}
+	}
+			return TASK_NO_ERROR;
+}
+

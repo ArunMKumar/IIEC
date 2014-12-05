@@ -47,14 +47,15 @@ child data structure to store the data
 */
 childData_t childs[NUM_CHILDS]; // Change as per project, declared in global scope, should be Zeros everywhere
 
-/*
-This array contains the I2C addresses of the childs that we need to ocmmunicate with
-*/
+
+
 
 /*
 Creating data structure for parent and child comm
+Here we set up tyhe device for parent and child communication.
+the adresses are for this node only.
 */
-deviceAttrib_t parentDevice = { PARENT_COMM_TYPE, 000, PARENT_ADDRESS };
+deviceAttrib_t parentDevice = { PARENT_COMM_TYPE, 000, SRC_ADDRESS };
 deviceAttrib_t childDevice = { CHILD_COMM_TYPE, 0x00, SRC_ADDRESS };
 /*
 Creating Node instance here
@@ -133,6 +134,12 @@ status_t Node::establishCommChild(){
 		return TASK_NO_ERROR;
 	}
 
+
+	/*
+	This array contains the I2C addresses of the childs that we need to ocmmunicate with
+	*/
+	//addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR };// , CHILD2_I2C_ADDR
+
 	uint8_t numTries = 0;
 	uint8_t Command[1] = { CMD_SEND_ACK };
 	// Debug:
@@ -148,18 +155,20 @@ status_t Node::establishCommChild(){
 			//Debug:
 			Serial.print("============================\n");
 			Serial.write("Sending to child device:" );
-			Serial.print(childAddr[i], DEC);
+			Serial.print(static_cast<unsigned int>(childAddr[i]), DEC);
 			Serial.write("\n");
 			Serial.print("============================\n");
 			
 			
 
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
+			delay(20);
+			MyNode.ProtocolSetResponse(&childs[i]);		// see if child has responded
+		
 		}
-		delay(200);		// lets wait for some time
-
-		MyNode.ProtocolReadChild(childs);		// see if child has responded
-		MyNode.ProtocolReadParent();	
+			// lets wait for some time
+		MyNode.ProtocolReadParent();
+	
 		delay(10);
 		numTries++;
 		COMM_ESTABLISHED_CHILDS = checkChildComm();	// even if one child is uninitialized we try again
@@ -189,7 +198,9 @@ status_t Node::nodeInit(void){
 	
 	Serial.write("Inside Node_INITd\n");
 	// Task 0: Initialize the Node data structure
-	//addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR };// , CHILD2_I2C_ADDR
+
+	addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR };// , CHILD2_I2C_ADDR
+
 	
 	if (NUM_CHILDS){			// if there are childs we go here otherwise we do not
 		MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
@@ -290,7 +301,8 @@ void commRxISR(int count){
 	/*
 		ISR for the dats received on the I2C bus
 	*/
-
+	Serial.write("Inside serial receive ISR\n");
+	while (1);
 	while (0 < Wire.available()){
 		MyNode.commChild.commWriteInBuffer(Wire.read());	// Project specific implementation
 	}

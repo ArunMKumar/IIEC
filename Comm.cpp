@@ -112,9 +112,10 @@ status_t Comm::Transmit(id_t address){
 				Transmit all the data in one go
 			*/
 			outBuffer.readBuffer(&data);
+			Serial.write("Reached Wire Write\n");
 			Wire.write(data);
 		}
-
+		Serial.write("Reached End Teansmission\n");
 		Wire.endTransmission();				 // End I2C Comm
 	}
 

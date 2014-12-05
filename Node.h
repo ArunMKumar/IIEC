@@ -92,16 +92,17 @@ class Node{
 		The buffer is read and is written to. Physical level details are 
 		handled by the Comm instance.
 	  */
-	  status_t ProtocolReadChild(childData_t[]);					// read data from child(s)
+	  status_t ProtocolReadChild(childData_t*);					// read data from child(s)
 	  //void ProtocolReadChildData(uint8_t, uint8_t);			// read data for a specific child
 	  status_t ProtocolReadParent();								// read command and data from parent
 	  status_t ProtocolWriteChild(uint8_t[], uint8_t, uint8_t);		// Write data to the child
 	  status_t ProtocolWriteParent();								// write data to parent
 	  void ProtocolHandleParentCmd(uint8_t);						// Handles the command received from the parent.
-	  void ProtocolHandleChildCmd(childData_t[], uint8_t, uint8_t);							// Handles the command received from the child.
+	  void ProtocolHandleChildCmd(childData_t[], uint8_t, uint8_t);	// Handles the command received from the child.
 	  void ProtocolReqChildData(void);								// Request data from the child nodes
 	  void ProtocolDLRequest(void);									// Request the parent for the Demanded load
 	  void ProtocolAssignLoads(void);								// Assigns the loads to the children
+	  status_t ProtocolSetResponse(childData_t*);
 	
 	  status_t Task(void);
 	  status_t establishCommChild();		//establish communication with child nodes
