@@ -232,8 +232,13 @@ status_t Node::ProtocolWriteChild(uint8_t Command[], uint8_t len, addr_t address
 
 	commChild.commWriteBuffer(CMD_FRAME_HEADER1);
 	commChild.commWriteBuffer(CMD_FRAME_HEADER2);
+	Serial.write("FrameHEader Sent\n");
+
 	for(uint8_t i=0; i< len; i++){
+		Serial.write("Sending Command :");
 		commChild.commWriteBuffer(Command[i]);
+		Serial.print(Command[i]);
+		Serial.write("\n");
 	}
 	commChild.commSetTxStatus(TRUE);
 	commChild.Transmit(address);
@@ -314,6 +319,9 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 			is connected so we can safely set the COMM_ESTABLISHED_PARENT
 			to TRUE.
 		*/
+		Serial.print("Receeived SEND_ACK from Parent: ");
+		Serial.write("\n");
+
 		COMM_ESTABLISHED_PARENT = TRUE;		// The parent is there!! Great.
 		commParent.commWriteBuffer(CMD_FRAME_HEADER1);
 		commParent.commWriteBuffer(CMD_FRAME_HEADER2);
@@ -321,6 +329,7 @@ void Node::ProtocolHandleParentCmd(uint8_t Command){
 		commParent.commWriteBuffer(CMD_ACK);
 		commParent.commSetTxStatus(TRUE);
 		commParent.Transmit(PARENT_ADDRESS);
+		Serial.print("Sending SEND_ACK from Parent: ");
 		break;
 
 	case CMD_SET_ASL:
@@ -360,6 +369,9 @@ void Node::ProtocolHandleChildCmd(childData_t childs[], uint8_t Command, uint8_t
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			if (iD == childs[i].ID){
 				childs[i].CommEstablished = TRUE;
+				Serial.print("Receeived ACK from Child: ");
+				Serial.print(i+1);
+				Serial.write("\n");
 			}
 			
 		}

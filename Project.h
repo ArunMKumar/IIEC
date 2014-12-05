@@ -55,7 +55,7 @@ typedef union {
 *********************************************************************************************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    NODES			 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
-#define NUM_CHILDS	0x02
+#define NUM_CHILDS	0U
 #define NUM_PARENT	1U
 #define NUM_LOADS	4U
 #define NODE_ID		23U	// test
@@ -68,7 +68,7 @@ typedef union {
 */
 
 //Address independent of the medium
-#define SRC_ADDRESS				0x00
+#define SRC_ADDRESS				0x01
 #define PARENT_ADDRESS			0x02
 #define COMM_NUM_TRIES			0x04
 

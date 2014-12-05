@@ -51,7 +51,6 @@ childData_t childs[NUM_CHILDS]; // Change as per project, declared in global sco
 This array contains the I2C addresses of the childs that we need to ocmmunicate with
 */
 
-addr_t childAddrtest = CHILD1_I2C_ADDR;
 /*
 Creating data structure for parent and child comm
 */
@@ -130,6 +129,9 @@ status_t Node::establishCommChild(){
 	 both of these are handled in the ProtocolReadchild and ProtocolReadParent methods
 
 	 */
+	if (0 == NUM_CHILDS){		// if there are no children then there is no point waiting here
+		return TASK_NO_ERROR;
+	}
 
 	uint8_t numTries = 0;
 	uint8_t Command[1] = { CMD_SEND_ACK };
@@ -137,26 +139,25 @@ status_t Node::establishCommChild(){
 	
 	Serial.write("Inside establish Comm Child\n");
 	Serial.write("Values:");
-		Serial.print(COMM_ESTABLISHED_CHILDS);
+	Serial.print(COMM_ESTABLISHED_CHILDS);
 	Serial.print(COMM_ESTABLISHED_PARENT);
 	Serial.write("\n");
-	
-	Serial.write("V:");
+
 	while ((FALSE == COMM_ESTABLISHED_CHILDS) || (FALSE == COMM_ESTABLISHED_PARENT)){
 		for (uint8_t i = 0; i < NUM_CHILDS; i++){
 			//Debug:
 			Serial.print("============================\n");
 			Serial.write("Sending to child device:" );
-			Serial.print(childAddr[i]);
+			Serial.print(childAddr[i], DEC);
 			Serial.write("\n");
 			Serial.print("============================\n");
 			
-			Serial.print(childAddr[i],DEC);
 			
 
 			MyNode.ProtocolWriteChild(Command, 1, childAddr[i]);
 		}
 		delay(200);		// lets wait for some time
+
 		MyNode.ProtocolReadChild(childs);		// see if child has responded
 		MyNode.ProtocolReadParent();	
 		delay(10);
@@ -188,17 +189,12 @@ status_t Node::nodeInit(void){
 	
 	Serial.write("Inside Node_INITd\n");
 	// Task 0: Initialize the Node data structure
-	addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR, CHILD2_I2C_ADDR };
-	//debug::
-	Serial.write("checking address\n");
-	Serial.write("Address:");
-	Serial.print(childAddr[0], DEC);
-	Serial.write("\n");
-	Serial.print(CHILD1_I2C_ADDR, DEC);
-	Serial.write("\n");
+	//addr_t childAddr[NUM_CHILDS] = { CHILD1_I2C_ADDR };// , CHILD2_I2C_ADDR
 	
-
-	MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
+	if (NUM_CHILDS){			// if there are childs we go here otherwise we do not
+		MyNode.nodeSetChildAddr(childAddr);	// Fill in the child addresses
+	}
+		
 	while (COMM_NOT_INIT == MyNode.nodeCommInit(&childDevice, &parentDevice));	// HW Initialization takes place here
 
 	MyNode.establishCommChild();		// Here we establish the communication with the child.
@@ -252,12 +248,10 @@ void ProjectInit(){
 	//debug
 	delay(4000);
 	Serial.write("Inside Project Init\n");
+
 	LoadInit();	// Fill the Load Data structure with the initialized data
 
 	ChildInit(); // Fill the ChildDdta Holder with Child ID
-
-	MyNode.nodeInit();
-
 
 	if (TASK_FAILED == MyNode.nodeInit()){	// Initialize the node and associated communication
 		INIT_DONE = FALSE;
@@ -273,7 +267,7 @@ void ProjectTaskMain(void){
 
 
 	//debug:
-	//Serial.write("Inside Task Main\n");
+	Serial.write("Inside Task Main\n");
 
 	if (TRUE == INIT_DONE){
 
@@ -287,7 +281,7 @@ void ProjectTaskMain(void){
 	MyNode.ProtocolReadParent();
 
 	//debug:
-	//Serial.write("Exit Task Main\n");
+	Serial.write("Exit Task Main\n");
 
 }
 
